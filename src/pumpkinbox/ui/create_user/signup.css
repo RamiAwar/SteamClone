@@ -1,0 +1,7 @@
+.input{
+    -fx-text-fill:#ddd;
+}
+
+.error{
+    -fx-fill: #aaa;
+}

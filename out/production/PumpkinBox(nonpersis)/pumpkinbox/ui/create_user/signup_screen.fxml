@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="548.0" prefWidth="909.0" style="-fx-background-color: rgba(255,255,255,0);" stylesheets="@signup.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pumpkinbox.ui.create_user.signupScreenController">
+   <children>
+      <Pane prefHeight="650.0" prefWidth="826.0" style="-fx-background-color: rgba(255,255,255,0);" />
+      <Pane prefHeight="425.0" prefWidth="506.0" style="-fx-background-color: #444; -fx-border-radius: 20 20 20 20;">
+         <children>
+            <HBox prefHeight="526.0" prefWidth="888.0">
+               <children>
+                  <VBox alignment="BASELINE_LEFT" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="526.0" prefWidth="453.0" HBox.hgrow="NEVER">
+                     <children>
+                        <ImageView fitHeight="159.0" fitWidth="134.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="NEVER">
+                           <image>
+                              <Image url="@pumpkin.png" />
+                           </image>
+                           <VBox.margin>
+                              <Insets left="150.0" right="150.0" top="85.0" />
+                           </VBox.margin>
+                        </ImageView>
+                        <Label alignment="CENTER" text="Create an account" textFill="#f2f2f2">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="60.0" right="20.0" top="20.0" />
+                           </VBox.margin>
+                        </Label>
+                        <JFXTextField fx:id="firstname" focusColor="#e4e4e4" labelFloat="true" prefHeight="30.0" prefWidth="322.0" promptText="Firstname" styleClass="input" stylesheets="@signup.css" unFocusColor="#a1a1a1">
+                           <VBox.margin>
+                              <Insets left="60.0" right="60.0" top="20.0" />
+                           </VBox.margin>
+                        </JFXTextField>
+                        <Label fx:id="firstnameLabel" alignment="BASELINE_LEFT" prefHeight="25.0" prefWidth="322.0" style="-fx-text-fill: #eee; -fx-background-color: #aa4444;" styleClass="error" text="Invalid username or password" textFill="#ffffffd1" textOverrun="CLIP">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="60.0" right="60.0" top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <JFXTextField fx:id="lastname" focusColor="#e4e4e4" labelFloat="true" prefHeight="30.0" prefWidth="322.0" promptText="Lastname" styleClass="input" stylesheets="@signup.css" unFocusColor="#a1a1a1">
+                           <VBox.margin>
+                              <Insets left="60.0" right="60.0" top="30.0" />
+                           </VBox.margin></JFXTextField>
+                        <Label fx:id="lastnameLabel" alignment="BASELINE_LEFT" prefHeight="25.0" prefWidth="322.0" style="-fx-background-color: #aa4444;" text="Invalid username or password" textAlignment="CENTER" textFill="#ffffffd1" textOverrun="CLIP">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets left="60.0" right="60.0" top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <Separator maxHeight="-Infinity" orientation="VERTICAL" prefHeight="389.0" prefWidth="7.0" style="-fx-color: #666;" HBox.hgrow="NEVER">
+                     <HBox.margin>
+                        <Insets bottom="40.0" top="130.0" />
+                     </HBox.margin></Separator>
+                  <VBox alignment="BASELINE_LEFT" fillWidth="false" prefHeight="526.0" prefWidth="463.0">
+                     <children>
+                        <JFXTextField fx:id="email" focusColor="#e4e4e4" labelFloat="true" prefHeight="30.0" prefWidth="322.0" promptText="Email" styleClass="input" stylesheets="@signup.css" unFocusColor="#a1a1a1">
+                           <VBox.margin>
+                              <Insets left="60.0" right="60.0" top="160.0" />
+                           </VBox.margin></JFXTextField>
+                        <Label fx:id="emailLabel" alignment="BASELINE_LEFT" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="320.0" style="-fx-background-color: #aa4444;" text="Invalid username or password" textFill="#ffffffd1" textOverrun="CLIP">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets left="60.0" right="60.0" top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <JFXPasswordField fx:id="password" focusColor="#e1e1e1" labelFloat="true" prefHeight="30.0" prefWidth="321.0" promptText="Password" styleClass="input" stylesheets="@signup.css" unFocusColor="#a1a1a1">
+                           <VBox.margin>
+                              <Insets left="60.0" right="60.0" top="30.0" />
+                           </VBox.margin></JFXPasswordField>
+                        <Label fx:id="passwordLabel" alignment="BASELINE_LEFT" prefHeight="25.0" prefWidth="319.0" style="-fx-background-color: #aa4444;" text="Invalid username or password" textFill="#ffffffd1" textOverrun="CLIP">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets left="60.0" right="60.0" top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox prefHeight="100.0" prefWidth="310.0">
+                           <children>
+                              <JFXButton fx:id="signupButton" alignment="BASELINE_LEFT" onAction="#signup" prefHeight="27.0" prefWidth="136.0" style="-fx-background-color: #555;" text="Signup" textFill="#dddddd">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin></JFXButton>
+                              <JFXButton fx:id="cancelButton" alignment="BASELINE_LEFT" onAction="#close" prefHeight="27.0" prefWidth="148.0" style="-fx-background-color: #555;" text="Cancel" textFill="#dddddd">
+                                 <HBox.margin>
+                                    <Insets left="50.0" />
+                                 </HBox.margin></JFXButton>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="63.0" right="60.0" top="50.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+            </HBox>
+            <Label layoutX="291.0" layoutY="28.0" prefHeight="51.0" prefWidth="324.0" text="PumpkinBox" textFill="#eeeeee">
+               <font>
+                  <Font name="Press Start 2P Regular" size="31.0" />
+               </font>
+            </Label>
+            <HBox fx:id="menuBar" layoutY="2.0" prefHeight="28.0" prefWidth="888.0">
+               <children>
+                  <Label fx:id="closeIcon" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="minimizeIcon" layoutX="10.0" layoutY="10.0" textFill="WHITE" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+            <Region fx:id="draggableRegion" layoutX="3.0" layoutY="41.0" prefHeight="480.0" prefWidth="22.0" />
+         </children>
+         <effect>
+            <DropShadow blurType="GAUSSIAN" color="#00000046" offsetX="5.0" offsetY="5.0" radius="10.76" width="24.04" />
+         </effect>
+         <StackPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </StackPane.margin>
+      </Pane>
+   </children>
+   <effect>
+      <DropShadow blurType="GAUSSIAN" />
+   </effect>
+</StackPane>

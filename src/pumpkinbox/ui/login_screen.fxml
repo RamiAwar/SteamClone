@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0" prefWidth="526.0" style="-fx-background-color: rgba(255,255,255,0);" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pumpkinbox.ui.loginScreenController">
+   <children>
+      <Pane prefHeight="650.0" prefWidth="826.0" style="-fx-background-color: rgba(255,255,255,0);" />
+      <Pane prefHeight="425.0" prefWidth="506.0" style="-fx-background-color: #444;">
+         <children>
+            <HBox fx:id="menuBar" prefHeight="28.0" prefWidth="499.0">
+               <children>
+                  <Label fx:id="closeIcon" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="minimizeIcon" layoutX="10.0" layoutY="10.0" textFill="WHITE" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+            <Label layoutX="91.0" layoutY="31.0" prefHeight="51.0" prefWidth="324.0" text="PumpkinBox" textFill="#eeeeee">
+               <font>
+                  <Font name="Press Start 2P Regular" size="31.0" />
+               </font>
+            </Label>
+            <Region fx:id="draggableRegion" layoutX="3.0" layoutY="86.0" prefHeight="345.0" prefWidth="22.0" />
+            <VBox alignment="CENTER" layoutX="47.0" layoutY="66.0" prefHeight="399.0" prefWidth="406.0">
+               <children>
+                  <JFXTextField fx:id="email" focusColor="#e4e4e4" labelFloat="true" prefHeight="30.0" prefWidth="322.0" promptText="Email" styleClass="input" stylesheets="@main.css" unFocusColor="#a1a1a1">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
+                     </VBox.margin>
+                  </JFXTextField>
+                  <JFXPasswordField fx:id="password" focusColor="#e1e1e1" labelFloat="true" prefHeight="30.0" prefWidth="321.0" promptText="Password" styleClass="input" stylesheets="@main.css" unFocusColor="#a1a1a1">
+                     <VBox.margin>
+                        <Insets left="20.0" right="20.0" top="20.0" />
+                     </VBox.margin>
+                  </JFXPasswordField>
+                  <HBox alignment="CENTER" prefHeight="38.0" prefWidth="319.0">
+                     <children>
+                        <JFXButton alignment="BASELINE_LEFT" onAction="#login" prefHeight="27.0" prefWidth="136.0" style="-fx-background-color: #555;" text="Login" textFill="#dddddd">
+                           <HBox.margin>
+                              <Insets right="30.0" />
+                           </HBox.margin>
+                        </JFXButton>
+                        <JFXButton alignment="BASELINE_LEFT" onAction="#close" prefHeight="27.0" prefWidth="148.0" style="-fx-background-color: #555;" text="Cancel" textFill="#dddddd">
+                           <HBox.margin>
+                              <Insets left="30.0" />
+                           </HBox.margin>
+                        </JFXButton>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="20.0" top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Label fx:id="errorLabel" alignment="CENTER" prefHeight="29.0" prefWidth="320.0" style="-fx-border-color: #ee5555;" text="Incorrect username or password. " textFill="#ffffffd1">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Separator maxHeight="-Infinity" maxWidth="-Infinity" opacity="0.56" prefHeight="0.5" prefWidth="399.0">
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </Separator>
+                  <HBox alignment="BASELINE_RIGHT" prefHeight="38.0" prefWidth="299.0">
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="152.0" text="Forgot your password? " textFill="#dddddd" />
+                        <JFXButton alignment="BASELINE_LEFT" prefHeight="27.0" prefWidth="148.0" style="-fx-background-color: #555;" text="Recover account" textFill="#dddddd" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="20.0" right="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="BASELINE_RIGHT" prefHeight="13.0" prefWidth="406.0">
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="227.0" text="Don't have a PumpkinBox account?" textFill="#dddddd" />
+                        <JFXButton fx:id="signupButton" alignment="BASELINE_LEFT" onAction="#signup" prefHeight="27.0" prefWidth="148.0" style="-fx-background-color: #555;" text="Create an account" textFill="#dddddd" />
+                     </children>
+                     <VBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+         <effect>
+            <DropShadow blurType="GAUSSIAN" color="#00000046" offsetX="5.0" offsetY="5.0" radius="10.76" width="24.04" />
+         </effect>
+         <StackPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </StackPane.margin>
+      </Pane>
+   </children>
+   <effect>
+      <DropShadow blurType="GAUSSIAN" />
+   </effect>
+</StackPane>
