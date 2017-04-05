@@ -1,12 +1,10 @@
 package pumpkinbox.ui.notifications;
 
-import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
-import pumpkinbox.ui.icons.Icons;
 
 /**
  * Created by ramiawar on 4/4/17.
@@ -19,13 +17,13 @@ public class Notification {
 
         switch(code){
             case "SUCCESS":
-                image  = new ImageView(new Image("images/check_green.png"));
+                image  = new ImageView(new Image("icon_graphics/check_green.png"));
                 break;
             case "ERROR":
-                image = new ImageView(new Image("images/cross_red.png"));
+                image = new ImageView(new Image("icon_graphics/cross_red.png"));
                 break;
             default:
-                image = new ImageView(new Image("images/warning_red.png"));
+                image = new ImageView(new Image("icon_graphics/warning_red.png"));
                 break;
         }
 

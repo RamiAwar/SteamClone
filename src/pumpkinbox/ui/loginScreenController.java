@@ -3,10 +3,12 @@ package pumpkinbox.ui;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import javafx.application.Platform;
 import pumpkinbox.api.ResponseObject;
 import pumpkinbox.client.Client;
 import pumpkinbox.ui.create_user.signupScreenController;
 import pumpkinbox.ui.draggable.EffectUtilities;
+import pumpkinbox.ui.home.homeController;
 import pumpkinbox.ui.icons.Icons;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,7 +25,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import pumpkinbox.api.CODES;
 import pumpkinbox.ui.notifications.Notification;
-import pumpkinbox.validation.Validator;
 
 import java.io.IOException;
 import java.net.URL;
@@ -35,6 +36,7 @@ import java.util.ResourceBundle;
 public class loginScreenController implements Initializable{
 
     private final String CRLF = "\r\n";
+    private String authenticationToken;
 
     Icons icons = new Icons();
 
@@ -79,13 +81,13 @@ public class loginScreenController implements Initializable{
 
     @FXML
     void signup(ActionEvent e){
-        loadWindow("/pumpkinbox/ui/create_user/signup_screen.fxml", "Create Account");
+        loadSignupWindow("/pumpkinbox/ui/create_user/signup_screen.fxml", "Create Account");
     }
 
     @FXML
     void login(ActionEvent event) {
 
-        //loadWindow("/com/librarymanager/ui/addMember/add_member.fxml", "New Member");
+        //loadSignupWindow("/com/librarymanager/ui/addMember/add_member.fxml", "New Member");
 
         //Making sure email and password fields are non-empty, or else we send an invalid request and try to receive objects that
         //will not be sent.
@@ -113,13 +115,14 @@ public class loginScreenController implements Initializable{
                 System.out.println("Sending successful.");
                 System.out.println("Login succeeded.");
 
-                //TODO: Transition to next scene
-
                 //Receive authentication token
-                String token = response.getToken();
-                System.out.println(token);
+                authenticationToken = response.getToken();
+                System.out.println(authenticationToken);
                 errorLabel.setVisible(false);
 
+                //Transition to next scene
+                loadHomeWindow("/pumpkinbox/ui/home/home_screen.fxml", "PumpkinBox");
+                close();
                 break;
 
             case CODES.NOT_FOUND:
@@ -136,7 +139,7 @@ public class loginScreenController implements Initializable{
 
 
 
-    void loadWindow(String location, String title){
+    void loadSignupWindow(String location, String title){
         try {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource(location));
@@ -159,6 +162,40 @@ public class loginScreenController implements Initializable{
                     loader.<signupScreenController>getController();
             controller.registerStage(stage);
 
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    void loadHomeWindow(String location, String title){
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(location));
+            Parent parent = loader.load();
+
+            Stage stage = new Stage(StageStyle.UNDECORATED);
+            stage.initStyle(StageStyle.TRANSPARENT);
+
+            stage.setTitle(title);
+            Scene scene = new Scene(parent);
+            scene.setFill(Color.TRANSPARENT);
+            scene.getStylesheets().add("pumpkinbox/ui/home/home.css");
+
+            stage.setScene(scene);
+            stage.setAlwaysOnTop(true);
+            stage.show();
+
+            //Passing primaryStage to controller in order to make window draggable
+            homeController controller =
+                    loader.<homeController>getController();
+
+            controller.registerStage(stage);
+
+            System.out.println("Writing token to home: " + authenticationToken);
+            controller.setAuthenticationToken(authenticationToken);
+
+            stage.setOnCloseRequest(e -> Platform.exit());
 
         } catch (IOException e) {
             e.printStackTrace();

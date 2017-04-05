@@ -47,6 +47,5 @@ public class main extends Application {
                 loader.<loginScreenController>getController();
         controller.registerStage(primaryStage);
 
-        primaryStage.setOnCloseRequest(e -> Platform.exit());
     }
 }

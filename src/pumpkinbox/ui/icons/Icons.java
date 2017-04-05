@@ -28,10 +28,14 @@ public class Icons {
     public FontAwesomeIconView MINIMIZE;
     public MaterialDesignIconView CLOSE_m;
     public MaterialDesignIconView MINIMIZE_m;
+    public MaterialDesignIconView MINIMIZE_small;
+
     public MaterialDesignIconView SUCCESS;
+    public MaterialDesignIconView SEARCH;
 
 
     public Icons(){
+
         ADD_USER = new FontAwesomeIconView(FontAwesomeIcon.USER_PLUS);
         LIST_USERS = new FontAwesomeIconView(FontAwesomeIcon.USERS);
         ADD_BOOK = new FontAwesomeIconView(FontAwesomeIcon.LEANPUB);
@@ -45,6 +49,8 @@ public class Icons {
         CLOSE_m = new MaterialDesignIconView(MaterialDesignIcon.CLOSE);
         MINIMIZE_m = new MaterialDesignIconView(MaterialDesignIcon.MENU_DOWN);
         SUCCESS = new MaterialDesignIconView(MaterialDesignIcon.CHECK_ALL);
+        SEARCH = new MaterialDesignIconView(MaterialDesignIcon.MAGNIFY);
+        MINIMIZE_small = new MaterialDesignIconView(MaterialDesignIcon.MENU_DOWN);
 
 
     }
@@ -59,6 +65,7 @@ public class Icons {
 
         SUCCESS.setSize("5em");
 
+        SEARCH.setSize("1.5em");
 
         RENEW.setSize("1em");
         ISSUE.setSize("1em");
@@ -69,15 +76,17 @@ public class Icons {
 
         CLOSE_m.setSize("1.5em");
         MINIMIZE_m.setSize("1.8em");
+        MINIMIZE_small.setSize("1.5em");
 
 
         CLOSE.setFill(Paint.valueOf("#fff"));
         MINIMIZE.setFill(Paint.valueOf("#fff"));
-
+        MINIMIZE_small.setFill(Paint.valueOf("#ddd"));
         MINIMIZE_m.setFill(Paint.valueOf("#fff"));
         CLOSE_m.setFill(Paint.valueOf("#fff"));
 
         SUCCESS.setFill(Paint.valueOf("#fff"));
+        SEARCH.setFill(Paint.valueOf("#fff"));
 
     }
 

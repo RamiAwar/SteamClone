@@ -31,7 +31,7 @@ public class home extends Application {
 
         loader = new FXMLLoader(
                 getClass().getResource(
-                        "home.fxml"
+                        "home_screen.fxml"
                 )
         );
 
