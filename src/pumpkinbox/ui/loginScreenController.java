@@ -37,6 +37,8 @@ public class loginScreenController implements Initializable{
 
     private final String CRLF = "\r\n";
     private String authenticationToken;
+    private int userId;
+
 
     Icons icons = new Icons();
 
@@ -119,6 +121,7 @@ public class loginScreenController implements Initializable{
                 authenticationToken = response.getToken();
                 System.out.println(authenticationToken);
                 errorLabel.setVisible(false);
+                userId = response.getUserId();
 
                 //Transition to next scene
                 loadHomeWindow("/pumpkinbox/ui/home/home_screen.fxml", "PumpkinBox");
@@ -194,6 +197,7 @@ public class loginScreenController implements Initializable{
 
             System.out.println("Writing token to home: " + authenticationToken);
             controller.setAuthenticationToken(authenticationToken);
+            controller.setUserId(userId);
 
             stage.setOnCloseRequest(e -> Platform.exit());
 
@@ -221,6 +225,7 @@ public class loginScreenController implements Initializable{
     }
 
     private void minimize(){
+
         stage.setIconified(true);
     }
 

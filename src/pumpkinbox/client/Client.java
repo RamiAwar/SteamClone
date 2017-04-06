@@ -31,12 +31,14 @@ public class Client {
 
             String response = (String) datain.readObject();
             String token = (String) datain.readObject();
+            int userId = (int) datain.readObject();
 
             clientSocket.close();
 
             object.setResponse(response);
             object.setToken(token);
             object.setStatusCode(CODES.OK);
+            object.setUserId(userId);
 
             if(response.equals(CODES.NOT_FOUND)) object.setStatusCode(CODES.NOT_FOUND);
 

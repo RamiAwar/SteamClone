@@ -8,6 +8,8 @@ import org.joda.time.DateTime;
 import org.joda.time.Instant;
 import org.joda.time.Interval;
 
+import java.time.format.DateTimeFormatter;
+
 
 /**
  * Created by ramiawar on 3/31/17.
@@ -26,6 +28,18 @@ public class Time {
         return dateTime.toString();
     }
 
+    public static String prettyTimeStamp(){
+        DateTime dateTime = new DateTime();
+        String month = dateTime.monthOfYear().getAsText();
+        String day = dateTime.dayOfWeek().getAsText();
+        int year = dateTime.getYear();
+        String hour = dateTime.hourOfDay().getAsText();
+        String minute = dateTime.minuteOfHour().getAsText();
+
+        return day + ", " + month + " " + day + " " + Integer.toString(year) + " at " + hour + ":" + minute;
+
+    }
+
     public static String getTimeStampPlus(){
         DateTime dateTime = new DateTime();
         return dateTime.plusHours(1).toString();
@@ -41,9 +55,11 @@ public class Time {
 
     public static void main(String[] args) {
 
-        DateTime time = new DateTime().plusHours(4);
+        DateTime time = new DateTime().plusHours(2);
 
-        System.out.println(checkTimestamp(time.toString()));
+        System.out.println(Integer.parseInt(time.hourOfDay().getAsText())%12);
+        System.out.println(time.getHourOfDay());
+        System.out.println(time.toDate());
     }
 
     public static String getDuration(Instant x1, Instant x2){

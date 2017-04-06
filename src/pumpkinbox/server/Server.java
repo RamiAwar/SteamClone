@@ -5,6 +5,7 @@
 package pumpkinbox.server;
 
 import pumpkinbox.api.CODES;
+import pumpkinbox.api.NotificationObject;
 import pumpkinbox.database.DatabaseHandler;
 import pumpkinbox.security.AuthToken;
 import pumpkinbox.security.Hasher;
@@ -19,12 +20,13 @@ import java.sql.ResultSet;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingDeque;
 
 public class Server {
 
     private int port = 8000;    //ServerSocket port number
     private ServerSocket serverSocket;
-
 
     //Empty private constructor since we do not this class to be accessible from other classes
     private Server() throws ClassNotFoundException {}
@@ -86,6 +88,7 @@ public class Server {
 
         //Constructor
         public ServerThread(Socket socket) {
+
             this.socket = socket;
             this.db = DatabaseHandler.getInstance();
         }
@@ -211,6 +214,8 @@ public class Server {
                             }
 
                             dataout.writeObject(authToken);
+
+                            dataout.writeObject(rs.getInt("id"));
 
                             //TODO:Get home page info
                             //dataout.writeObject(INFO);

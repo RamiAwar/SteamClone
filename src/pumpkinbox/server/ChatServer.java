@@ -9,6 +9,7 @@ package pumpkinbox.server;
  */
 
 import pumpkinbox.api.CODES;
+import pumpkinbox.api.NotificationObject;
 import pumpkinbox.database.DatabaseHandler;
 import pumpkinbox.time.Time;
 
@@ -18,9 +19,11 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 import java.util.Vector;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
@@ -28,6 +31,11 @@ public class ChatServer {
 
     private int port = 9000;    //ServerSocket port number
     private ServerSocket serverSocket;
+
+    public ArrayList<NotificationObject> notificationList = new ArrayList<>();
+
+    //This queue is for saving notifications and sending them once the access token has been confirmed.
+    private BlockingQueue<String> notificationQueue = new LinkedBlockingQueue<>();
 
     public Vector<ChatServerThread> connectedClients = new Vector<ChatServerThread>();
 
@@ -56,7 +64,7 @@ public class ChatServer {
                 Socket newConnection = serverSocket.accept();
                 System.out.println("Client connected.");
 
-                ChatServerThread st = new ChatServerThread(newConnection);  //Creating a thread for each new client
+                ChatServerThread st = new ChatServerThread(newConnection, notificationList);  //Creating a thread for each new client
                 connectedClients.add(st);
 
                 new Thread(st).start();
@@ -90,11 +98,12 @@ public class ChatServer {
         private ObjectInputStream datain;
         private ObjectOutputStream dataout;
         private DatabaseHandler db;
+        private int userId;
 
         private final String CRLF = "\r\n";
 
         //Constructor
-        public ChatServerThread(Socket socket) {
+        public ChatServerThread(Socket socket, ArrayList<NotificationObject> notificationList) {
             this.socket = socket;
             this.db = DatabaseHandler.getInstance();
         }
@@ -128,16 +137,26 @@ public class ChatServer {
                     System.out.println("Waiting for object...");
                     Object s = datain.readObject(); //Read client request
 
-                    //TODO: Send ping every 1 min to check if connection is alive?
-                    //
-                    //if not
-                    //remove current client from ConnectedClients list.
-                    //socket.close();
+                    //TODO: Check if connection still alive to close socket and update friends list if not
 
                     if (!s.equals(null)) {
 
                         System.out.println("Server received: " + s);//for debugging
                         parseRequest((String) s);   //Decode client request
+
+                        
+
+                        //Check notification queue
+                        for (int i = 0; i < notificationList.size(); i++) {
+                            NotificationObject notification = notificationList.get(i);
+                            if( userId == notification.getReceiver()){
+                                String message = notification.getMessage();
+                                String sender = notification.getSenderUsername();
+                                notificationList.remove(i);
+                                notificationQueue.offer("NOTIFICATION " + sender + "|" + message);
+
+                            }
+                        }
 
                     }
 
@@ -212,9 +231,10 @@ public class ChatServer {
 
                             //Check authentication token
                             System.out.println("User exists. Checking if token valid...");
-
                             String token = rs.getString("authtoken");
+
                             System.out.println(token);
+
                             if(token.equals(SECRET)){
                                 System.out.println("Token exists. Checking expiration...");
                             } else{
@@ -237,9 +257,11 @@ public class ChatServer {
                                 //Send OK
                                 System.out.println("User exists and valid auth token, adding message to db...");
 
+                                if(userId != Integer.parseInt(sender_id)) userId = Integer.parseInt(sender_id);
+
                                 //Add message to database
                                 //get timestamp
-                                String timestamp = Time.getTimeStamp();
+                                String timestamp = Time.prettyTimeStamp();
                                 if(db.executeAction("INSERT INTO pumpkinbox_messages (sender_id, receiver_id, content, timestamp) VALUES ('" +
                                         sender_id + "', '" +
                                         receiver_id + "', '" +

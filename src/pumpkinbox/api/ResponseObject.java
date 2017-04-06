@@ -8,7 +8,7 @@ public class ResponseObject {
     private String response;
     private String token;
     private String statusCode;
-
+    private int userId;
 
     public String getStatusCode() {
         return statusCode;
@@ -18,7 +18,9 @@ public class ResponseObject {
         this.statusCode = statusCode;
     }
 
+    public int getUserId(){return userId;}
 
+    public void setUserId(int id){this.userId = id;}
 
     public String getResponse() {
         return response;

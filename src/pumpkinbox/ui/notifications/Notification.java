@@ -22,6 +22,9 @@ public class Notification {
             case "ERROR":
                 image = new ImageView(new Image("icon_graphics/cross_red.png"));
                 break;
+            case "MESSAGE":
+                image = new ImageView(new Image("icon_graphics/cross_red.png"));
+                break;
             default:
                 image = new ImageView(new Image("icon_graphics/warning_red.png"));
                 break;
