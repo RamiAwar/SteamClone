@@ -1,13 +1,15 @@
+package pumpkinbox.server;
+
+/**
+ * Created by ramiawar on 4/6/17.
+ */
 
 /**
  * Created by ramiawar on 3/23/17.
  */
-package pumpkinbox.server;
 
 import pumpkinbox.api.CODES;
 import pumpkinbox.database.DatabaseHandler;
-import pumpkinbox.security.AuthToken;
-import pumpkinbox.security.Hasher;
 import pumpkinbox.time.Time;
 
 import java.io.IOException;
@@ -16,18 +18,21 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.ResultSet;
-import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
-public class Server {
 
-    private int port = 8000;    //ServerSocket port number
+public class ChatServer {
+
+    private int port = 9000;    //ServerSocket port number
     private ServerSocket serverSocket;
 
+    public Vector<ChatServerThread> connectedClients = new Vector<ChatServerThread>();
 
     //Empty private constructor since we do not this class to be accessible from other classes
-    private Server() throws ClassNotFoundException {}
+    private ChatServer() throws ClassNotFoundException {}
 
     //Accepts connections indefinitely
     public void acceptConnections() {
@@ -44,12 +49,16 @@ public class Server {
 
         while (true) {  //Accepting connections indefinitely
 
+            System.out.println(connectedClients);
+
             try
             {
                 Socket newConnection = serverSocket.accept();
                 System.out.println("Client connected.");
 
-                ServerThread st = new ServerThread(newConnection);  //Creating a thread for each new client
+                ChatServerThread st = new ChatServerThread(newConnection);  //Creating a thread for each new client
+                connectedClients.add(st);
+
                 new Thread(st).start();
 
             }
@@ -64,9 +73,9 @@ public class Server {
 
         //Instantiate server and call acceptConnections to loop indefinitely
 
-        Server server = null;
+        ChatServer server = null;
         try {
-            server = new Server();
+            server = new ChatServer();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             System.exit(1);
@@ -75,7 +84,7 @@ public class Server {
         server.acceptConnections();
     }
 
-    class ServerThread implements Runnable {
+    class ChatServerThread implements Runnable {
 
         private Socket socket;
         private ObjectInputStream datain;
@@ -85,7 +94,7 @@ public class Server {
         private final String CRLF = "\r\n";
 
         //Constructor
-        public ServerThread(Socket socket) {
+        public ChatServerThread(Socket socket) {
             this.socket = socket;
             this.db = DatabaseHandler.getInstance();
         }
@@ -110,13 +119,13 @@ public class Server {
             }
 
             //ServerThread main program
-            System.out.println("Connected");
+            System.out.println("Streams opened successfully.");
 
             while (true) {
                 long millis = System.currentTimeMillis();
 
                 try {
-
+                    System.out.println("Waiting for object...");
                     Object s = datain.readObject(); //Read client request
 
                     //TODO: Send ping every 1 min to check if connection is alive?
@@ -133,6 +142,7 @@ public class Server {
                     }
 
                 } catch (Exception e) {
+                    connectedClients.remove(this);
                     System.out.println("---------------Client Disconnected---------------");
                     e.printStackTrace();
                     System.out.println("-------------------------------------------------");
@@ -170,50 +180,79 @@ public class Server {
             switch (VERB) {
 
 
-                case "LOGIN":
-                    if(SECRET.equals("")) {
+                case "MESSAGE":
+                    if(SECRET.equals("") || CONTENT.equals("")) {
                         System.out.println("Invalid request");
+                        try {
+                            dataout.writeObject(CODES.INVALID_REQUEST);
+                        } catch (IOException e) {
+                            System.out.println("Could not send invalid request to server.");
+                            e.printStackTrace();
+                        }
+
                         break;
                     }
 
-                    //TODO:  decrypt SECRET
 
-                    String[] userpass = SECRET.split("\\|");
-                    String username = userpass[0];
-                    String password = Hasher.sha256(userpass[1]);
+                    String[] message_content = CONTENT.split("\\|");
+
+                    String sender_id = message_content[0];
+                    String receiver_id = message_content[1];
+                    String content = message_content[2];
 
                     //Look up username/pass in database
-                    ResultSet rs = db.executeQuery("SELECT * FROM pumpkinbox_users_table WHERE email='" + username + "' AND password='" + password +"';");
+                    ResultSet rs = db.executeQuery("SELECT * FROM pumpkinbox_users_table WHERE id='" + sender_id +"';");
 
                     try {
                         System.out.println("Checking if user exists ...");
+
                         if(rs.next()){
 
-                            //Login user:
-                            //Send OK code, homepage info
-                            System.out.println("User exists, sending OK code...");
-                            dataout.writeObject(CODES.OK + CRLF);
+                            //User exists, check auth token:
 
-                            //TODO: Generate auth token, add to db, send to user
-                            String timestamp = Time.getTimeStampPlus();
-                            String authToken = AuthToken.generateToken();
+                            //Check authentication token
+                            System.out.println("User exists. Checking if token valid...");
 
-                            String query = "UPDATE pumpkinbox_users_table SET "+
-                                    "authtoken='" + authToken + "', " +
-                                    "expiration='" + timestamp + "' " +
-                                    "WHERE email='" + username + "';";
-
-                            try{
-                                db.executeAction(query);
-                                System.out.println("Inserting authentication token...");
-                            }catch(Exception e){
-                                System.out.println("Token insertion failed");
+                            String token = rs.getString("authtoken");
+                            System.out.println(token);
+                            if(token.equals(SECRET)){
+                                System.out.println("Token exists. Checking expiration...");
+                            } else{
+                                System.out.println("Invalid authentication token.");
+                                dataout.writeObject(CODES.INVALID_TOKEN);
+                                return;
                             }
 
-                            dataout.writeObject(authToken);
+                            //Check valid timestamp
+                            String expirationTime = rs.getString("expiration");
+                            boolean validToken = Time.checkTimestamp(expirationTime);
 
-                            //TODO:Get home page info
-                            //dataout.writeObject(INFO);
+                            //Update token expiration time
+                            String query = "UPDATE pumpkinbox_users_table SET "+
+                                    "authtoken='" + SECRET + "', " +
+                                    "expiration='" + Time.getTimeStampPlus() + "' " +
+                                    "WHERE id='" + sender_id + "';";
+
+                            if(validToken){
+                                //Send OK
+                                System.out.println("User exists and valid auth token, adding message to db...");
+
+                                //Add message to database
+                                //get timestamp
+                                String timestamp = Time.getTimeStamp();
+                                if(db.executeAction("INSERT INTO pumpkinbox_messages (sender_id, receiver_id, content, timestamp) VALUES ('" +
+                                        sender_id + "', '" +
+                                        receiver_id + "', '" +
+                                        content + "', '" +
+                                        timestamp + "');")) dataout.writeObject(CODES.OK);
+
+                                System.out.println("Message sent.");
+
+                            }else{
+                                System.out.println("User exists but token EXPIRED, sending invalid token code...");
+                                dataout.writeObject(CODES.INVALID_TOKEN + CRLF);
+
+                            }
 
                         }else{
                             System.out.println("User not found, sending NOT FOUND code...");
@@ -224,58 +263,15 @@ public class Server {
                         e.printStackTrace();
                     }
 
-
-
                     break;
 
-                case "SIGNUP":
-
-                    if(SECRET.equals("") || CONTENT.equals("")) {
-                        System.out.println("Invalid request");
-                        break;
-                    }
-
-                    //TODO:decrypt SECRET
-
-                    userpass = SECRET.split("\\|");
-                    username = userpass[0];
-                    password = Hasher.sha256(userpass[1]);
-                    String[] userinfo = CONTENT.split("\\|");
-                    String firstname = userinfo[0];
-                    String lastname = userinfo[1];
-
-                    //Look up username in database
-                    rs = db.executeQuery("SELECT * FROM pumpkinbox_users_table WHERE email='" + username + "' ;");
-
+                default:
                     try {
-                        if(rs.next()){
-                            //User already exists
-                            dataout.writeObject(CODES.ALREADY_EXISTS);
-                        }else{
-                            //Write out OK if execution successful
-                            if(db.executeAction("INSERT INTO pumpkinbox_users_table (id, firstname, lastname, password, email) VALUES (0,'" +
-                                    firstname + "', '" +
-                                    lastname + "', '" +
-                                    password + "', '" +
-                                    username + "');")) dataout.writeObject(CODES.OK);
-                            else dataout.writeObject(CODES.INSERTION_ERROR);
-                        }
-                    } catch (Exception e) {
+                        dataout.writeObject(CODES.INVALID_REQUEST);
+                    } catch (IOException e) {
+                        System.out.println("Could not send invalid request to client.");
                         e.printStackTrace();
                     }
-
-                    break;
-
-                case "GET":
-
-                    break;
-
-                case "MESSAGE":
-
-                    break;
-
-                case "UPDATE":
-
                     break;
             }
         }

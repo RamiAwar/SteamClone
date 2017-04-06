@@ -11,6 +11,8 @@ public class CODES {
     public static final String ALREADY_EXISTS = "3 ALREADY EXISTS";
     public static final String INSERTION_ERROR = "4 INSERTION ERROR";
     public static final String RECEIVE_ERROR = "5 NOTHING RECEIVED";
+    public static final String INVALID_REQUEST = "6 INVALID REQUEST";
+    public static final String INVALID_TOKEN = "7 INVALID TOKEN";
 
 
 }
