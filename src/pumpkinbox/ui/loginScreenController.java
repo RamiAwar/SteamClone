@@ -38,6 +38,7 @@ public class loginScreenController implements Initializable{
     private final String CRLF = "\r\n";
     private String authenticationToken;
     private int userId;
+    private String name;
 
 
     Icons icons = new Icons();
@@ -58,6 +59,7 @@ public class loginScreenController implements Initializable{
     JFXButton createAccountButton;
     @FXML
     Label errorLabel;
+
 
     private Stage stage;
 
@@ -119,6 +121,7 @@ public class loginScreenController implements Initializable{
 
                 //Receive authentication token
                 authenticationToken = response.getToken();
+                name = response.getUserName();
                 System.out.println(authenticationToken);
                 errorLabel.setVisible(false);
                 userId = response.getUserId();
@@ -198,6 +201,10 @@ public class loginScreenController implements Initializable{
             System.out.println("Writing token to home: " + authenticationToken);
             controller.setAuthenticationToken(authenticationToken);
             controller.setUserId(userId);
+            controller.setName(name);
+            controller.initClient();
+
+            System.out.println("LOGIN - USER NAME: " + name);
 
             stage.setOnCloseRequest(e -> Platform.exit());
 

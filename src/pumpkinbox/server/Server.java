@@ -214,8 +214,8 @@ public class Server {
                             }
 
                             dataout.writeObject(authToken);
-
-                            dataout.writeObject(rs.getInt("id"));
+                            String user_details = Integer.toString(rs.getInt("id")) + "|" + rs.getString("firstname");
+                            dataout.writeObject(user_details);
 
                             //TODO:Get home page info
                             //dataout.writeObject(INFO);
@@ -228,8 +228,6 @@ public class Server {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
-
 
                     break;
 

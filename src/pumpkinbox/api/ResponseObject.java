@@ -10,6 +10,16 @@ public class ResponseObject {
     private String statusCode;
     private int userId;
 
+    public String getUserName() {
+        return name;
+    }
+
+    public void setUserName(String name) {
+        this.name = name;
+    }
+
+    private String name;
+
     public String getStatusCode() {
         return statusCode;
     }

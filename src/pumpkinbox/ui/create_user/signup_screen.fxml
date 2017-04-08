@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.text.*?>
-<?import com.jfoenix.controls.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="548.0" prefWidth="909.0" style="-fx-background-color: rgba(255,255,255,0);" stylesheets="@signup.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pumpkinbox.ui.create_user.signupScreenController">
+<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="548.0" prefWidth="909.0" style="-fx-background-color: rgba(255,255,255,0);" stylesheets="@signup.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pumpkinbox.ui.create_user.signupScreenController">
    <children>
       <Pane prefHeight="650.0" prefWidth="826.0" style="-fx-background-color: rgba(255,255,255,0);" />
       <Pane prefHeight="425.0" prefWidth="506.0" style="-fx-background-color: #444; -fx-border-radius: 20 20 20 20;">
@@ -21,9 +25,9 @@
                <children>
                   <VBox alignment="BASELINE_LEFT" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="526.0" prefWidth="453.0" HBox.hgrow="NEVER">
                      <children>
-                        <ImageView fitHeight="159.0" fitWidth="134.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="NEVER">
+                        <ImageView fx:id="pumpkinbox_logo" fitHeight="159.0" fitWidth="134.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="NEVER">
                            <image>
-                              <Image url="@pumpkin.png" />
+                              <Image url="@../../../../resources/images/pumpkin.png" />
                            </image>
                            <VBox.margin>
                               <Insets left="150.0" right="150.0" top="85.0" />

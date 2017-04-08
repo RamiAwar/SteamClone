@@ -7,5 +7,6 @@ public class Friend {
 
     private int friend_id;
     private String friend_status;
+    private String friend_name;
 
 }

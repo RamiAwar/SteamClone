@@ -1,12 +1,18 @@
 package pumpkinbox.ui.home;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.ListView;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import javafx.util.Duration;
 import pumpkinbox.api.NotificationObject;
+import pumpkinbox.api.User;
 import pumpkinbox.client.ChatClient;
 import pumpkinbox.client.Client;
 import pumpkinbox.ui.draggable.EffectUtilities;
@@ -22,14 +28,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import pumpkinbox.ui.images.Images;
 import pumpkinbox.ui.notifications.Notification;
 
-import javax.swing.*;
+
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -40,19 +47,35 @@ public class homeController implements Initializable{
     private String authenticationToken;
     private String online_status;
     private int userId;
+    private String name;
+
+    private ObservableList<String> friendsList = FXCollections.observableArrayList();
 
     private BlockingQueue<String> messages_queue = new LinkedBlockingQueue<>();
-    public BlockingQueue<NotificationObject> notification_queue = new LinkedBlockingQueue<>();
+    private BlockingQueue<NotificationObject> notification_queue = new LinkedBlockingQueue<>();
 
-
+    private final BlockingQueue<User> onlineFriends = new LinkedBlockingQueue<>();
+    private ArrayList<String> onlineFriendsNames = new ArrayList<>();
     public void setAuthenticationToken(String s){
         this.authenticationToken = s;
     }
-    public void setUserId(int id){this.userId = id;}
+    public void setName(String name){
+        this.name = name;
+    }
+    public void setUserId(int id){
+        this.userId = id;
+    }
+    public void initClient(){
+        System.out.println("Initializing client with : " + authenticationToken + name);
+
+        client = new ChatClient(onlineFriends, messages_queue, notification_queue, userId, authenticationToken);
+        client.connect();
+    }
+
 
     Icons icons = new Icons();
 
-    ChatClient client = new ChatClient(messages_queue, notification_queue, userId, authenticationToken);
+    ChatClient client;
 
     @FXML
     Label closeIcon;
@@ -68,6 +91,17 @@ public class homeController implements Initializable{
     Label user_status;
     @FXML
     ContextMenu statusMenu;
+    @FXML
+    ListView friends_list;
+    @FXML
+    Label username;
+    @FXML
+    ImageView profile_photo;
+    @FXML
+    JFXButton add_friend;
+    @FXML
+    Label status_icon;
+
 
 
     private Stage stage;
@@ -93,17 +127,25 @@ public class homeController implements Initializable{
     @FXML
     void setStatusOnline(ActionEvent e){
         user_status.setText("Online");
+        status_icon.setGraphic(icons.GHOST_GREEN);
         online_status = "online";
     }
     @FXML
     void setStatusOffline(ActionEvent e){
         user_status.setText("Offline");
+        status_icon.setGraphic(icons.GHOST_RED);
         online_status = "offline";
     }
     @FXML
     void setStatusAway(ActionEvent e){
         user_status.setText("Away");
+        status_icon.setGraphic(icons.GHOST_ORANGE);
         online_status = "away";
+    }
+
+    @FXML
+    void loadAddFriend(ActionEvent e){
+
     }
 
     void loadWindow(String location, String title){
@@ -136,17 +178,30 @@ public class homeController implements Initializable{
             statusMenu.show(user_status, event.getScreenX(), event.getScreenY());
         });
 
-        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+        username.setText(name);
+
+        profile_photo.setImage(Images.pumpkin_logo);
+
+        Timeline gui_updater = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent event) {
-                updateGUI();
-                System.out.println(authenticationToken);
-                System.out.println(userId);
+
+                try {
+                    updateGUI();
+
+                } catch (InterruptedException e) {
+                    System.out.println("Error taking from queue.");
+                    e.printStackTrace();
+                }
+
+
+//                System.out.println(authenticationToken);
+//                System.out.println(userId);
             }
         }));
-        fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
-        fiveSecondsWonder.play();
+        gui_updater.setCycleCount(Timeline.INDEFINITE);
+        gui_updater.play();
 
     }
 
@@ -163,10 +218,25 @@ public class homeController implements Initializable{
         searchIcon.setGraphic(icons.SEARCH);
         user_status.setGraphic(icons.MINIMIZE_small);
         minimizeIcon.setGraphic(icons.MINIMIZE_m);
+        add_friend.setGraphic(icons.ADD);
+        status_icon.setGraphic(icons.GHOST_GREEN);
 
     }
 
-    public void updateGUI(){
+    public void updateGUI() throws InterruptedException {
+
+        System.out.println("Updating friends list...");
+
+        if(!name.equals(null)) username.setText(name);
+
+        checkAndAdd(onlineFriends, onlineFriendsNames);
+
+        System.out.println("MAIN: " + onlineFriendsNames);
+
+
+        friendsList.setAll(onlineFriendsNames);
+        friends_list.getItems().setAll(onlineFriendsNames);
+
         if(!notification_queue.isEmpty()){
             NotificationObject notificationObject = new NotificationObject();
             try {
@@ -177,5 +247,17 @@ public class homeController implements Initializable{
             Notification notif = new Notification(notificationObject.getSenderUsername(), notificationObject.getSenderUsername(), 5, "MESSAGE");
         }
 
+    }
+
+    private void checkAndAdd(BlockingQueue<User> friends, ArrayList<String> array) throws InterruptedException {
+
+        while(!friends.isEmpty()){
+
+            User friend = friends.take();
+
+            if(!array.contains(friend.getUsername())){
+                array.add(friend.getUsername());
+            }
+        }
     }
 }

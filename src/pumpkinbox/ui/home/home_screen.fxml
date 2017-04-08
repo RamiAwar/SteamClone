@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXPopup?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
@@ -45,21 +46,21 @@
                   <Font name="Press Start 2P Regular" size="13.0" />
                </font>
             </Label>
-            <HBox alignment="CENTER" layoutY="31.0" prefHeight="567.0" prefWidth="839.0">
+            <HBox alignment="CENTER" layoutY="31.0" prefHeight="567.0" prefWidth="1019.0">
                <children>
-                  <VBox alignment="CENTER" prefHeight="567.0" prefWidth="235.0">
+                  <VBox alignment="CENTER" prefHeight="567.0" prefWidth="281.0">
                      <children>
                         <Label style="-fx-text-fill: #ddd;" text="Friends">
                            <font>
                               <Font name="Press Start 2P Regular" size="20.0" />
                            </font>
                            <VBox.margin>
-                              <Insets bottom="20.0" left="20.0" right="20.0" />
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                            </VBox.margin>
                         </Label>
                         <HBox prefHeight="68.0" prefWidth="200.0">
                            <children>
-                              <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-color: #fff;">
+                              <ImageView fx:id="profile_photo" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-color: #fff;">
                                  <image>
                                     <Image url="@../../../../../../Desktop/Pumpkin%20Box%20Project/Pumpkin-01.png" />
                                  </image>
@@ -71,47 +72,73 @@
                                  </HBox.margin></ImageView>
                               <VBox alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="190.0">
                                  <children>
-                                    <Label fx:id="username" text="Rami Awar" textFill="#e8e8e8">
+                                    <Label fx:id="username" textFill="#e8e8e8">
                                        <font>
                                           <Font size="17.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="user_status" contentDisplay="RIGHT" graphicTextGap="7.0" text="Online" textFill="#c9c9c9">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor>
-                                       <contextMenu>
-                                          <ContextMenu fx:id="statusMenu">
-                                            <items>
-                                              <MenuItem mnemonicParsing="false" text="Online" />
-                                                <MenuItem mnemonicParsing="false" text="Away" />
-                                                <MenuItem mnemonicParsing="false" text="Offline" />
-                                            </items>
-                                          </ContextMenu>
-                                       </contextMenu>
-                                    </Label>
+                                    <HBox prefHeight="1.0" prefWidth="146.0">
+                                       <children>
+                                          <Label fx:id="status_icon" textFill="#e8e8e8">
+                                             <font>
+                                                <Font size="17.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                             <padding>
+                                                <Insets bottom="4.0" />
+                                             </padding>
+                                          </Label>
+                                          <Label fx:id="user_status" alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="7.0" text="Online" textFill="#c9c9c9">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                             <contextMenu>
+                                                <ContextMenu fx:id="statusMenu">
+                                                  <items>
+                                                    <MenuItem mnemonicParsing="false" onAction="#setStatusOnline" text="Online" />
+                                                      <MenuItem mnemonicParsing="false" onAction="#setStatusAway" text="Away" />
+                                                      <MenuItem mnemonicParsing="false" onAction="#setStatusOffline" text="Offline" />
+                                                  </items>
+                                                </ContextMenu>
+                                             </contextMenu>
+                                             <HBox.margin>
+                                                <Insets left="4.0" />
+                                             </HBox.margin>
+                                          </Label>
+                                       </children>
+                                    </HBox>
                                     <JFXPopup />
                                  </children></VBox>
                            </children>
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="0.0" prefWidth="235.0">
+                        <HBox alignment="CENTER" prefHeight="0.0" prefWidth="225.0">
                            <children>
+                              <JFXButton fx:id="add_friend" onAction="#loadAddFriend" prefHeight="27.0" prefWidth="306.0" style="-fx-background-color: #666;" text="Add Friend" textFill="#ebebeb">
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="20.0" />
+                                 </HBox.margin>
+                              </JFXButton>
                               <Label fx:id="searchIcon" alignment="CENTER" textAlignment="CENTER">
                                  <HBox.margin>
-                                    <Insets bottom="10.0" left="20.0" right="10.0" />
+                                    <Insets bottom="10.0" right="10.0" />
                                  </HBox.margin>
                               </Label>
-                              <JFXTextField accessibleRole="SPLIT_MENU_BUTTON" focusColor="#e4e4e4" maxHeight="-Infinity" prefHeight="25.0" prefWidth="300.0" promptText="Search" style="-fx-background-color: #555;" unFocusColor="#c6c6c6">
+                              <JFXTextField accessibleRole="SPLIT_MENU_BUTTON" focusColor="#e4e4e4" maxHeight="-Infinity" prefHeight="25.0" prefWidth="275.0" promptText="Search" style="-fx-background-color: #555;" unFocusColor="#c6c6c6">
                                  <HBox.margin>
-                                    <Insets bottom="10.0" right="20.0" />
+                                    <Insets bottom="10.0" />
                                  </HBox.margin>
                               </JFXTextField>
                            </children>
                         </HBox>
-                        <ListView fx:id="friends_list" prefHeight="323.0" prefWidth="234.0" style="-fx-background-color: #555;" stylesheets="@../main.css">
+                        <ListView fx:id="friends_list" prefHeight="433.0" prefWidth="234.0" style="-fx-background-color: #555;" stylesheets="@../main.css">
                            <VBox.margin>
                               <Insets bottom="2.0" left="1.0" />
                            </VBox.margin>
@@ -218,6 +245,7 @@
                         <Insets left="100.0" right="100.0" />
                      </HBox.margin>
                   </VBox>
+                  <VBox prefHeight="567.0" prefWidth="212.0" />
                </children>
             </HBox>
             <Region fx:id="draggableRegion" layoutX="196.0" layoutY="575.0" prefHeight="23.0" prefWidth="469.0" />

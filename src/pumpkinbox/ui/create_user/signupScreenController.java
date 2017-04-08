@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -22,6 +23,7 @@ import pumpkinbox.client.Client;
 import pumpkinbox.api.ResponseObject;
 import pumpkinbox.ui.draggable.EffectUtilities;
 import pumpkinbox.ui.icons.Icons;
+import pumpkinbox.ui.images.Images;
 import pumpkinbox.validation.Validator;
 
 import java.io.IOException;
@@ -63,6 +65,8 @@ public class signupScreenController implements Initializable{
     Label passwordLabel;
     @FXML
     StackPane root;
+    @FXML
+    ImageView pumpkinbox_logo;
 
     Validator firstnameValidator;
     Validator lastnameValidator;
@@ -179,6 +183,8 @@ public class signupScreenController implements Initializable{
         minimizeIcon.setOnMouseClicked((MouseEvent e) ->{
             minimize();
         });
+
+        pumpkinbox_logo.setImage(Images.pumpkin);
     }
 
     private void minimize(){
