@@ -1,5 +1,6 @@
-package pumpkinbox.ui.create_user;
+package pumpkinbox.ui.add_friend;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
@@ -10,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -19,8 +21,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import pumpkinbox.api.CODES;
-import pumpkinbox.client.Client;
 import pumpkinbox.api.ResponseObject;
+import pumpkinbox.client.Client;
 import pumpkinbox.ui.draggable.EffectUtilities;
 import pumpkinbox.ui.icons.Icons;
 import pumpkinbox.ui.images.Images;
@@ -33,47 +35,60 @@ import java.util.ResourceBundle;
 /**
  * Created by ramiawar on 3/23/17.
  */
-public class signupScreenController implements Initializable{
+public class addFriendController implements Initializable{
+
+    private String authenticationToken;
+
+    private int userID;
+    private String userName;
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
+    public void setName(String userName) {
+        this.userName = userName;
+    }
 
     private final String CRLF = "\r\n";
+
+    //authentication token setter to set from outside controller
+    public void setAuthenticationToken(String authenticationToken) {
+        this.authenticationToken = authenticationToken;
+    }
 
     Icons icons = new Icons();
 
     @FXML
     Label closeIcon;
-    @FXML
-    HBox menuBar;
-    @FXML
-    Region draggableRegion;
+
     @FXML
     Label minimizeIcon;
+
     @FXML
-    JFXTextField email;
+    HBox menuBar;
+
     @FXML
-    JFXPasswordField password;
+    JFXTextField friend_email;
+
     @FXML
-    JFXTextField firstname;
+    Label error_label;
+
     @FXML
-    JFXTextField lastname;
+    JFXButton searchButton;
+
     @FXML
-    Label firstnameLabel;
+    JFXButton cancelButton;
+
     @FXML
-    Label lastnameLabel;
-    @FXML
-    Label emailLabel;
-    @FXML
-    Label passwordLabel;
-    @FXML
-    StackPane root;
+    Region draggableRegion;
+
     @FXML
     ImageView pumpkinbox_logo;
 
-    Validator firstnameValidator;
-    Validator lastnameValidator;
-    Validator emailValidator;
-    Validator passwordValidator;
-
     private Stage stage;
+
+    Validator emailValidator;
 
     //Receiving stage from main class to make window draggable
     public void registerStage(Stage stage){
@@ -81,8 +96,8 @@ public class signupScreenController implements Initializable{
         this.stage = stage;
         EffectUtilities.makeDraggable(this.stage, this.menuBar);
         EffectUtilities.makeDraggable(this.stage, this.draggableRegion);
-    }
 
+    }
 
     void close() {
         stage.close();
@@ -93,11 +108,10 @@ public class signupScreenController implements Initializable{
         stage.close();
     }
 
-
     @FXML
-    void signup(ActionEvent event){
+    void addFriend(ActionEvent event){
 
-        if(email.getText().isEmpty() || password.getText().isEmpty() || firstname.getText().isEmpty() || lastname.getText().isEmpty()){
+        if( friend_email.getText().isEmpty() ){
 
             //TODO: Display ALERT: please fill all fields
             //
@@ -107,11 +121,10 @@ public class signupScreenController implements Initializable{
             //
             //
             //
-
             return;
         }
 
-        ResponseObject response = Client.sendSignupData("SIGNUP " + email.getText() + "|" + password.getText() + " " + firstname.getText() + "|" + lastname.getText());
+        ResponseObject response = Client.sendFriendRequestData("GET " + authenticationToken + " " + userID + "|" + userName + "|" + friend_email.getText() );
 
         switch(response.getStatusCode()){
             case CODES.ALREADY_EXISTS:
@@ -174,9 +187,6 @@ public class signupScreenController implements Initializable{
 
         setupValidators();
 
-        EffectUtilities.makeDraggable(stage, menuBar);
-        EffectUtilities.makeDraggable(stage, draggableRegion);
-
         closeIcon.setOnMouseClicked((MouseEvent e) ->{
             close();
         });
@@ -185,7 +195,6 @@ public class signupScreenController implements Initializable{
         });
 
         pumpkinbox_logo.setImage(Images.pumpkin);
-
     }
 
     private void minimize(){
@@ -203,17 +212,9 @@ public class signupScreenController implements Initializable{
     }
 
     void setupValidators(){
-        firstnameValidator = new Validator(firstnameLabel, firstname, "Required");
-        firstnameValidator.createNonEmptyValidator();
 
-        lastnameValidator = new Validator(lastnameLabel, lastname, "Required");
-        lastnameValidator.createNonEmptyValidator();
-
-        emailValidator = new Validator(emailLabel, email, "Required");
+        emailValidator = new Validator(error_label, friend_email, "Invalid email");
         emailValidator.createEmailValidator();
-
-        passwordValidator = new Validator(passwordLabel, password, "Required");
-        passwordValidator.createPasswordValidator();
 
     }
 

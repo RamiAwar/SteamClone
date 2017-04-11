@@ -6,6 +6,7 @@ package pumpkinbox.server;
 
 import pumpkinbox.api.CODES;
 import pumpkinbox.api.NotificationObject;
+import pumpkinbox.api.User;
 import pumpkinbox.database.DatabaseHandler;
 import pumpkinbox.security.AuthToken;
 import pumpkinbox.security.Hasher;
@@ -17,6 +18,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
@@ -270,6 +272,147 @@ public class Server {
                     break;
 
                 case "GET":
+
+                    if(SECRET.equals("") || CONTENT.equals("")) {
+                        System.out.println("Invalid request");
+                        try {
+                            dataout.writeObject(CODES.INVALID_REQUEST);
+                        } catch (IOException e) {
+                            System.out.println("Could not send invalid request to server.");
+                            e.printStackTrace();
+                        }
+
+                        break;
+                    }
+
+                    String[] get_content = CONTENT.split("\\|");
+
+                    String sender = get_content[0];
+                    String content = get_content[1];
+
+                    ResultSet rs = db.executeQuery("SELECT * FROM pumpkinbox_users_table WHERE id='" + sender +"';");
+
+                    try {
+                        System.out.println("Checking if user exists ...");
+
+                        if(rs.next()){
+
+                            //User exists, check auth token, get username:
+                            username = rs.getString("email");
+
+                            //Check authentication token
+                            System.out.println("User exists. Checking if token valid...");
+                            String token = rs.getString("authtoken");
+
+                            System.out.println(token);
+
+                            if(token.equals(SECRET)){
+                                System.out.println("Token exists. Checking expiration...");
+                            } else{
+                                System.out.println("Invalid authentication token.");
+                                dataout.writeObject(CODES.INVALID_TOKEN);
+                                return;
+                            }
+
+                            //Check valid timestamp
+                            String expirationTime = rs.getString("expiration");
+                            boolean validToken = Time.checkTimestamp(expirationTime);
+
+                            //Update token expiration time
+                            String query = "UPDATE pumpkinbox_users_table SET "+
+                                    "authtoken='" + SECRET + "', " +
+                                    "expiration='" + Time.getTimeStampPlus() + "' " +
+                                    "WHERE id='" + sender+ "';";
+
+                            if(validToken){
+
+                                //Send OK
+                                System.out.println("User exists and valid auth token. Getting friends ...");
+
+                                if(userId != Integer.parseInt(sender)) userId = Integer.parseInt(sender);
+
+                                boolean notThere = true;
+                                for (int i = 0; i < users.size(); i++) {
+                                    if(users.get(i).getUserId() == userId){
+                                        notThere = false;
+                                        break;
+                                    }
+                                }
+                                if(notThere) users.add(new User(userId, username));
+
+
+                                System.out.println("CONTENT: " + content);
+                                //Check user friends
+                                if(content.equals("friends")) {
+
+                                    ArrayList<User> onlineFriends = new ArrayList<User>();
+
+                                    System.out.println("Fetching friends from database...");
+                                    ResultSet friends = db.executeQuery("SELECT * FROM pumpkinbox_friends_table WHERE sender_id='" +
+                                            sender + "' OR receiver_id='" +
+                                            sender + "';");
+
+                                    while (friends.next()) {
+
+                                        //retrieving which part of statement corresponds to friend id
+                                        int friend_id = (friends.getInt("sender_id") == Integer.parseInt(sender))
+                                                ? friends.getInt("receiver_id")
+                                                : friends.getInt("sender_id");
+
+                                        //Check if friend is online
+                                        boolean isOnline = false;
+                                        for (int i = 0; i < users.size(); i++) {
+                                            if(users.get(i).getUserId() == friend_id) isOnline = true;
+                                        }
+                                        if (isOnline) {
+                                            //Get friend username
+                                            System.out.println("Friend online: " + friend_id);
+                                            ResultSet friend = db.executeQuery("SELECT * FROM pumpkinbox_users_table WHERE id='" + friend_id + "';");
+                                            if(friend.next()) onlineFriends.add(new User(friend_id, friend.getString("email")));
+                                        }
+
+                                        System.out.println("[ " + friends.getInt("sender_id"));
+                                        System.out.println(friends.getInt("receiver_id") + " ]");
+                                    }
+
+                                    //Return friends to client
+                                    //Turn onlineFriends into a string
+                                    String outputFriends = "";
+                                    try {
+                                        System.out.println("Forming output...");
+                                        for (int i = 0; i < onlineFriends.size()-1; i++) {
+                                            System.out.println(onlineFriends.get(i).getUsername());
+                                            outputFriends += onlineFriends.get(i).getUsername() + "|";
+                                            outputFriends += onlineFriends.get(i).getUserId() + "|";
+                                        }
+
+                                        outputFriends += onlineFriends.get(onlineFriends.size() - 1).getUsername() + "|";
+                                        outputFriends += onlineFriends.get(onlineFriends.size() - 1).getUserId();
+
+                                        System.out.println("Sending to client: " + outputFriends);
+                                        dataout.writeObject(outputFriends);
+                                    }catch (Exception e){
+                                        e.printStackTrace();
+                                    }
+
+
+                                }
+
+                            }else{
+                                System.out.println("User exists but token EXPIRED, sending invalid token code...");
+                                dataout.writeObject(CODES.INVALID_TOKEN + CRLF);
+
+                            }
+
+                        }else{
+                            System.out.println("User not found, sending NOT FOUND code...");
+                            dataout.writeObject(CODES.NOT_FOUND);
+                            dataout.writeObject(CODES.NOT_FOUND);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
 
                     break;
 

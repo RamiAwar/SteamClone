@@ -2,6 +2,7 @@ package pumpkinbox.client;
 
 import pumpkinbox.api.CODES;
 import pumpkinbox.api.ResponseObject;
+import pumpkinbox.ui.notifications.Notification;
 
 import java.io.*;
 import java.net.Socket;
@@ -50,6 +51,45 @@ public class Client {
             return object;
 
         } catch (Exception e) {
+            Notification notif = new Notification("Error", "Try again later", 5, "ERROR");
+            e.printStackTrace();
+        }
+
+        object.setStatusCode(CODES.SEND_ERROR);
+
+        return object;
+    }
+
+    public static ResponseObject sendFriendRequestData(String data){
+
+        Socket clientSocket;
+
+        ResponseObject object = new ResponseObject();
+
+        try{
+            clientSocket = new Socket(hostname, port);
+
+            //Care about order
+            ObjectInputStream datain = new ObjectInputStream(clientSocket.getInputStream());
+            ObjectOutputStream dataout = new ObjectOutputStream(clientSocket.getOutputStream());
+
+            dataout.writeObject(data);
+            String response = (String) datain.readObject();
+            clientSocket.close();
+
+            String[] details = response.split("\\|");
+
+
+
+            //Data received, parse into response object
+            object.setResponse(response);
+            object.setToken("");
+            object.setStatusCode(CODES.OK);
+
+            return object;
+
+
+        }catch(Exception e){
             e.printStackTrace();
         }
 

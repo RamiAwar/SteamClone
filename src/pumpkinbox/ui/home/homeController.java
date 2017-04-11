@@ -10,11 +10,13 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import pumpkinbox.api.NotificationObject;
 import pumpkinbox.api.User;
 import pumpkinbox.client.ChatClient;
 import pumpkinbox.client.Client;
+import pumpkinbox.ui.add_friend.addFriendController;
 import pumpkinbox.ui.draggable.EffectUtilities;
 import pumpkinbox.ui.icons.Icons;
 import javafx.event.ActionEvent;
@@ -145,7 +147,41 @@ public class homeController implements Initializable{
 
     @FXML
     void loadAddFriend(ActionEvent e){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pumpkinbox/ui/add_friend/add_friend_screen.fxml"));
+        Parent parent = null;
 
+        try {
+            parent = loader.load();
+        } catch (IOException e1) {
+            Notification notification = new Notification("Error", "Unable to load window", 10, "ERROR");
+            e1.printStackTrace();
+            return;
+        }
+
+        Stage stage = new Stage(StageStyle.UNDECORATED);
+        stage.initStyle(StageStyle.TRANSPARENT);
+
+        stage.setTitle("Add a friend");
+        Scene scene = new Scene(parent);
+        scene.setFill(Color.TRANSPARENT);
+        scene.getStylesheets().add("pumpkinbox/ui/add_friend/add_friend.css");
+
+        stage.setScene(scene);
+        stage.setAlwaysOnTop(true);
+        stage.show();
+
+        //Passing primaryStage to controller in order to make window draggable
+        addFriendController controller =
+                loader.<addFriendController>getController();
+
+        controller.registerStage(stage);
+
+        System.out.println("Writing token to home: " + authenticationToken);
+        controller.setAuthenticationToken(authenticationToken);
+        controller.setUserID(userId);
+        controller.setName(name);
+
+        System.out.println("LOGIN - USER NAME: " + name);
     }
 
     void loadWindow(String location, String title){

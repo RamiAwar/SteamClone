@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.text.*?>
-<?import com.jfoenix.controls.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0" prefWidth="526.0" style="-fx-background-color: rgba(255,255,255,0);" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pumpkinbox.ui.loginScreenController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0" prefWidth="526.0" style="-fx-background-color: rgba(255,255,255,0);" stylesheets="@main.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pumpkinbox.ui.loginScreenController">
    <children>
       <Pane prefHeight="650.0" prefWidth="826.0" style="-fx-background-color: rgba(255,255,255,0);" />
       <Pane prefHeight="425.0" prefWidth="506.0" style="-fx-background-color: #444;">
@@ -49,12 +52,12 @@
                   </JFXPasswordField>
                   <HBox alignment="CENTER" prefHeight="38.0" prefWidth="319.0">
                      <children>
-                        <JFXButton alignment="BASELINE_LEFT" onAction="#login" prefHeight="27.0" prefWidth="136.0" style="-fx-background-color: #555;" text="Login" textFill="#dddddd">
+                        <JFXButton alignment="BASELINE_LEFT" defaultButton="true" onAction="#login" prefHeight="27.0" prefWidth="136.0" style="-fx-background-color: #555;" text="Login" textFill="#dddddd">
                            <HBox.margin>
                               <Insets right="30.0" />
                            </HBox.margin>
                         </JFXButton>
-                        <JFXButton alignment="BASELINE_LEFT" onAction="#close" prefHeight="27.0" prefWidth="148.0" style="-fx-background-color: #555;" text="Cancel" textFill="#dddddd">
+                        <JFXButton alignment="BASELINE_LEFT" cancelButton="true" onAction="#close" prefHeight="27.0" prefWidth="148.0" style="-fx-background-color: #555;" text="Cancel" textFill="#dddddd">
                            <HBox.margin>
                               <Insets left="30.0" />
                            </HBox.margin>
