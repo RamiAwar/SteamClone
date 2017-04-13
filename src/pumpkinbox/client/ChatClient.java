@@ -95,35 +95,6 @@ public class ChatClient {
     }
 
 
-//    public static void main(String args[]) throws IOException {
-//
-//        //Instantiate server and call acceptConnections to loop indefinitely
-//
-//        ChatClient client = null;
-//
-//        final BlockingQueue<String> queue = new LinkedBlockingQueue<String>();
-//
-//        client = new ChatClient(queue);
-//
-//        //Create thread to setup in/out, read from queue
-//        client.connect();
-//
-//        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-//        String input = br.readLine();
-//
-//        System.out.println("Main thread: Entering input loop...");
-//
-//        while(!input.equals("exit")){
-//
-//            queue.offer(input);
-//
-//            System.out.println(input + " added to queue");
-//
-//            input = br.readLine();
-//        }
-//    }
-
-
     class ChatClientThread implements Runnable {
 
         private Socket socket;
@@ -167,10 +138,12 @@ public class ChatClient {
 
                 @Override
                 public void run() {
-                    //TODO: Check online friends
+                    //Check online friends
                     try {
                         System.out.println("Requesting online friends...");
                         dataout.writeObject("GET " + authenticationToken + " " + userId + "|friends");
+
+                        //FIXME WHERE IS RECEIVE OBJECT?
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -178,8 +151,8 @@ public class ChatClient {
                 }
             };
 
-            timer = new Timer("MyTimer");//create a new timer
-            timer.scheduleAtFixedRate(timerTask, 30, 5000);//start timer in 30ms to increment  counter
+            timer = new Timer("Friends updater");//create a new timer
+            timer.scheduleAtFixedRate(timerTask, 30, 1000);
 
             //ServerThread main program
             System.out.println("Streams opened successfully.");

@@ -1,7 +1,7 @@
 package pumpkinbox.ui.create_user;
 
 /**
- * Created by ramiawar on 4/3/17.
+ * Created by ramiawar on 4/14/17.
  */
 
 import javafx.application.Application;
@@ -11,12 +11,14 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import pumpkinbox.database.DatabaseHandler;
+
+
 /**
  * Created by ramiawar on 3/23/17.
  */
 
 
-public class signup_test extends Application {
+public class signup_screen_test extends Application {
 
     public static void main(String[] args) {
         launch(args);

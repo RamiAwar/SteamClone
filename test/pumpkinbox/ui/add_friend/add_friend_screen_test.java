@@ -1,7 +1,7 @@
 package pumpkinbox.ui.add_friend;
 
 /**
- * Created by ramiawar on 4/3/17.
+ * Created by ramiawar on 4/14/17.
  */
 
 import javafx.application.Application;
@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import pumpkinbox.database.DatabaseHandler;
 
-public class add_friend_test extends Application {
+public class add_friend_screen_test extends Application {
 
     public static void main(String[] args) {
         launch(args);

@@ -18,6 +18,7 @@ import pumpkinbox.time.Time;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.ResultSet;
@@ -33,13 +34,16 @@ public class ChatServer {
     private int port = 9000;    //ServerSocket port number
     private ServerSocket serverSocket;
 
+    //This array is for storing notifications incoming from the database like messages or invitations and passing them over through the notiication queue
     public ArrayList<NotificationObject> notificationList = new ArrayList<>();
 
     //This queue is for saving notifications and sending them once the access token has been confirmed.
     private BlockingQueue<String> notificationQueue = new LinkedBlockingQueue<>();
 
+    //This vector stores the currently connected clients
     public Vector<ChatServerThread> connectedClients = new Vector<ChatServerThread>();
 
+    //This vector stores the User objects of currently connected clients
     public Vector<User> users = new Vector<User>();
 
     //Empty private constructor since we do not this class to be accessible from other classes
@@ -101,14 +105,18 @@ public class ChatServer {
         private ObjectInputStream datain;
         private ObjectOutputStream dataout;
         private DatabaseHandler db;
+        private String ip;
+
         public int userId;
         public String username;
+
 
         private final String CRLF = "\r\n";
 
         //Constructor
         public ChatServerThread(Socket socket, ArrayList<NotificationObject> notificationList) {
             this.socket = socket;
+            this.ip = this.socket.getInetAddress().toString();
             this.db = DatabaseHandler.getInstance();
         }
 
@@ -116,12 +124,13 @@ public class ChatServer {
             return socket;
         }
 
+
         //Thread main program
         public void run() {
 
             try {
 
-                System.out.println("Getting output/input socket streams...");
+                System.out.println("Getting output/input socket streams for " + this.ip);
 
                 dataout = new ObjectOutputStream(socket.getOutputStream());
                 datain = new ObjectInputStream(socket.getInputStream());
@@ -129,28 +138,27 @@ public class ChatServer {
                 userId = Integer.parseInt((String) datain.readObject());
                 users.add(new User(userId, ""));
 
-                System.out.println(users);
-
             } catch (Exception e) {
                 System.out.println("Failed to get socket Input/Output streams ... \nClosing thread...");
                 return;
             }
 
             //ServerThread main program
-            System.out.println("Streams opened successfully.");
+            System.out.println("Streams to " + this.ip + " opened successfully.");
 
             while (true) {
-                long millis = System.currentTimeMillis();
+
+//                long millis = System.currentTimeMillis();
 
                 try {
-                    System.out.println("Waiting for object...");
+                    System.out.println("Waiting for object from " + this.ip);
                     Object s = datain.readObject(); //Read client request
 
                     //TODO: Check if connection still alive to close socket and update friends list if not
 
                     if (!s.equals(null)) {
 
-                        System.out.println("Server received: " + s);//for debugging
+                        System.out.println("Server received: " + s + " from " + this.ip);//for debugging
                         parseRequest((String) s);   //Decode client request
 
 
@@ -171,17 +179,16 @@ public class ChatServer {
 
                 } catch (Exception e) {
                     connectedClients.remove(this);
-                    System.out.println("---------------Client Disconnected---------------");
+                    System.out.println("---------------" + this.ip + " disconnected---------------");
                     e.printStackTrace();
-                    System.out.println("-------------------------------------------------");
                     break;
                 }
 
-                try {
-                    Thread.sleep(1000 - millis % 1000); //Sleep thread for 1 second to increase efficiency
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    Thread.sleep(100 - millis % 100); //Sleep thread for 0.1 second to increase efficiency
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
             }
 
         }
@@ -209,11 +216,11 @@ public class ChatServer {
 
                 case "GET":
                     if(SECRET.equals("") || CONTENT.equals("")) {
-                        System.out.println("Invalid request");
+                        System.out.println(this.ip + " - Invalid request");
                         try {
                             dataout.writeObject(CODES.INVALID_REQUEST);
                         } catch (IOException e) {
-                            System.out.println("Could not send invalid request to server.");
+                            System.out.println(this.ip + " - Invalid request to server.");
                             e.printStackTrace();
                         }
 

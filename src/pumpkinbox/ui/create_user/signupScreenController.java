@@ -76,6 +76,11 @@ public class signupScreenController implements Initializable{
     private Stage stage;
 
     //Receiving stage from main class to make window draggable
+
+    /**
+     * Hello there
+     * @param stage
+     */
     public void registerStage(Stage stage){
 
         this.stage = stage;

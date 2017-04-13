@@ -129,10 +129,10 @@ public class addFriendController implements Initializable{
         switch(response.getStatusCode()){
             case CODES.ALREADY_EXISTS:
                 System.out.println("User already exists. Try logging in...");
-                email.clear();
-                password.clear();
-                firstname.clear();
-                lastname.clear();
+//                email.clear();
+//                password.clear();
+//                firstname.clear();
+//                lastname.clear();
                 //TODO: alert user that they already exists
 
 

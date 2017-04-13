@@ -67,7 +67,7 @@
                         </JFXButton>
                      </children>
                      <VBox.margin>
-                        <Insets left="60.0" right="60.0" top="35.0" />
+                        <Insets left="60.0" right="60.0" top="18.0" />
                      </VBox.margin>
                   </HBox>
                </children>
