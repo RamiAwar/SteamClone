@@ -10,6 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.image.ImageView;
@@ -108,33 +110,34 @@ public class addFriendController implements Initializable{
         stage.close();
     }
 
+
+    /**
+     * Validates email field then sends a request to find friend. If the friend is found, a friend request is sent to that user.
+     * @param event
+     */
     @FXML
     void addFriend(ActionEvent event){
 
-        if( friend_email.getText().isEmpty() ){
+        //Visible error label -> invalid email indirectly ( faster than checking email validity directly )
+        if( friend_email.getText().isEmpty() || error_label.isVisible()){
 
-            //TODO: Display ALERT: please fill all fields
-            //
-            //
-            //
-            //TODO: CHECK IF ANY LABEL IS VISIBLE -> INCORRECT INFO
-            //
-            //
-            //
+            // Display ALERT: please fill all fields
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Please enter a valid email", ButtonType.OK);
+            alert.show();
+
             return;
         }
 
+        //VALID EMAIL
         ResponseObject response = Client.sendFriendRequestData("GET " + authenticationToken + " " + userID + "|" + userName + "|" + friend_email.getText() );
 
         switch(response.getStatusCode()){
             case CODES.ALREADY_EXISTS:
                 System.out.println("User already exists. Try logging in...");
-//                email.clear();
-//                password.clear();
-//                firstname.clear();
-//                lastname.clear();
-                //TODO: alert user that they already exists
+                friend_email.clear();
 
+                //TODO: alert user that they already exists
+                Alert alert = new Alert(Alert.AlertType.ERROR, "User already exists. Try logging in.", ButtonType.CLOSE);
 
                 break;
             case CODES.OK:

@@ -138,12 +138,24 @@ public class ChatClient {
 
                 @Override
                 public void run() {
+
                     //Check online friends
                     try {
-                        System.out.println("Requesting online friends...");
-                        dataout.writeObject("GET " + authenticationToken + " " + userId + "|friends");
 
-                        //FIXME WHERE IS RECEIVE OBJECT?
+                        System.out.println(userId + " - Requesting online friends...");
+
+                        dataout.writeObject("GET " + authenticationToken + " " + userId + "|friends");
+                        System.out.println("Receiving online friends...");
+
+                        String friends = (String) datain.readObject();
+
+                        System.out.println("Received: " + friends);
+
+                        String[] friendsList = friends.split("\\|");
+                        for (int i = 0; i < friendsList.length-1; i+=2) {
+                            onlineFriends.offer(new User(Integer.parseInt(friendsList[i+1]), friendsList[i]));
+                            System.out.println(friendsList[i]);
+                        }
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -157,26 +169,13 @@ public class ChatClient {
             //ServerThread main program
             System.out.println("Streams opened successfully.");
 
-            while (true) {
-                long millis = System.currentTimeMillis();
-
-                try {
-                    System.out.println("Reading from server...");
-
-                    //TODO: Parse message
-                    System.out.println("Receiving online friends...");
-                    String friends = (String) datain.readObject();
-                    System.out.println("Received: " + friends);
-
-
-                    String[] friendsList = friends.split("\\|");
-                    for (int i = 0; i < friendsList.length-1; i+=2) {
-                        onlineFriends.offer(new User(Integer.parseInt(friendsList[i+1]), friendsList[i]));
-                        System.out.println(friendsList[i]);
-                    }
-
-
-
+//            while (true) {
+//
+//                try {
+//                    System.out.println("Reading from server...");
+//
+//                    TODO: Parse message
+//
 //                    String input = (String) datain.readObject();
 //                    StringTokenizer tokens = new StringTokenizer(input);
 //
@@ -188,7 +187,7 @@ public class ChatClient {
 //                    if(CONTENT.equals("")){
 //                        System.out.println("Invalid server response! Server has gone mad!");
 //                    }
-//
+////
 //                    if(VERB.equals("NOTIFICATION")){
 //
 //                        String[] content = CONTENT.split("\\|");
@@ -202,19 +201,19 @@ public class ChatClient {
 //                        notificationQueue.offer(notificationObject);
 //
 //                    }
-
-                    //TODO: Send ping every 1 min to check if connection is alive?
-
-
-                } catch (Exception e) {
-                    System.out.println("---------------Client Disconnected---------------");
-                    e.printStackTrace();
-                    System.out.println("-------------------------------------------------");
-                    break;
-                }
-
-
-            }
+//
+//                    //TODO: Send ping every 1 min to check if connection is alive?
+//
+//
+//                } catch (Exception e) {
+//                    System.out.println("---------------Client Disconnected---------------");
+//                    e.printStackTrace();
+//                    System.out.println("-------------------------------------------------");
+//                    break;
+//                }
+//
+//
+//            }
 
         }
     }

@@ -1,5 +1,7 @@
-package pumpkinbox.ui.home;/**
- * Created by ramiawar on 3/23/17.
+package pumpkinbox.ui.home;
+
+/**
+ * Created by ramiawar on 4/14/17.
  */
 
 import pumpkinbox.database.DatabaseHandler;
@@ -11,7 +13,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class home extends Application {
+
+public class home_screen_test extends Application {
 
     public static void main(String[] args) {
         launch(args);

@@ -1,16 +1,21 @@
 package pumpkinbox.ui.home;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import pumpkinbox.api.NotificationObject;
 import pumpkinbox.api.User;
@@ -50,35 +55,47 @@ public class homeController implements Initializable{
     private String online_status;
     private int userId;
     private String name;
+    private Icons icons = new Icons();
+    private ChatClient client;
+    private Stage stage;
+
 
     private ObservableList<String> friendsList = FXCollections.observableArrayList();
 
     private BlockingQueue<String> messages_queue = new LinkedBlockingQueue<>();
+
     private BlockingQueue<NotificationObject> notification_queue = new LinkedBlockingQueue<>();
 
     private final BlockingQueue<User> onlineFriends = new LinkedBlockingQueue<>();
+
     private ArrayList<String> onlineFriendsNames = new ArrayList<>();
+
+
     public void setAuthenticationToken(String s){
         this.authenticationToken = s;
     }
     public void setName(String name){
         this.name = name;
     }
+
     public void setUserId(int id){
         this.userId = id;
     }
-    public void initClient(){
-        System.out.println("Initializing client with : " + authenticationToken + name);
 
+
+    /**
+     * This function creates a new client, passing the numerous BlockingQueues to the thread. ( BlockingQueues are used since they are
+     * thread safe objects and fit the need )
+     */
+    public void initClient(){
+
+        //System.out.println("Initializing client with : " + authenticationToken + name);
         client = new ChatClient(onlineFriends, messages_queue, notification_queue, userId, authenticationToken);
         client.connect();
     }
 
-
-    Icons icons = new Icons();
-
-    ChatClient client;
-
+    @FXML
+    StackPane stackPane;
     @FXML
     Label closeIcon;
     @FXML
@@ -106,9 +123,10 @@ public class homeController implements Initializable{
 
 
 
-    private Stage stage;
+
 
     //Receiving stage from main class to make window draggable
+
     public void registerStage(Stage stage){
 
         this.stage = stage;
@@ -147,41 +165,61 @@ public class homeController implements Initializable{
 
     @FXML
     void loadAddFriend(ActionEvent e){
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pumpkinbox/ui/add_friend/add_friend_screen.fxml"));
-        Parent parent = null;
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pumpkinbox/ui/add_friend/add_friend_screen.fxml"));
+//        Parent parent = null;
+//
+//        try {
+//            parent = loader.load();
+//        } catch (IOException e1) {
+//            Notification notification = new Notification("Error", "Unable to load window", 10, "ERROR");
+//            e1.printStackTrace();
+//            return;
+//        }
+//
+//        Stage stage = new Stage(StageStyle.UNDECORATED);
+//        stage.initStyle(StageStyle.TRANSPARENT);
+//
+//        stage.setTitle("Add a friend");
+//        Scene scene = new Scene(parent);
+//        scene.setFill(Color.TRANSPARENT);
+//        scene.getStylesheets().add("pumpkinbox/ui/add_friend/add_friend.css");
+//
+//        stage.setScene(scene);
+//        stage.setAlwaysOnTop(false);
+//        stage.show();
+//
+//        //Passing primaryStage to controller in order to make window draggable
+//        addFriendController controller =
+//                loader.<addFriendController>getController();
+//
+//        controller.registerStage(stage);
+//
+//        System.out.println("Writing token to home: " + authenticationToken);
+//        controller.setAuthenticationToken(authenticationToken);
+//        controller.setUserID(userId);
+//        controller.setName(name);
+//
+//        System.out.println("LOGIN - USER NAME: " + name);
 
-        try {
-            parent = loader.load();
-        } catch (IOException e1) {
-            Notification notification = new Notification("Error", "Unable to load window", 10, "ERROR");
-            e1.printStackTrace();
-            return;
-        }
+        JFXDialogLayout content = new JFXDialogLayout();
+        content.setHeading(new Text("Heading"));
+        content.setBody(new Text("Test text"));
 
-        Stage stage = new Stage(StageStyle.UNDECORATED);
-        stage.initStyle(StageStyle.TRANSPARENT);
+        JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.BOTTOM);
+        stackPane.setMargin(dialog, new Insets(10, 10, 10, 10));
 
-        stage.setTitle("Add a friend");
-        Scene scene = new Scene(parent);
-        scene.setFill(Color.TRANSPARENT);
-        scene.getStylesheets().add("pumpkinbox/ui/add_friend/add_friend.css");
+        JFXButton button = new JFXButton("Accept invite");
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                dialog.close();
+            }
+        });
 
-        stage.setScene(scene);
-        stage.setAlwaysOnTop(true);
-        stage.show();
+        content.setActions(button);
 
-        //Passing primaryStage to controller in order to make window draggable
-        addFriendController controller =
-                loader.<addFriendController>getController();
+        dialog.show();
 
-        controller.registerStage(stage);
-
-        System.out.println("Writing token to home: " + authenticationToken);
-        controller.setAuthenticationToken(authenticationToken);
-        controller.setUserID(userId);
-        controller.setName(name);
-
-        System.out.println("LOGIN - USER NAME: " + name);
     }
 
     void loadWindow(String location, String title){
@@ -230,8 +268,6 @@ public class homeController implements Initializable{
                     System.out.println("Error taking from queue.");
                     e.printStackTrace();
                 }
-
-
 //                System.out.println(authenticationToken);
 //                System.out.println(userId);
             }
@@ -268,7 +304,6 @@ public class homeController implements Initializable{
         checkAndAdd(onlineFriends, onlineFriendsNames);
 
         System.out.println("MAIN: " + onlineFriendsNames);
-
 
         friendsList.setAll(onlineFriendsNames);
         friends_list.getItems().setAll(onlineFriendsNames);

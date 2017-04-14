@@ -189,7 +189,7 @@ public class loginScreenController implements Initializable{
             scene.getStylesheets().add("pumpkinbox/ui/home/home.css");
 
             stage.setScene(scene);
-            stage.setAlwaysOnTop(true);
+            stage.setAlwaysOnTop(false);
             stage.show();
 
             //Passing primaryStage to controller in order to make window draggable

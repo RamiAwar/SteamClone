@@ -71,7 +71,7 @@ public class ChatServer {
                 Socket newConnection = serverSocket.accept();
                 System.out.println("Client connected.");
 
-                ChatServerThread st = new ChatServerThread(newConnection, notificationList);  //Creating a thread for each new client
+                ChatServerThread st = new ChatServerThread(newConnection);  //Creating a thread for each new client
                 connectedClients.add(st);
 
                 new Thread(st).start();
@@ -114,9 +114,9 @@ public class ChatServer {
         private final String CRLF = "\r\n";
 
         //Constructor
-        public ChatServerThread(Socket socket, ArrayList<NotificationObject> notificationList) {
+        public ChatServerThread(Socket socket) {
             this.socket = socket;
-            this.ip = this.socket.getInetAddress().toString();
+            this.ip = String.valueOf(this.socket.getPort());
             this.db = DatabaseHandler.getInstance();
         }
 
@@ -162,18 +162,18 @@ public class ChatServer {
                         parseRequest((String) s);   //Decode client request
 
 
-
+                        //TODO fill notif queue
                         //Check notification queue
-                        for (int i = 0; i < notificationList.size(); i++) {
-                            NotificationObject notification = notificationList.get(i);
-                            if( userId == notification.getReceiver()){
-                                String message = notification.getMessage();
-                                String sender = notification.getSenderUsername();
-                                notificationList.remove(i);
-                                notificationQueue.offer("NOTIFICATION " + sender + "|" + message);
-
-                            }
-                        }
+//                        for (int i = 0; i < notificationList.size(); i++) {
+//                            NotificationObject notification = notificationList.get(i);
+//                            if( userId == notification.getReceiver()){
+//                                String message = notification.getMessage();
+//                                String sender = notification.getSenderUsername();
+//                                notificationList.remove(i);
+//                                notificationQueue.offer("NOTIFICATION " + sender + "|" + message);
+//
+//                            }
+//                        }
 
                     }
 
@@ -215,6 +215,7 @@ public class ChatServer {
             switch (VERB) {
 
                 case "GET":
+
                     if(SECRET.equals("") || CONTENT.equals("")) {
                         System.out.println(this.ip + " - Invalid request");
                         try {
@@ -235,7 +236,7 @@ public class ChatServer {
                     ResultSet rs = db.executeQuery("SELECT * FROM pumpkinbox_users_table WHERE id='" + sender +"';");
 
                     try {
-                        System.out.println("Checking if user exists ...");
+//                        System.out.println("Checking if user exists ...");
 
                         if(rs.next()){
 
@@ -243,15 +244,15 @@ public class ChatServer {
                             username = rs.getString("email");
 
                             //Check authentication token
-                            System.out.println("User exists. Checking if token valid...");
+//                            System.out.println("User exists. Checking if token valid...");
                             String token = rs.getString("authtoken");
 
-                            System.out.println(token);
+//                            System.out.println(token);
 
                             if(token.equals(SECRET)){
-                                System.out.println("Token exists. Checking expiration...");
+//                                System.out.println("Token exists. Checking expiration...");
                             } else{
-                                System.out.println("Invalid authentication token.");
+//                                System.out.println("Invalid authentication token.");
                                 dataout.writeObject(CODES.INVALID_TOKEN);
                                 return;
                             }
@@ -269,7 +270,7 @@ public class ChatServer {
                             if(validToken){
 
                                 //Send OK
-                                System.out.println("User exists and valid auth token. Getting friends ...");
+//                                System.out.println("User exists and valid auth token. Getting friends ...");
 
                                 if(userId != Integer.parseInt(sender)) userId = Integer.parseInt(sender);
 
@@ -283,13 +284,13 @@ public class ChatServer {
                                 if(notThere) users.add(new User(userId, username));
 
 
-                                System.out.println("CONTENT: " + content);
+//                                System.out.println("CONTENT: " + content);
                                 //Check user friends
                                 if(content.equals("friends")) {
 
                                     ArrayList<User> onlineFriends = new ArrayList<User>();
 
-                                    System.out.println("Fetching friends from database...");
+//                                    System.out.println("Fetching friends from database...");
                                     ResultSet friends = db.executeQuery("SELECT * FROM pumpkinbox_friends_table WHERE sender_id='" +
                                             sender + "' OR receiver_id='" +
                                             sender + "';");
@@ -308,20 +309,21 @@ public class ChatServer {
                                         }
                                         if (isOnline) {
                                             //Get friend username
-                                            System.out.println("Friend online: " + friend_id);
+//                                            System.out.println("Friend online: " + friend_id);
                                             ResultSet friend = db.executeQuery("SELECT * FROM pumpkinbox_users_table WHERE id='" + friend_id + "';");
                                             if(friend.next()) onlineFriends.add(new User(friend_id, friend.getString("email")));
                                         }
 
-                                        System.out.println("[ " + friends.getInt("sender_id"));
-                                        System.out.println(friends.getInt("receiver_id") + " ]");
+//                                        System.out.println("[ " + friends.getInt("sender_id"));
+//                                        System.out.println(friends.getInt("receiver_id") + " ]");
                                     }
 
                                     //Return friends to client
                                     //Turn onlineFriends into a string
                                     String outputFriends = "";
                                     try {
-                                        System.out.println("Forming output...");
+//                                        System.out.println("Forming output...");
+                                        if(onlineFriends.size() < 1) return;
                                         for (int i = 0; i < onlineFriends.size()-1; i++) {
                                             System.out.println(onlineFriends.get(i).getUsername());
                                             outputFriends += onlineFriends.get(i).getUsername() + "|";
@@ -349,7 +351,7 @@ public class ChatServer {
                         }else{
                             System.out.println("User not found, sending NOT FOUND code...");
                             dataout.writeObject(CODES.NOT_FOUND);
-                            dataout.writeObject(CODES.NOT_FOUND);
+
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

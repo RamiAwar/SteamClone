@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="618.0" prefWidth="1038.0" style="-fx-background-color: rgba(255,255,255,0);" stylesheets="@home.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pumpkinbox.ui.home.homeController">
+<StackPane fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="618.0" prefWidth="1038.0" style="-fx-background-color: rgba(255,255,255,0);" stylesheets="@home.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pumpkinbox.ui.home.homeController">
    <children>
       <Pane prefHeight="650.0" prefWidth="826.0" style="-fx-background-color: rgba(255,255,255,0);" />
       <Pane prefHeight="425.0" prefWidth="506.0" style="-fx-background-color: #444;">
@@ -77,17 +77,17 @@
                                           <Font size="17.0" />
                                        </font>
                                     </Label>
-                                    <HBox prefHeight="1.0" prefWidth="146.0">
+                                    <HBox prefHeight="100.0" prefWidth="200.0">
                                        <children>
                                           <Label fx:id="status_icon" textFill="#e8e8e8">
                                              <font>
                                                 <Font size="17.0" />
                                              </font>
                                              <HBox.margin>
-                                                <Insets />
+                                                <Insets bottom="3.0" />
                                              </HBox.margin>
                                              <padding>
-                                                <Insets bottom="4.0" />
+                                                <Insets bottom="2.0" />
                                              </padding>
                                           </Label>
                                           <Label fx:id="user_status" alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="7.0" text="Online" textFill="#c9c9c9">
@@ -261,4 +261,7 @@
    <effect>
       <DropShadow blurType="GAUSSIAN" />
    </effect>
+   <padding>
+      <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+   </padding>
 </StackPane>
