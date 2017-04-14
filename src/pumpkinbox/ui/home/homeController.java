@@ -21,6 +21,7 @@ import pumpkinbox.api.NotificationObject;
 import pumpkinbox.api.User;
 import pumpkinbox.client.ChatClient;
 import pumpkinbox.client.Client;
+import pumpkinbox.dialogs.DecisionDialog;
 import pumpkinbox.ui.add_friend.addFriendController;
 import pumpkinbox.ui.draggable.EffectUtilities;
 import pumpkinbox.ui.icons.Icons;
@@ -165,60 +166,41 @@ public class homeController implements Initializable{
 
     @FXML
     void loadAddFriend(ActionEvent e){
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pumpkinbox/ui/add_friend/add_friend_screen.fxml"));
-//        Parent parent = null;
-//
-//        try {
-//            parent = loader.load();
-//        } catch (IOException e1) {
-//            Notification notification = new Notification("Error", "Unable to load window", 10, "ERROR");
-//            e1.printStackTrace();
-//            return;
-//        }
-//
-//        Stage stage = new Stage(StageStyle.UNDECORATED);
-//        stage.initStyle(StageStyle.TRANSPARENT);
-//
-//        stage.setTitle("Add a friend");
-//        Scene scene = new Scene(parent);
-//        scene.setFill(Color.TRANSPARENT);
-//        scene.getStylesheets().add("pumpkinbox/ui/add_friend/add_friend.css");
-//
-//        stage.setScene(scene);
-//        stage.setAlwaysOnTop(false);
-//        stage.show();
-//
-//        //Passing primaryStage to controller in order to make window draggable
-//        addFriendController controller =
-//                loader.<addFriendController>getController();
-//
-//        controller.registerStage(stage);
-//
-//        System.out.println("Writing token to home: " + authenticationToken);
-//        controller.setAuthenticationToken(authenticationToken);
-//        controller.setUserID(userId);
-//        controller.setName(name);
-//
-//        System.out.println("LOGIN - USER NAME: " + name);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pumpkinbox/ui/add_friend/add_friend_screen.fxml"));
+        Parent parent = null;
 
-        JFXDialogLayout content = new JFXDialogLayout();
-        content.setHeading(new Text("Heading"));
-        content.setBody(new Text("Test text"));
+        try {
+            parent = loader.load();
+        } catch (IOException e1) {
+            Notification notification = new Notification("Error", "Unable to load window", 10, "ERROR");
+            e1.printStackTrace();
+            return;
+        }
 
-        JFXDialog dialog = new JFXDialog(stackPane, content, JFXDialog.DialogTransition.BOTTOM);
-        stackPane.setMargin(dialog, new Insets(10, 10, 10, 10));
+        Stage stage = new Stage(StageStyle.UNDECORATED);
+        stage.initStyle(StageStyle.TRANSPARENT);
 
-        JFXButton button = new JFXButton("Accept invite");
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                dialog.close();
-            }
-        });
+        stage.setTitle("Add a friend");
+        Scene scene = new Scene(parent);
+        scene.setFill(Color.TRANSPARENT);
+        scene.getStylesheets().add("pumpkinbox/ui/add_friend/add_friend.css");
 
-        content.setActions(button);
+        stage.setScene(scene);
+        stage.setAlwaysOnTop(false);
+        stage.show();
 
-        dialog.show();
+        //Passing primaryStage to controller in order to make window draggable
+        addFriendController controller =
+                loader.<addFriendController>getController();
+
+        controller.registerStage(stage);
+
+        System.out.println("Writing token to home: " + authenticationToken);
+        controller.setAuthenticationToken(authenticationToken);
+        controller.setUserID(userId);
+        controller.setName(name);
+
+        System.out.println("LOGIN - USER NAME: " + name);
 
     }
 

@@ -2,16 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ea390b94-db5d-44b3-a481-7b9f9afc9939" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/pumpkinbox/ui/home/home_screen_test.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/ui/home/home.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/pumpkinbox/ui/home/home.java" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pumpkinbox/dialogs/DecisionDialog.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pumpkinbox/client/ChatClient.java" afterPath="$PROJECT_DIR$/src/pumpkinbox/client/ChatClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pumpkinbox/server/ChatServer.java" afterPath="$PROJECT_DIR$/src/pumpkinbox/server/ChatServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pumpkinbox/ui/add_friend/addFriendController.java" afterPath="$PROJECT_DIR$/src/pumpkinbox/ui/add_friend/addFriendController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pumpkinbox/ui/home/homeController.java" afterPath="$PROJECT_DIR$/src/pumpkinbox/ui/home/homeController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pumpkinbox/ui/home/home_screen.fxml" afterPath="$PROJECT_DIR$/src/pumpkinbox/ui/home/home_screen.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pumpkinbox/ui/loginScreenController.java" afterPath="$PROJECT_DIR$/src/pumpkinbox/ui/loginScreenController.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -69,23 +62,46 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="homeController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="homeController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/home/homeController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="282">
-              <caret line="242" column="20" lean-forward="true" selection-start-line="242" selection-start-column="20" selection-end-line="242" selection-end-column="20" />
+            <state relative-caret-position="525">
+              <caret line="203" column="0" lean-forward="false" selection-start-line="203" selection-start-column="0" selection-end-line="203" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2345#2346#0" expanded="true" />
-                <element signature="e#2389#2390#0" expanded="true" />
-                <element signature="e#2427#2428#0" expanded="true" />
-                <element signature="e#2459#2460#0" expanded="true" />
-                <element signature="e#2495#2496#0" expanded="true" />
-                <element signature="e#2527#2528#0" expanded="true" />
-                <element signature="e#6321#6322#0" expanded="true" />
-                <element signature="e#6367#6368#0" expanded="true" />
-                <marker date="1492172222000" expanded="false" signature="5439:5460" ph="&lt;~&gt;" />
+                <element signature="e#2387#2388#0" expanded="true" />
+                <element signature="e#2431#2432#0" expanded="true" />
+                <element signature="e#2469#2470#0" expanded="true" />
+                <element signature="e#2501#2502#0" expanded="true" />
+                <element signature="e#2537#2538#0" expanded="true" />
+                <element signature="e#2569#2570#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DecisionDialog.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/pumpkinbox/dialogs/DecisionDialog.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-240">
+              <caret line="19" column="50" lean-forward="true" selection-start-line="19" selection-start-column="50" selection-end-line="19" selection-end-column="50" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#2953#2954#0" expanded="true" />
+                <element signature="e#2987#2988#0" expanded="true" />
+                <element signature="e#3088#3089#0" expanded="true" />
+                <element signature="e#3123#3124#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="signupScreenController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/create_user/signupScreenController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="107" column="14" lean-forward="false" selection-start-line="107" selection-start-column="14" selection-end-line="107" selection-end-column="14" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -136,8 +152,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/pumpkinbox/ui/client/main.java" />
-        <option value="$PROJECT_DIR$/src/pumpkinbox/security/AuthTokens.java" />
         <option value="$PROJECT_DIR$/src/pumpkinbox/ui/create_account/mainController.java" />
         <option value="$PROJECT_DIR$/src/pumpkinbox/ui/client/login_screen.fxml" />
         <option value="$PROJECT_DIR$/src/pumpkinbox/ui/client/LoginResponseObject.java" />
@@ -179,19 +193,21 @@
         <option value="$PROJECT_DIR$/test/pumpkinbox/ui/create_user/signup_screen_test.java" />
         <option value="$PROJECT_DIR$/test/pumpkinbox/ui/add_friend/add_friend_test.java" />
         <option value="$PROJECT_DIR$/test/pumpkinbox/ui/add_friend/add_friend_screen_test.java" />
-        <option value="$PROJECT_DIR$/src/pumpkinbox/ui/create_user/signupScreenController.java" />
         <option value="$PROJECT_DIR$/test/pumpkinbox/ui/home/home_screen_test.java" />
         <option value="$PROJECT_DIR$/src/pumpkinbox/ui/add_friend/addFriendController.java" />
         <option value="$PROJECT_DIR$/src/pumpkinbox/client/ChatClient.java" />
         <option value="$PROJECT_DIR$/src/pumpkinbox/server/ChatServer.java" />
         <option value="$PROJECT_DIR$/src/pumpkinbox/ui/loginScreenController.java" />
         <option value="$PROJECT_DIR$/src/pumpkinbox/ui/home/home_screen.fxml" />
+        <option value="$PROJECT_DIR$/src/pumpkinbox/ui/create_user/signupScreenController.java" />
+        <option value="$PROJECT_DIR$/src/pumpkinbox/dialogs/Dialog.java" />
         <option value="$PROJECT_DIR$/src/pumpkinbox/ui/home/homeController.java" />
+        <option value="$PROJECT_DIR$/src/pumpkinbox/dialogs/DecisionDialog.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="width" value="1440" />
+    <option name="width" value="1600" />
     <option name="height" value="900" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -235,10 +251,6 @@
               <option name="myItemId" value="test" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ui" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -302,7 +314,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="home" />
+              <option name="myItemId" value="create_user" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -324,55 +336,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="ui" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="add_friend" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PumpkinBox (nonpersis)" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PumpkinBox(nonpersis)" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pumpkinbox" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="client" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PumpkinBox (nonpersis)" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PumpkinBox(nonpersis)" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pumpkinbox" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="api" />
+              <option name="myItemId" value="dialogs" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -779,7 +743,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="900" extended-state="6" />
+    <frame x="0" y="0" width="1600" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -792,13 +756,13 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" x="100" y="100" width="1240" height="700" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23614457" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23614457" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19742489" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17715019" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3277635" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -825,13 +789,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home/src.zip!/java/io/ObjectInputStream.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="372" column="0" lean-forward="false" selection-start-line="372" selection-start-column="0" selection-end-line="372" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/client/create_user/Client.java" />
     <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/client/create_user/LoginResponseObject.java" />
     <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/client/create_user/main.java" />
@@ -1060,14 +1017,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/create_user/signupScreenController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="76" column="0" lean-forward="true" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/pumpkinbox/ui/create_user/signup_screen_test.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="230">
@@ -1188,19 +1137,38 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/home/homeController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="242" column="20" lean-forward="true" selection-start-line="242" selection-start-column="20" selection-end-line="242" selection-end-column="20" />
+        <state relative-caret-position="525">
+          <caret line="203" column="0" lean-forward="false" selection-start-line="203" selection-start-column="0" selection-end-line="203" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2345#2346#0" expanded="true" />
-            <element signature="e#2389#2390#0" expanded="true" />
-            <element signature="e#2427#2428#0" expanded="true" />
-            <element signature="e#2459#2460#0" expanded="true" />
-            <element signature="e#2495#2496#0" expanded="true" />
-            <element signature="e#2527#2528#0" expanded="true" />
-            <element signature="e#6321#6322#0" expanded="true" />
-            <element signature="e#6367#6368#0" expanded="true" />
-            <marker date="1492172222000" expanded="false" signature="5439:5460" ph="&lt;~&gt;" />
+            <element signature="e#2387#2388#0" expanded="true" />
+            <element signature="e#2431#2432#0" expanded="true" />
+            <element signature="e#2469#2470#0" expanded="true" />
+            <element signature="e#2501#2502#0" expanded="true" />
+            <element signature="e#2537#2538#0" expanded="true" />
+            <element signature="e#2569#2570#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/create_user/signupScreenController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="107" column="14" lean-forward="false" selection-start-line="107" selection-start-column="14" selection-end-line="107" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/dialogs/DecisionDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-240">
+          <caret line="19" column="50" lean-forward="true" selection-start-line="19" selection-start-column="50" selection-end-line="19" selection-end-column="50" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2953#2954#0" expanded="true" />
+            <element signature="e#2987#2988#0" expanded="true" />
+            <element signature="e#3088#3089#0" expanded="true" />
+            <element signature="e#3123#3124#0" expanded="true" />
           </folding>
         </state>
       </provider>
