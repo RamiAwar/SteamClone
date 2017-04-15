@@ -14,7 +14,7 @@ import javafx.scene.text.Text;
  */
 
 /**
- * Decision dialog is a dialog box with only one action button, which can be programmed from the caller class.
+ * Decision dialog is a dialog box with two action buttons, one of which can be programmed from the caller class, and the other is a cancel button.
  * This is done through referencing the public variable confirmButton and overriding its setOnAction method.
  * <br><br>
  * <h1>Example usage of DecisionDialog class:</h1>
@@ -55,6 +55,10 @@ public class DecisionDialog {
         this.confirmButton = new JFXButton(confirmButtonText);
         this.cancelButton = new JFXButton(cancelButtonText);
 
+        this.confirmButton.setStyle("-fx-text-fill:#4285f4;");
+        this.cancelButton.setStyle("-fx-text-fill:#4285f4;");
+
+
         this.cancelButton.setOnAction(event -> this.dialog.close());
 
         this.content.setActions(this.confirmButton, this.cancelButton);
@@ -78,6 +82,10 @@ public class DecisionDialog {
 
         this.confirmButton = new JFXButton(confirmButtonText);
         this.cancelButton = new JFXButton("Cancel");
+
+        this.confirmButton.setStyle("-fx-text-fill:#4285f4;");
+        this.cancelButton.setStyle("-fx-text-fill:#4285f4;");
+
 
         this.cancelButton.setOnAction(event -> this.dialog.close());
 

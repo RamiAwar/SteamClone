@@ -31,6 +31,12 @@ public class Client {
             dataout.writeObject(data);
 
             String response = (String) datain.readObject();
+
+            if(response.equals(CODES.NOT_FOUND)){
+                object.setStatusCode(CODES.NOT_FOUND);
+                return object;
+            }
+
             String token = (String) datain.readObject();
             String user_details = (String) datain.readObject();
 
@@ -45,13 +51,10 @@ public class Client {
             object.setToken(token);
             object.setStatusCode(CODES.OK);
 
-
-            if(response.equals(CODES.NOT_FOUND)) object.setStatusCode(CODES.NOT_FOUND);
-
             return object;
 
         } catch (Exception e) {
-            Notification notif = new Notification("Error", "Try again later", 5, "ERROR");
+            Notification notif = new Notification("Error", "An error occured. Please restart the application.", 10, "ERROR");
             e.printStackTrace();
         }
 
@@ -78,8 +81,6 @@ public class Client {
             clientSocket.close();
 
             String[] details = response.split("\\|");
-
-
 
             //Data received, parse into response object
             object.setResponse(response);

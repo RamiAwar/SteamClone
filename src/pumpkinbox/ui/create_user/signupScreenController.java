@@ -21,6 +21,7 @@ import javafx.stage.StageStyle;
 import pumpkinbox.api.CODES;
 import pumpkinbox.client.Client;
 import pumpkinbox.api.ResponseObject;
+import pumpkinbox.dialogs.AlertDialog;
 import pumpkinbox.ui.draggable.EffectUtilities;
 import pumpkinbox.ui.icons.Icons;
 import pumpkinbox.ui.images.Images;
@@ -38,6 +39,7 @@ public class signupScreenController implements Initializable{
     private final String CRLF = "\r\n";
 
     Icons icons = new Icons();
+
 
     @FXML
     Label closeIcon;
@@ -104,15 +106,18 @@ public class signupScreenController implements Initializable{
 
         if(email.getText().isEmpty() || password.getText().isEmpty() || firstname.getText().isEmpty() || lastname.getText().isEmpty()){
 
-            //TODO: Display ALERT: please fill all fields
-            //
-            //
-            //
-            //TODO: CHECK IF ANY LABEL IS VISIBLE -> INCORRECT INFO
-            //
-            //
-            //
+            //Display ALERT: please fill all fields
+            AlertDialog alert = new AlertDialog(root, "Invalid Request", "Please fill all fields before submitting", "Okay");
+            alert.showDialog();
+            return;
+        }
 
+        //CHECK IF ANY LABEL IS VISIBLE -> INCORRECT INFO
+        if(emailLabel.isVisible() || passwordLabel.isVisible() || firstnameLabel.isVisible() || lastnameLabel.isVisible()){
+
+            //Display alert: fill fields with valid values
+            AlertDialog alert = new AlertDialog(root, "Invalid Values", "Please fill all fields with valid values", "Okay");
+            alert.showDialog();
             return;
         }
 
@@ -120,25 +125,33 @@ public class signupScreenController implements Initializable{
 
         switch(response.getStatusCode()){
             case CODES.ALREADY_EXISTS:
-                System.out.println("User already exists. Try logging in...");
                 email.clear();
                 password.clear();
                 firstname.clear();
                 lastname.clear();
-                //TODO: alert user that they already exists
-
+                //Alert user that they already exists
+                AlertDialog alert = new AlertDialog(root, "User Already Exists", "The email entered belongs to an already existing user. Please try logging in instead.", "Okay");
+                alert.showDialog();
 
                 break;
             case CODES.OK:
                 System.out.println("New user successfully created.");
                 System.out.println("Please login.");
-                //TODO: Display alert, success, please log in
-                close(); //close window
+                //Display alert, success, please log in
+                AlertDialog success = new AlertDialog(root, "Account Creation Successful", "Your account has been successfully created. Please login.", "Okay");
+                success.actionButton.setOnAction(event1 -> close());
+                success.dialog.setOnDialogClosed(event1 -> close());
+                success.showDialog();
+
                 break;
 
             case CODES.INSERTION_ERROR:
                 System.out.println("There was an error creating your account. Please try again later.");
-                //TODO: Display message
+                // Display message
+                AlertDialog error = new AlertDialog(root, "Server Error", "An unexpected error has occurred. Please contact us at pumpkin@box.com", "Close");
+                error.actionButton.setOnAction(event1 -> close());
+                error.dialog.setOnDialogClosed(event1 -> close());
+                error.showDialog();
                 break;
 
             default:

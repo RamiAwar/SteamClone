@@ -195,12 +195,10 @@ public class homeController implements Initializable{
 
         controller.registerStage(stage);
 
-        System.out.println("Writing token to home: " + authenticationToken);
         controller.setAuthenticationToken(authenticationToken);
         controller.setUserID(userId);
         controller.setName(name);
 
-        System.out.println("LOGIN - USER NAME: " + name);
 
     }
 

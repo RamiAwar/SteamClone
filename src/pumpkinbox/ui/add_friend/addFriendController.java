@@ -129,17 +129,18 @@ public class addFriendController implements Initializable{
         }
 
         //VALID EMAIL
-        ResponseObject response = Client.sendFriendRequestData("GET " + authenticationToken + " " + userID + "|" + userName + "|" + friend_email.getText() );
+        ResponseObject response = Client.sendFriendRequestData("UPDATE " + authenticationToken + " " + "addfriend" + userID + "|" + userName + "|" + friend_email.getText() );
+
 
         switch(response.getStatusCode()){
             case CODES.ALREADY_EXISTS:
-                System.out.println("User already exists. Try logging in...");
                 friend_email.clear();
 
                 //TODO: alert user that they already exists
                 Alert alert = new Alert(Alert.AlertType.ERROR, "User already exists. Try logging in.", ButtonType.CLOSE);
 
                 break;
+
             case CODES.OK:
                 System.out.println("New user successfully created.");
                 System.out.println("Please login.");
