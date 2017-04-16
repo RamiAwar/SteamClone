@@ -9,7 +9,7 @@ package pumpkinbox.server;
  */
 
 import pumpkinbox.api.CODES;
-import pumpkinbox.api.Friend;
+import pumpkinbox.api.MessageObject;
 import pumpkinbox.api.NotificationObject;
 import pumpkinbox.api.User;
 import pumpkinbox.database.DatabaseHandler;
@@ -18,15 +18,11 @@ import pumpkinbox.time.Time;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
-import java.util.Vector;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.*;
+
 
 
 public class ChatServer {
@@ -34,20 +30,23 @@ public class ChatServer {
     private int port = 9000;    //ServerSocket port number
     private ServerSocket serverSocket;
 
-    //This array is for storing notifications incoming from the database like messages or invitations and passing them over through the notiication queue
-    public ArrayList<NotificationObject> notificationList = new ArrayList<>();
-
-    //This queue is for saving notifications and sending them once the access token has been confirmed.
-    private BlockingQueue<String> notificationQueue = new LinkedBlockingQueue<>();
-
-    //This vector stores the currently connected clients
-    public Vector<ChatServerThread> connectedClients = new Vector<ChatServerThread>();
-
     //This vector stores the User objects of currently connected clients
-    public Vector<User> users = new Vector<User>();
+    public volatile Vector<User> onlineUsersList = new Vector<User>();
+
 
     //Empty private constructor since we do not this class to be accessible from other classes
     private ChatServer() throws ClassNotFoundException {}
+
+
+
+    /**
+     * Synchronized method to add users from threads.
+     * @param user User to be added to online users list.
+     */
+    public synchronized void addUser(User user){
+        onlineUsersList.add(user);
+    }
+
 
     //Accepts connections indefinitely
     public void acceptConnections() {
@@ -64,7 +63,7 @@ public class ChatServer {
 
         while (true) {  //Accepting connections indefinitely
 
-            System.out.println(users);
+            System.out.println(onlineUsersList);
 
             try
             {
@@ -72,7 +71,6 @@ public class ChatServer {
                 System.out.println("Client connected.");
 
                 ChatServerThread st = new ChatServerThread(newConnection);  //Creating a thread for each new client
-                connectedClients.add(st);
 
                 new Thread(st).start();
 
@@ -87,7 +85,6 @@ public class ChatServer {
     public static void main(String args[]) {
 
         //Instantiate server and call acceptConnections to loop indefinitely
-
         ChatServer server = null;
         try {
             server = new ChatServer();
@@ -105,7 +102,9 @@ public class ChatServer {
         private ObjectInputStream datain;
         private ObjectOutputStream dataout;
         private DatabaseHandler db;
-        private String ip;
+        private String clientPort;
+        private Timer timer;
+
 
         public int userId;
         public String username;
@@ -116,7 +115,7 @@ public class ChatServer {
         //Constructor
         public ChatServerThread(Socket socket) {
             this.socket = socket;
-            this.ip = String.valueOf(this.socket.getPort());
+            this.clientPort = String.valueOf(this.socket.getPort());
             this.db = DatabaseHandler.getInstance();
         }
 
@@ -128,15 +127,71 @@ public class ChatServer {
         //Thread main program
         public void run() {
 
+            TimerTask timerTask = new TimerTask() {
+
+                @Override
+                public void run() {
+
+                    try {
+
+                        //Search database for unread messages
+                        ResultSet rs = db.executeQuery("SELECT * FROM pumpkinbox_messages WHERE receiver_id='" + userId +"' AND received='0';");
+
+                        //Send any unread messages to client and MARK AS READ
+                        while(rs.next()){
+
+                            String message = rs.getString("content");
+                            int sender_id = rs.getInt("sender_id");
+                            String timestamp = rs.getString("timestamp");
+                            String sender_name = "unknown error";
+                            int messageId = rs.getInt("id");
+
+                            System.out.println("MESSAGE FOUND: " + message);
+
+                            for (int i = 0; i < onlineUsersList.size(); i++) {
+                                if(onlineUsersList.get(i).getUserId() == sender_id){
+                                    sender_name = onlineUsersList.get(i).getUsername();
+                                    break;
+                                }
+                            }
+
+                            System.out.println("Writing message to client");
+
+                            dataout.writeObject("MESSAGE " + sender_id + "|" + timestamp + "|" + message);
+
+                            //Update database messages as read
+                            String query = "UPDATE pumpkinbox_messages SET "+
+                                    "received='1' WHERE id='" + messageId + "';";
+                            db.executeAction(query);
+
+                        }
+
+
+
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+
+            timer = new Timer("Message fetcher");//create a new timer
+            timer.scheduleAtFixedRate(timerTask, 30, 500);
+
             try {
 
-                System.out.println("Getting output/input socket streams for " + this.ip);
+                System.out.println("Getting output/input socket streams for " + this.clientPort);
 
                 dataout = new ObjectOutputStream(socket.getOutputStream());
                 datain = new ObjectInputStream(socket.getInputStream());
 
-                userId = Integer.parseInt((String) datain.readObject());
-                users.add(new User(userId, ""));
+                String[] user_details = ((String) datain.readObject()).split("\\|");
+
+                this.userId = Integer.parseInt(user_details[0]);
+                this.username = user_details[1];
+
+                //Adding newly connected user to online friends list
+                addUser(new User(userId, username));
 
             } catch (Exception e) {
                 System.out.println("Failed to get socket Input/Output streams ... \nClosing thread...");
@@ -144,51 +199,30 @@ public class ChatServer {
             }
 
             //ServerThread main program
-            System.out.println("Streams to " + this.ip + " opened successfully.");
+            System.out.println("Streams to " + this.clientPort + " opened successfully.");
 
             while (true) {
 
-//                long millis = System.currentTimeMillis();
-
                 try {
-                    System.out.println("Waiting for object from " + this.ip);
-                    Object s = datain.readObject(); //Read client request
 
-                    //TODO: Check if connection still alive to close socket and update friends list if not
+                    System.out.println("Waiting for object from " + this.clientPort);
+                    Object s = datain.readObject(); //Read client request
 
                     if (!s.equals(null)) {
 
-                        System.out.println("Server received: " + s + " from " + this.ip);//for debugging
+                        System.out.println("Server received: " + s + " from " + this.clientPort);//for debugging
                         parseRequest((String) s);   //Decode client request
-
-
-                        //TODO fill notif queue
-                        //Check notification queue
-//                        for (int i = 0; i < notificationList.size(); i++) {
-//                            NotificationObject notification = notificationList.get(i);
-//                            if( userId == notification.getReceiver()){
-//                                String message = notification.getMessage();
-//                                String sender = notification.getSenderUsername();
-//                                notificationList.remove(i);
-//                                notificationQueue.offer("NOTIFICATION " + sender + "|" + message);
-//
-//                            }
-//                        }
 
                     }
 
+
+
                 } catch (Exception e) {
-                    connectedClients.remove(this);
-                    System.out.println("---------------" + this.ip + " disconnected---------------");
+                    System.out.println("---------------" + this.clientPort + " disconnected---------------");
                     e.printStackTrace();
                     break;
                 }
 
-//                try {
-//                    Thread.sleep(100 - millis % 100); //Sleep thread for 0.1 second to increase efficiency
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
             }
 
         }
@@ -211,20 +245,18 @@ public class ChatServer {
             try{SECRET = tokens.nextToken();}catch(Exception e){e.printStackTrace();}
             try{CONTENT = tokens.nextToken();}catch(Exception e){e.printStackTrace();}
 
-
             switch (VERB) {
 
                 case "GET":
 
                     if(SECRET.equals("") || CONTENT.equals("")) {
-                        System.out.println(this.ip + " - Invalid request");
+                        System.out.println(this.clientPort + " - Invalid request");
                         try {
                             dataout.writeObject(CODES.INVALID_REQUEST);
                         } catch (IOException e) {
-                            System.out.println(this.ip + " - Invalid request to server.");
+                            System.out.println(this.clientPort + " - Invalid request to server.");
                             e.printStackTrace();
                         }
-
                         break;
                     }
 
@@ -274,21 +306,24 @@ public class ChatServer {
 
                                 if(userId != Integer.parseInt(sender)) userId = Integer.parseInt(sender);
 
+
+                                //UNECCESSARY, BUT WHAT THE HECK
+                                //Making sure that this user is online
                                 boolean notThere = true;
-                                for (int i = 0; i < users.size(); i++) {
-                                    if(users.get(i).getUserId() == userId){
+                                for (int i = 0; i < onlineUsersList.size(); i++) {
+                                    if(onlineUsersList.get(i).getUserId() == userId){
                                         notThere = false;
                                         break;
                                     }
                                 }
-                                if(notThere) users.add(new User(userId, username));
+                                if(notThere) addUser(new User(userId, username));
 
 
 //                                System.out.println("CONTENT: " + content);
                                 //Check user friends
-                                if(content.equals("friends")) {
+                                if(content.equals("friends")) {//GET FRIENDS REQUESTED
 
-                                    ArrayList<User> onlineFriends = new ArrayList<User>();
+                                    ArrayList<User> myOnlineFriends = new ArrayList<User>();
 
 //                                    System.out.println("Fetching friends from database...");
                                     ResultSet friends = db.executeQuery("SELECT * FROM pumpkinbox_friends_table WHERE sender_id='" +
@@ -304,41 +339,47 @@ public class ChatServer {
 
                                         //Check if friend is online
                                         boolean isOnline = false;
-                                        for (int i = 0; i < users.size(); i++) {
-                                            if(users.get(i).getUserId() == friend_id) isOnline = true;
+                                        for (int i = 0; i < onlineUsersList.size(); i++) {
+                                            if(onlineUsersList.get(i).getUserId() == friend_id) isOnline = true;
                                         }
+
                                         if (isOnline) {
                                             //Get friend username
 //                                            System.out.println("Friend online: " + friend_id);
                                             ResultSet friend = db.executeQuery("SELECT * FROM pumpkinbox_users_table WHERE id='" + friend_id + "';");
-                                            if(friend.next()) onlineFriends.add(new User(friend_id, friend.getString("email")));
+                                            if(friend.next()) myOnlineFriends.add(new User(friend_id, friend.getString("email"), friend.getString("firstname")));
                                         }
-
-//                                        System.out.println("[ " + friends.getInt("sender_id"));
-//                                        System.out.println(friends.getInt("receiver_id") + " ]");
                                     }
 
                                     //Return friends to client
-                                    //Turn onlineFriends into a string
+                                    //Turn myOnlineFriends into a string
                                     String outputFriends = "";
                                     try {
-//                                        System.out.println("Forming output...");
-                                        if(onlineFriends.size() < 1) return;
-                                        for (int i = 0; i < onlineFriends.size()-1; i++) {
-                                            System.out.println(onlineFriends.get(i).getUsername());
-                                            outputFriends += onlineFriends.get(i).getUsername() + "|";
-                                            outputFriends += onlineFriends.get(i).getUserId() + "|";
+                                        System.out.println("No friends online, sending to user.");
+                                        if(myOnlineFriends.size() < 1) {
+                                            dataout.writeObject("FRIENDS " + outputFriends);
+                                            return;
                                         }
 
-                                        outputFriends += onlineFriends.get(onlineFriends.size() - 1).getUsername() + "|";
-                                        outputFriends += onlineFriends.get(onlineFriends.size() - 1).getUserId();
+
+                                        //Forming a string containing all users to be sent to client
+                                        for (int i = 0; i < myOnlineFriends.size()-1; i++) {
+                                            System.out.println(myOnlineFriends.get(i).getUsername());
+                                            outputFriends += myOnlineFriends.get(i).getUsername() + "|";
+                                            outputFriends += myOnlineFriends.get(i).getUserId() + "|";
+                                            outputFriends += myOnlineFriends.get(i).getFirstName() + "|";
+                                        }
+
+                                        outputFriends += myOnlineFriends.get(myOnlineFriends.size() - 1).getUsername() + "|";
+                                        outputFriends += myOnlineFriends.get(myOnlineFriends.size() - 1).getUserId() + "|";
+                                        outputFriends += myOnlineFriends.get(myOnlineFriends.size() - 1).getFirstName();
 
                                         System.out.println("Sending to client: " + outputFriends);
-                                        dataout.writeObject(outputFriends);
+                                        dataout.writeObject("FRIENDS " + outputFriends);
+
                                     }catch (Exception e){
                                         e.printStackTrace();
                                 }
-
 
                                 }
 
@@ -377,7 +418,8 @@ public class ChatServer {
                     }
 
 
-                    String[] message_content = CONTENT.split("\\|");
+                    String[] lines = request.split(" ", 3);
+                    String[] message_content = lines[2].split("\\|");
 
                     String sender_id = message_content[0];
                     String receiver_id = message_content[1];
@@ -418,7 +460,9 @@ public class ChatServer {
                                     "WHERE id='" + sender_id + "';";
 
                             if(validToken){
-                                //Send OK
+
+
+
                                 System.out.println("User exists and valid auth token, adding message to db...");
 
                                 if(userId != Integer.parseInt(sender_id)) userId = Integer.parseInt(sender_id);

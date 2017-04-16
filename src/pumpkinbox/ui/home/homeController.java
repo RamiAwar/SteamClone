@@ -1,28 +1,25 @@
 package pumpkinbox.ui.home;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
-import pumpkinbox.api.NotificationObject;
+import pumpkinbox.api.MessageObject;
 import pumpkinbox.api.User;
 import pumpkinbox.client.ChatClient;
-import pumpkinbox.client.Client;
-import pumpkinbox.dialogs.DecisionDialog;
+import pumpkinbox.dialogs.AlertDialog;
 import pumpkinbox.ui.add_friend.addFriendController;
+import pumpkinbox.ui.chat_window.chatWindowController;
+import pumpkinbox.ui.create_user.signupScreenController;
 import pumpkinbox.ui.draggable.EffectUtilities;
 import pumpkinbox.ui.icons.Icons;
 import javafx.event.ActionEvent;
@@ -63,13 +60,13 @@ public class homeController implements Initializable{
 
     private ObservableList<String> friendsList = FXCollections.observableArrayList();
 
-    private BlockingQueue<String> messages_queue = new LinkedBlockingQueue<>();
-
-    private BlockingQueue<NotificationObject> notification_queue = new LinkedBlockingQueue<>();
+    private BlockingQueue<MessageObject> sendMessageQueue = new LinkedBlockingQueue<>();
+    private BlockingQueue<MessageObject> receiveMessageQueue = new LinkedBlockingQueue<>();
 
     private final BlockingQueue<User> onlineFriends = new LinkedBlockingQueue<>();
 
     private ArrayList<String> onlineFriendsNames = new ArrayList<>();
+    private ArrayList<User> onlineFriendsDetails = new ArrayList<>();
 
 
     public void setAuthenticationToken(String s){
@@ -78,7 +75,6 @@ public class homeController implements Initializable{
     public void setName(String name){
         this.name = name;
     }
-
     public void setUserId(int id){
         this.userId = id;
     }
@@ -91,7 +87,7 @@ public class homeController implements Initializable{
     public void initClient(){
 
         //System.out.println("Initializing client with : " + authenticationToken + name);
-        client = new ChatClient(onlineFriends, messages_queue, notification_queue, userId, authenticationToken);
+        client = new ChatClient(onlineFriends, sendMessageQueue, receiveMessageQueue, userId, name, authenticationToken);
         client.connect();
     }
 
@@ -164,6 +160,18 @@ public class homeController implements Initializable{
         online_status = "away";
     }
 
+
+    @FXML
+    void loadMyProfile(ActionEvent e){
+
+
+        //TODO LOAD PROFILE PAGE
+
+
+
+
+    }
+
     @FXML
     void loadAddFriend(ActionEvent e){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/pumpkinbox/ui/add_friend/add_friend_screen.fxml"));
@@ -199,23 +207,51 @@ public class homeController implements Initializable{
         controller.setUserID(userId);
         controller.setName(name);
 
-
     }
 
-    void loadWindow(String location, String title){
+    void loadChatWindow(int friend_id, String friend_name){
+
+
         try {
 
-            Parent parent = FXMLLoader.load(getClass().getResource(location));
-            Stage stage = new Stage(StageStyle.DECORATED);
-            stage.setTitle(title);
-            stage.setScene(new Scene(parent));
-            stage.setAlwaysOnTop(true);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pumpkinbox/ui/chat_window/chat_screen.fxml"));
+            Parent parent = loader.load();
+
+            Stage stage = new Stage(StageStyle.UNDECORATED);
+            stage.initStyle(StageStyle.TRANSPARENT);
+
+            stage.setTitle("Chat with " + Integer.toString(friend_id));
+            Scene scene = new Scene(parent);
+            scene.setFill(Color.TRANSPARENT);
+            scene.getStylesheets().add("pumpkinbox/ui/chat_window/chat.css");
+
+            stage.setScene(scene);
+            stage.setAlwaysOnTop(false);
             stage.show();
+
+            //Passing primaryStage to controller in order to make window draggable
+            chatWindowController controller =
+                    loader.<chatWindowController>getController();
+
+            controller.registerStage(stage);
+
+            controller.setAuthenticationToken(authenticationToken);
+            controller.setUserID(userId);
+            controller.setUsername(name);
+            controller.setFriendID(friend_id);
+            controller.setFriendName(friend_name);
+            controller.setSendMessageQueue(sendMessageQueue);
+            controller.setReceiveMessageQueue(receiveMessageQueue);
+
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+
     }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -248,10 +284,9 @@ public class homeController implements Initializable{
                     System.out.println("Error taking from queue.");
                     e.printStackTrace();
                 }
-//                System.out.println(authenticationToken);
-//                System.out.println(userId);
             }
         }));
+
         gui_updater.setCycleCount(Timeline.INDEFINITE);
         gui_updater.play();
 
@@ -277,26 +312,43 @@ public class homeController implements Initializable{
 
     public void updateGUI() throws InterruptedException {
 
-        System.out.println("Updating friends list...");
+//        System.out.println("Updating friends list...");
 
         if(!name.equals(null)) username.setText(name);
 
         checkAndAdd(onlineFriends, onlineFriendsNames);
 
-        System.out.println("MAIN: " + onlineFriendsNames);
+//        System.out.println("MAIN: " + onlineFriendsNames);
 
         friendsList.setAll(onlineFriendsNames);
         friends_list.getItems().setAll(onlineFriendsNames);
 
-        if(!notification_queue.isEmpty()){
-            NotificationObject notificationObject = new NotificationObject();
-            try {
-                notificationObject = notification_queue.take();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        friends_list.setOnMouseClicked(event -> {
+
+            String friend_firstname = friends_list.getSelectionModel().getSelectedItem().toString();
+            int friend_id = -1;
+
+            //getting friend id
+            for (int i = 0; i < onlineFriendsDetails.size(); i++) {
+                if(onlineFriendsDetails.get(i).getFirstName().equals(friend_firstname)){
+                    friend_id = onlineFriendsDetails.get(i).getUserId();
+                    break;
+                }
             }
-            Notification notif = new Notification(notificationObject.getSenderUsername(), notificationObject.getSenderUsername(), 5, "MESSAGE");
-        }
+
+            if(friend_id == -1){
+                System.out.println("FRIEND ID NEGATIVE");
+                AlertDialog alert = new AlertDialog(stackPane, "Unknown Error", "An unknown error has occurred. Please try again later.");
+                alert.showDialog();
+                return;
+            }else {
+
+                //opening new chat window
+                loadChatWindow(friend_id, friend_firstname);
+            }
+
+        });
+
 
     }
 
@@ -306,8 +358,15 @@ public class homeController implements Initializable{
 
             User friend = friends.take();
 
-            if(!array.contains(friend.getUsername())){
-                array.add(friend.getUsername());
+            //TODO remove users that go offline SOMEHOW
+
+            if(!onlineFriendsDetails.contains(friend)){
+                onlineFriendsDetails.add(friend);
+//                System.out.println("FRIEND ID:" + friend.getUserId());
+            }
+
+            if(!array.contains(friend.getFirstName())){
+                array.add(friend.getFirstName());
             }
         }
     }

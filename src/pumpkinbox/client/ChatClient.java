@@ -6,15 +6,11 @@ package pumpkinbox.client;
 
 import pumpkinbox.api.*;
 import pumpkinbox.database.DatabaseHandler;
-import pumpkinbox.server.ChatServer;
-import pumpkinbox.ui.notifications.Notification;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.net.Socket;
 import java.util.*;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class ChatClient {
@@ -25,9 +21,12 @@ public class ChatClient {
     private int port = 9000;
 
     private Timer timer;
+    private Timer messageSenderTimer;
 
-    private BlockingQueue<String> messageQueue;
-    private BlockingQueue<NotificationObject> notificationQueue;
+    private int requestFriendsTime = 10000;
+
+    private BlockingQueue<MessageObject> sendMessageQueue;
+    private BlockingQueue<MessageObject> receiveMessageQueue;
 
     private ObjectInputStream datain;
     private ObjectOutputStream dataout;
@@ -35,36 +34,20 @@ public class ChatClient {
     private BlockingQueue<User> onlineFriends = new LinkedBlockingQueue<>();
 
     private int userId = -1;
+    private String username = "";
     private String authenticationToken = "-1";
 
-    public ChatClient(BlockingQueue<User> onlineFriends, BlockingQueue<String> messageQueue, BlockingQueue<NotificationObject> notificationQueue, int id, String authToken){
 
-        this.messageQueue = messageQueue;
-        this.notificationQueue = notificationQueue;
+
+    public ChatClient(BlockingQueue<User> onlineFriends, BlockingQueue<MessageObject> sendMessageQueue, BlockingQueue<MessageObject> receiveMessageQueue, int id, String username, String authToken){
+
+        this.sendMessageQueue = sendMessageQueue;
+        this.receiveMessageQueue = receiveMessageQueue;
         this.userId = id;
         this.authenticationToken = authToken;
         this.onlineFriends = onlineFriends;
+        this.username = username;
     }
-
-
-//    public ChatObject sendData(String data) throws IOException, ClassNotFoundException {
-//
-//        System.out.println("Sending data...");
-//        dataout.writeObject(data);
-//
-//        String response = (String) datain.readObject();
-//        String token = (String) datain.readObject();
-//
-//        ChatObject object = new ChatObject();
-//
-//        object.setResponse(response);
-//        object.setToken(token);
-//        object.setStatusCode(CODES.OK);
-//
-//        if(response.equals(CODES.NOT_FOUND)) object.setStatusCode(CODES.NOT_FOUND);
-//
-//        return object;
-//    }
 
 
     public ChatObject connect() {
@@ -80,7 +63,7 @@ public class ChatClient {
 
             ChatClientThread st = new ChatClientThread(clientSocket);  //Creating a thread for each new client
             Thread th =  new Thread(st);
-            th.setDaemon(true);
+            th.setDaemon(true);// this is in order for thread to stop when gui stops and not keep running on its own
             th.start();
 
             System.out.println("Thread started successfully.");
@@ -127,7 +110,9 @@ public class ChatClient {
                 dataout = new ObjectOutputStream(socket.getOutputStream());
 
                 System.out.println("Sending user id...");
-                dataout.writeObject(Integer.toString(userId));
+
+                //Sending id and username to chat server thread in order to be added as an online user
+                dataout.writeObject(Integer.toString(userId) + "|" + username);
 
             } catch (Exception e) {
                 System.out.println("Failed to get socket Input/Output streams ... \nClosing thread...");
@@ -139,22 +124,40 @@ public class ChatClient {
                 @Override
                 public void run() {
 
-                    //Check online friends
                     try {
 
-                        System.out.println(userId + " - Requesting online friends...");
-
+                        //Getting all online friends
+//                        System.out.println(userId + " - Requesting online friends...");
                         dataout.writeObject("GET " + authenticationToken + " " + userId + "|friends");
-                        System.out.println("Receiving online friends...");
 
-                        String friends = (String) datain.readObject();
 
-                        System.out.println("Received: " + friends);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
 
-                        String[] friendsList = friends.split("\\|");
-                        for (int i = 0; i < friendsList.length-1; i+=2) {
-                            onlineFriends.offer(new User(Integer.parseInt(friendsList[i+1]), friendsList[i]));
-                            System.out.println(friendsList[i]);
+
+            timer = new Timer("Friends updater");//create a new timer
+            timer.scheduleAtFixedRate(timerTask, 30, requestFriendsTime);
+
+            TimerTask messageSender = new TimerTask() {
+
+                @Override
+                public void run() {
+
+                    try {
+
+                        //Sending all queued messages to server
+                        while(!sendMessageQueue.isEmpty()){
+
+                            System.out.println("SENDING MESSAGE");
+
+                            MessageObject message = sendMessageQueue.take();
+                            dataout.writeObject("MESSAGE " + authenticationToken + " "
+                                    + message.getSender_id() + "|"
+                                    + message.getReceiver_id() + "|"
+                                    + message.getContent());
                         }
 
                     } catch (Exception e) {
@@ -163,57 +166,76 @@ public class ChatClient {
                 }
             };
 
-            timer = new Timer("Friends updater");//create a new timer
-            timer.scheduleAtFixedRate(timerTask, 30, 1000);
+
+            messageSenderTimer = new Timer("Message Sender");//create a new timer
+            messageSenderTimer.scheduleAtFixedRate(messageSender, 30, 300);
 
             //ServerThread main program
             System.out.println("Streams opened successfully.");
 
-//            while (true) {
-//
-//                try {
-//                    System.out.println("Reading from server...");
-//
-//                    TODO: Parse message
-//
-//                    String input = (String) datain.readObject();
-//                    StringTokenizer tokens = new StringTokenizer(input);
-//
-//                    String VERB = tokens.nextToken();
-//                    String CONTENT = "";
-//
-//                    try{CONTENT = tokens.nextToken();}catch(Exception e){e.printStackTrace();}
-//
-//                    if(CONTENT.equals("")){
-//                        System.out.println("Invalid server response! Server has gone mad!");
-//                    }
-////
-//                    if(VERB.equals("NOTIFICATION")){
-//
-//                        String[] content = CONTENT.split("\\|");
-//                        String senderUsername = content[0];
-//                        String message = content[1];
-//
-//                        NotificationObject notificationObject = new NotificationObject();
-//                        notificationObject.setMessage(message);
-//                        notificationObject.setSenderUsername(senderUsername);
-//
-//                        notificationQueue.offer(notificationObject);
-//
-//                    }
-//
-//                    //TODO: Send ping every 1 min to check if connection is alive?
-//
-//
-//                } catch (Exception e) {
-//                    System.out.println("---------------Client Disconnected---------------");
-//                    e.printStackTrace();
-//                    System.out.println("-------------------------------------------------");
-//                    break;
-//                }
-//
-//
-//            }
+
+
+
+            while (true) {
+
+                try {
+                    System.out.println("Reading from server...");
+
+                    String input = (String) datain.readObject();
+                    StringTokenizer tokens = new StringTokenizer(input);
+
+                    System.out.println("CLIENT RECEIVED: " + input);
+
+                    String VERB = tokens.nextToken();
+                    String CONTENT = "";
+
+                    try{CONTENT = tokens.nextToken();}catch(Exception e){e.printStackTrace();}
+
+                    if(CONTENT.equals("")){
+                        System.out.println("Invalid server response! Server has gone mad!");
+                    }
+
+                    switch (VERB){
+
+                        case "FRIENDS":
+
+                            String[] friendsList = CONTENT.split("\\|");
+                            for (int i = 0; i < friendsList.length-1; i+=3) {
+                                onlineFriends.offer(new User(Integer.parseInt(friendsList[i+1]), friendsList[i], friendsList[i+2]));
+                            }
+                            break;
+
+                        case "MESSAGE":
+
+                            String[] lines = input.split(" ", 2);
+                            String[] messageObject = lines[1].split("\\|");
+
+                            int sender_id = Integer.parseInt(messageObject[0]);
+                            String time_sent = messageObject[1];
+                            String message = messageObject[2];
+
+                            System.out.println("PUTTING INTO QUEUE: " + message);
+
+                            receiveMessageQueue.offer(new MessageObject(sender_id, time_sent, message));
+
+                        default:
+                            System.out.println("UNKNOWN VERB RECEIVED:");
+                            System.out.println(input);
+
+                    }
+
+
+
+
+                } catch (Exception e) {
+                    System.out.println("---------------Client Disconnected---------------");
+                    e.printStackTrace();
+                    System.out.println("-------------------------------------------------");
+                    break;
+                }
+
+
+            }
 
         }
     }

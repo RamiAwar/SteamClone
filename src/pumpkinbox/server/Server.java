@@ -347,13 +347,16 @@ public class Server {
                                         //retrieving friend id
                                         int friend_id = friend.getInt("id");
 
-                                        //Adding friendship to database
-//                                        if(db.executeAction("INSERT INTO pumpkinbox__table (id, firstname, lastname, password, email) VALUES (0,'" +
-//                                                 + "', '" +
-//                                                lastname + "', '" +
-//                                                password + "', '" +
-//                                                username + "');")){
+                                        //Here must send friend REQUEST
+
+
+                                        //TODO LATER Adding friendship to database
+//                                        if(db.executeAction("INSERT INTO pumpkinbox_friends_table (id, sender_id, receiver_id, timestamp) VALUES ('" +
+//                                                userId + "', '" +
+//                                                friend_id + "', '" +
+//                                                Time.getTimeStamp() + "');")){
 //                                            System.out.println("Insertion successful");
+//                                            dataout.writeObject(CODES.OK);
 //                                        }
                                     }
 
