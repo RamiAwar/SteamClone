@@ -63,7 +63,7 @@ public class Client {
         return object;
     }
 
-    public static ResponseObject sendFriendRequestData(String data){
+    public static ResponseObject sendFriendRequestData(int senderId,String sender_username, String friend_email, String auth){
 
         Socket clientSocket;
 
@@ -76,16 +76,17 @@ public class Client {
             ObjectInputStream datain = new ObjectInputStream(clientSocket.getInputStream());
             ObjectOutputStream dataout = new ObjectOutputStream(clientSocket.getOutputStream());
 
-            dataout.writeObject(data);
+            String request = "UPDATE " + auth + " REQUEST|" + Integer.toString(senderId) + "|" + sender_username + "|" + friend_email;
+
+            dataout.writeObject(request);
             String response = (String) datain.readObject();
             clientSocket.close();
 
-            String[] details = response.split("\\|");
 
             //Data received, parse into response object
             object.setResponse(response);
             object.setToken("");
-            object.setStatusCode(CODES.OK);
+            object.setStatusCode(response);
 
             return object;
 

@@ -31,6 +31,7 @@ import pumpkinbox.api.MessageObject;
 import pumpkinbox.api.User;
 import pumpkinbox.client.ChatClient;
 import pumpkinbox.dialogs.AlertDialog;
+import pumpkinbox.time.Time;
 import pumpkinbox.ui.add_friend.addFriendController;
 import pumpkinbox.ui.draggable.EffectUtilities;
 import pumpkinbox.ui.icons.Icons;
@@ -139,7 +140,10 @@ public class chatWindowController implements Initializable {
         sendMessageQueue.offer(new MessageObject(userId, friendId, message_content));
 
         //Add message to text area
+        text_area.setStyle("-fx-text-fill:#000;");
         text_area.appendText("\n" + name + ": " + message_content);
+        text_area.setStyle("-fx-text-fill:#aaa;");
+        text_area.appendText("\n" + Time.prettyTimeStamp());
     }
 
 
@@ -203,7 +207,7 @@ public class chatWindowController implements Initializable {
         //TODO CUSTOMIZE IMAGE
         friend_profile.setImage(Images.getImage("PRO2"));
 
-
+        text_area.setEditable(false);
 
         Timeline chat_updater = new Timeline(new KeyFrame(Duration.seconds(0.1), new EventHandler<ActionEvent>() {
 
@@ -262,8 +266,9 @@ public class chatWindowController implements Initializable {
             if(sender == friendId){
                 System.out.println("WE GOT A MATCH!");
                 text_area.appendText("\n" + friend_name + ": " + message.getContent());
-                text_area.setStyle("-fx-text-fill:#444;");
-                text_area.appendText("\n\t\t\t" + message.getTime_sent());
+                text_area.setStyle("-fx-text-fill:#999;");
+                text_area.appendText("\n\t\t" + message.getTime_sent());
+                text_area.setStyle("-fx-text-fill:#000;");
             }else{
                 System.out.println("THIS IS ANOTHER FRIEND :(((");
                 messages.add(message);

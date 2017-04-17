@@ -2,39 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ea390b94-db5d-44b3-a481-7b9f9afc9939" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/images/pro1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/images/pro2.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pumpkinbox/api/MessageObject.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pumpkinbox/ui/chat_window/chat.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pumpkinbox/ui/chat_window/chatWindowController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pumpkinbox/ui/chat_window/chat_screen.fxml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pumpkinbox/ui/profile/profile.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/pumpkinbox/ui/profile/profileScreenController.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/server/ChatServer$ChatServerThread.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/server/ChatServer.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/api/User.class" afterPath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/api/User.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/client/ChatClient$ChatClientThread$1.class" afterPath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/client/ChatClient$ChatClientThread$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/client/ChatClient$ChatClientThread$2.class" afterPath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/client/ChatClient$ChatClientThread$2.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/client/ChatClient$ChatClientThread.class" afterPath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/client/ChatClient$ChatClientThread.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/client/ChatClient.class" afterPath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/client/ChatClient.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/client/Client.class" afterPath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/client/Client.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/server/Server$ServerThread.class" afterPath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/server/Server$ServerThread.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/time/Time.class" afterPath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/time/Time.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/ui/add_friend/addFriendController.class" afterPath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/ui/add_friend/addFriendController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/ui/chat_window/chatWindowController$1.class" afterPath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/ui/chat_window/chatWindowController$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/ui/chat_window/chatWindowController.class" afterPath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/ui/chat_window/chatWindowController.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/ui/create_user/signupScreenController.class" afterPath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/ui/create_user/signupScreenController.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/ui/home/homeController$1.class" afterPath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/ui/home/homeController$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/ui/home/homeController.class" afterPath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/ui/home/homeController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/ui/loginScreenController.class" afterPath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/ui/loginScreenController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/ui/images/Images.class" afterPath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/ui/images/Images.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/ui/notifications/Notification.class" afterPath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/ui/notifications/Notification.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/ui/add_friend/add_friend_screen.fxml" afterPath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/ui/add_friend/add_friend_screen.fxml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/ui/home/home_screen.fxml" afterPath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/ui/home/home_screen.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pumpkinbox/api/User.java" afterPath="$PROJECT_DIR$/src/pumpkinbox/api/User.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/ui/login_screen.fxml" afterPath="$PROJECT_DIR$/out/production/PumpkinBox(nonpersis)/pumpkinbox/ui/login_screen.fxml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pumpkinbox/client/ChatClient.java" afterPath="$PROJECT_DIR$/src/pumpkinbox/client/ChatClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pumpkinbox/server/ChatServer.java" afterPath="$PROJECT_DIR$/src/pumpkinbox/server/ChatServer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pumpkinbox/client/Client.java" afterPath="$PROJECT_DIR$/src/pumpkinbox/client/Client.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pumpkinbox/server/Server.java" afterPath="$PROJECT_DIR$/src/pumpkinbox/server/Server.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pumpkinbox/time/Time.java" afterPath="$PROJECT_DIR$/src/pumpkinbox/time/Time.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pumpkinbox/ui/add_friend/addFriendController.java" afterPath="$PROJECT_DIR$/src/pumpkinbox/ui/add_friend/addFriendController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pumpkinbox/ui/add_friend/add_friend_screen.fxml" afterPath="$PROJECT_DIR$/src/pumpkinbox/ui/add_friend/add_friend_screen.fxml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pumpkinbox/ui/chat_window/chatWindowController.java" afterPath="$PROJECT_DIR$/src/pumpkinbox/ui/chat_window/chatWindowController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pumpkinbox/ui/create_user/signupScreenController.java" afterPath="$PROJECT_DIR$/src/pumpkinbox/ui/create_user/signupScreenController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pumpkinbox/ui/home/homeController.java" afterPath="$PROJECT_DIR$/src/pumpkinbox/ui/home/homeController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pumpkinbox/ui/home/home_screen.fxml" afterPath="$PROJECT_DIR$/src/pumpkinbox/ui/home/home_screen.fxml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pumpkinbox/ui/images/Images.java" afterPath="$PROJECT_DIR$/src/pumpkinbox/ui/images/Images.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pumpkinbox/ui/loginScreenController.java" afterPath="$PROJECT_DIR$/src/pumpkinbox/ui/loginScreenController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pumpkinbox/ui/login_screen.fxml" afterPath="$PROJECT_DIR$/src/pumpkinbox/ui/login_screen.fxml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pumpkinbox/ui/notifications/Notification.java" afterPath="$PROJECT_DIR$/src/pumpkinbox/ui/notifications/Notification.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -50,66 +47,80 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="Server.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pumpkinbox/server/Server.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="194">
+              <caret line="124" column="0" lean-forward="false" selection-start-line="124" selection-start-column="0" selection-end-line="124" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="signupScreenController.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/create_user/signupScreenController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="141" column="76" lean-forward="false" selection-start-line="141" selection-start-column="76" selection-end-line="141" selection-end-column="76" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="addFriendController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/add_friend/addFriendController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2325">
+              <caret line="199" column="22" lean-forward="false" selection-start-line="199" selection-start-column="22" selection-end-line="199" selection-end-column="22" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Client.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pumpkinbox/client/Client.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="390">
+              <caret line="78" column="95" lean-forward="false" selection-start-line="78" selection-start-column="95" selection-end-line="78" selection-end-column="95" />
+              <folding>
+                <element signature="method#sendLoginData#0;class#Client#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="chatWindowController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/chat_window/chatWindowController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1260">
+              <caret line="142" column="50" lean-forward="false" selection-start-line="142" selection-start-column="50" selection-end-line="142" selection-end-column="50" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="homeController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/home/homeController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-183">
-              <caret line="228" column="40" lean-forward="true" selection-start-line="228" selection-start-column="40" selection-end-line="228" selection-end-column="40" />
+            <state relative-caret-position="2130">
+              <caret line="191" column="9" lean-forward="false" selection-start-line="191" selection-start-column="9" selection-end-line="191" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#5532#5553#0" expanded="true" />
-                <element signature="e#6613#6635#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="User.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pumpkinbox/api/User.java">
+      <file leaf-file-name="Notification.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/notifications/Notification.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="21" column="5" lean-forward="true" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
-              <folding>
-                <element signature="e#246#247#0" expanded="true" />
-                <element signature="e#282#283#0" expanded="true" />
-                <element signature="e#340#341#0" expanded="true" />
-                <element signature="e#390#391#0" expanded="true" />
-                <element signature="e#713#714#0" expanded="true" />
-                <element signature="e#744#745#0" expanded="true" />
-                <element signature="e#792#793#0" expanded="true" />
-                <element signature="e#832#833#0" expanded="true" />
-                <element signature="e#862#863#0" expanded="true" />
-                <element signature="e#891#892#0" expanded="true" />
-                <element signature="e#932#933#0" expanded="true" />
-                <element signature="e#968#969#0" expanded="true" />
-                <element signature="e#1004#1005#0" expanded="true" />
-                <element signature="e#1036#1037#0" expanded="true" />
-                <element signature="e#1086#1087#0" expanded="true" />
-                <element signature="e#1128#1129#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="chatWindowController.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/chat_window/chatWindowController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="262" column="37" lean-forward="true" selection-start-line="262" selection-start-column="37" selection-end-line="262" selection-end-column="37" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2387#2388#0" expanded="true" />
-                <element signature="e#2434#2435#0" expanded="true" />
-                <element signature="e#2469#2470#0" expanded="true" />
-                <element signature="e#2501#2502#0" expanded="true" />
-                <element signature="e#2543#2544#0" expanded="true" />
-                <element signature="e#2575#2576#0" expanded="true" />
-                <element signature="e#2619#2620#0" expanded="true" />
-                <element signature="e#2658#2659#0" expanded="true" />
-                <element signature="e#2695#2696#0" expanded="true" />
-                <element signature="e#2729#2730#0" expanded="true" />
-                <element signature="e#5039#5060#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="210">
+              <caret line="18" column="27" lean-forward="false" selection-start-line="18" selection-start-column="27" selection-end-line="18" selection-end-column="27" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -117,8 +128,8 @@
       <file leaf-file-name="ChatClient.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/pumpkinbox/client/ChatClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="389">
-              <caret line="218" column="92" lean-forward="false" selection-start-line="218" selection-start-column="83" selection-end-line="218" selection-end-column="92" />
+            <state relative-caret-position="1725">
+              <caret line="124" column="27" lean-forward="false" selection-start-line="124" selection-start-column="27" selection-end-line="124" selection-end-column="27" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -126,27 +137,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ChatServer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pumpkinbox/server/ChatServer.java">
+      <file leaf-file-name="Images.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/images/Images.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="267">
-              <caret line="159" column="70" lean-forward="false" selection-start-line="159" selection-start-column="70" selection-end-line="159" selection-end-column="70" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MessageObject.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pumpkinbox/api/MessageObject.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="492">
-              <caret line="67" column="34" lean-forward="false" selection-start-line="67" selection-start-column="34" selection-end-line="67" selection-end-column="34" />
-              <folding>
-                <element signature="e#282#283#0" expanded="true" />
-                <element signature="e#314#315#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="210">
+              <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -189,7 +185,6 @@
         <option value="$PROJECT_DIR$/src/pumpkinbox/api/ChatObject.java" />
         <option value="$PROJECT_DIR$/src/pumpkinbox/api/CODES.java" />
         <option value="$PROJECT_DIR$/src/pumpkinbox/api/NotificationObject.java" />
-        <option value="$PROJECT_DIR$/src/pumpkinbox/ui/notifications/Notification.java" />
         <option value="$PROJECT_DIR$/src/pumpkinbox/api/Friend.java" />
         <option value="$PROJECT_DIR$/src/pumpkinbox/api/ResponseObject.java" />
         <option value="$PROJECT_DIR$/src/pumpkinbox/ui/main.css" />
@@ -204,25 +199,26 @@
         <option value="$PROJECT_DIR$/test/pumpkinbox/ui/home/home_screen_test.java" />
         <option value="$PROJECT_DIR$/src/pumpkinbox/ui/home/home_screen.fxml" />
         <option value="$PROJECT_DIR$/src/pumpkinbox/dialogs/Dialog.java" />
-        <option value="$PROJECT_DIR$/src/pumpkinbox/ui/add_friend/addFriendController.java" />
-        <option value="$PROJECT_DIR$/src/pumpkinbox/client/Client.java" />
         <option value="$PROJECT_DIR$/test/pumpkinbox/ui/dialogs/dialogsTest.java" />
         <option value="$PROJECT_DIR$/src/pumpkinbox/dialogs/DecisionDialog.java" />
         <option value="$PROJECT_DIR$/src/pumpkinbox/dialogs/AlertDialog.java" />
         <option value="$PROJECT_DIR$/src/pumpkinbox/ui/loginScreenController.java" />
-        <option value="$PROJECT_DIR$/src/pumpkinbox/ui/create_user/signupScreenController.java" />
-        <option value="$PROJECT_DIR$/src/pumpkinbox/server/Server.java" />
         <option value="$PROJECT_DIR$/src/pumpkinbox/ui/profile/profile_screen.fxml" />
         <option value="$PROJECT_DIR$/src/pumpkinbox/ui/profile/profileScreenController.java" />
         <option value="$PROJECT_DIR$/src/pumpkinbox/time/Time.java" />
         <option value="$PROJECT_DIR$/src/pumpkinbox/api/User.java" />
-        <option value="$PROJECT_DIR$/src/pumpkinbox/ui/images/Images.java" />
         <option value="$PROJECT_DIR$/src/pumpkinbox/ui/chat_window/chat_screen.fxml" />
-        <option value="$PROJECT_DIR$/src/pumpkinbox/ui/home/homeController.java" />
         <option value="$PROJECT_DIR$/src/pumpkinbox/server/ChatServer.java" />
-        <option value="$PROJECT_DIR$/src/pumpkinbox/ui/chat_window/chatWindowController.java" />
-        <option value="$PROJECT_DIR$/src/pumpkinbox/client/ChatClient.java" />
         <option value="$PROJECT_DIR$/src/pumpkinbox/api/MessageObject.java" />
+        <option value="$PROJECT_DIR$/src/pumpkinbox/ui/notifications/Notification.java" />
+        <option value="$PROJECT_DIR$/src/pumpkinbox/ui/home/homeController.java" />
+        <option value="$PROJECT_DIR$/src/pumpkinbox/client/ChatClient.java" />
+        <option value="$PROJECT_DIR$/src/pumpkinbox/ui/chat_window/chatWindowController.java" />
+        <option value="$PROJECT_DIR$/src/pumpkinbox/client/Client.java" />
+        <option value="$PROJECT_DIR$/src/pumpkinbox/ui/add_friend/addFriendController.java" />
+        <option value="$PROJECT_DIR$/src/pumpkinbox/ui/images/Images.java" />
+        <option value="$PROJECT_DIR$/src/pumpkinbox/ui/create_user/signupScreenController.java" />
+        <option value="$PROJECT_DIR$/src/pumpkinbox/server/Server.java" />
       </list>
     </option>
   </component>
@@ -246,9 +242,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -258,6 +254,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="PumpkinBox(nonpersis)" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PumpkinBox (nonpersis)" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PumpkinBox(nonpersis)" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -298,6 +312,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="ui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PumpkinBox (nonpersis)" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PumpkinBox(nonpersis)" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pumpkinbox" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="notifications" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -376,6 +416,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="home" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PumpkinBox (nonpersis)" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PumpkinBox(nonpersis)" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pumpkinbox" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="create_user" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -493,6 +559,28 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PumpkinBox (nonpersis)" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PumpkinBox(nonpersis)" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pumpkinbox" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="api" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -528,6 +616,10 @@
               <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="icon_graphics" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -539,7 +631,7 @@
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="FullScreen" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.JavaFX" />
-    <property name="SearchEverywhereHistoryKey" value="ser&#9;FILE&#9;file:///Users/ramiawar/IdeaProjects/PumpkinBox(nonpersis)/src/pumpkinbox/server/Server.java&#10;client&#9;FILE&#9;file:///Users/ramiawar/IdeaProjects/PumpkinBox(nonpersis)/src/pumpkinbox/client/Client.java&#10;signup&#9;FILE&#9;file:///Users/ramiawar/IdeaProjects/PumpkinBox(nonpersis)/src/pumpkinbox/ui/create_user/signupScreenController.java&#10;time&#9;FILE&#9;file:///Users/ramiawar/IdeaProjects/PumpkinBox(nonpersis)/src/pumpkinbox/time/Time.java" />
+    <property name="SearchEverywhereHistoryKey" value="images&#9;FILE&#9;file:///Users/ramiawar/IdeaProjects/PumpkinBox(nonpersis)/src/pumpkinbox/ui/images/Images.java&#10;ser&#9;FILE&#9;file:///Users/ramiawar/IdeaProjects/PumpkinBox(nonpersis)/src/pumpkinbox/server/Server.java&#10;client&#9;FILE&#9;file:///Users/ramiawar/IdeaProjects/PumpkinBox(nonpersis)/src/pumpkinbox/client/Client.java&#10;signup&#9;FILE&#9;file:///Users/ramiawar/IdeaProjects/PumpkinBox(nonpersis)/src/pumpkinbox/ui/create_user/signupScreenController.java&#10;time&#9;FILE&#9;file:///Users/ramiawar/IdeaProjects/PumpkinBox(nonpersis)/src/pumpkinbox/time/Time.java" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit3" />
   </component>
   <component name="RecentsManager">
@@ -968,7 +1060,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16165951" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16380544" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1029,13 +1121,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/api/ChatObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="30" lean-forward="false" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pumpkinbox/api/CODES.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -1063,13 +1148,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-493">
           <caret line="735" column="69" lean-forward="true" selection-start-line="735" selection-start-column="69" selection-end-line="735" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/api/NotificationObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="23" lean-forward="true" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1104,22 +1183,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/add_friend/add_friend_screen.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="585">
           <caret line="39" column="197" lean-forward="false" selection-start-line="39" selection-start-column="197" selection-end-line="39" selection-end-column="197" />
           <folding />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/notifications/Notification.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="23" column="22" lean-forward="false" selection-start-line="23" selection-start-column="22" selection-end-line="23" selection-end-column="22" />
-          <folding />
-        </state>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
       </provider>
     </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home/lib/ant-javafx.jar!/resources/web-files/error.png">
@@ -1147,14 +1218,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/create_user/signup_screen.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="284">
           <caret line="117" column="59" lean-forward="false" selection-start-line="114" selection-start-column="30" selection-end-line="117" selection-end-column="59" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/home/home.java" />
@@ -1162,15 +1233,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="12" column="26" lean-forward="true" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/add_friend/addFriendController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="129" column="0" lean-forward="true" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1216,19 +1278,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/server/Server.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4905">
-          <caret line="350" column="0" lean-forward="false" selection-start-line="350" selection-start-column="0" selection-end-line="350" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#16035#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#2667#2668#0" expanded="false" />
-            <element signature="e#2704#2705#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/profile/profile.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1236,26 +1285,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/home/home_screen.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="35" lean-forward="false" selection-start-line="20" selection-start-column="35" selection-end-line="20" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/profile/profile_screen.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/profile/profileScreenController.java">
@@ -1276,21 +1313,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/client/Client.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="388">
-          <caret line="122" column="12" lean-forward="false" selection-start-line="122" selection-start-column="12" selection-end-line="122" selection-end-column="12" />
-          <folding>
-            <element signature="method#sendLoginData#0;class#Client#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home/javafx-src.zip!/javafx/scene/paint/Color.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="267">
           <caret line="771" column="30" lean-forward="false" selection-start-line="771" selection-start-column="30" selection-end-line="771" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1298,15 +1324,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/create_user/signupScreenController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="226" column="7" lean-forward="false" selection-start-line="226" selection-start-column="7" selection-end-line="226" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1318,14 +1335,6 @@
     <entry file="file://$PROJECT_DIR$/resources/images/pumpkin_profile.png">
       <provider selected="true" editor-type-id="images">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/images/Images.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="9" lean-forward="true" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pumpkinbox/api/User.java">
@@ -1353,33 +1362,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/loginScreenController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="168" column="0" lean-forward="true" selection-start-line="168" selection-start-column="0" selection-end-line="168" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/chat_window/chat_screen.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1080">
           <caret line="30" column="169" lean-forward="false" selection-start-line="30" selection-start-column="169" selection-end-line="30" selection-end-column="169" />
           <folding />
         </state>
       </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/home/homeController.java">
+    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/server/ChatServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-183">
-          <caret line="228" column="40" lean-forward="true" selection-start-line="228" selection-start-column="40" selection-end-line="228" selection-end-column="40" />
+        <state relative-caret-position="777">
+          <caret line="159" column="70" lean-forward="false" selection-start-line="159" selection-start-column="70" selection-end-line="159" selection-end-column="70" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#5532#5553#0" expanded="true" />
-            <element signature="e#6613#6635#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1395,20 +1394,62 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/client/ChatClient.java">
+    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/home/home.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="218" column="92" lean-forward="false" selection-start-line="218" selection-start-column="83" selection-end-line="218" selection-end-column="92" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/home/home_screen.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-915">
+          <caret line="20" column="35" lean-forward="false" selection-start-line="20" selection-start-column="35" selection-end-line="20" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/api/NotificationObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/notifications/Notification.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="18" column="27" lean-forward="false" selection-start-line="18" selection-start-column="27" selection-end-line="18" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/loginScreenController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="227" column="49" lean-forward="false" selection-start-line="227" selection-start-column="41" selection-end-line="227" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/home/homeController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2130">
+          <caret line="191" column="9" lean-forward="false" selection-start-line="191" selection-start-column="9" selection-end-line="191" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/server/ChatServer.java">
+    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/client/ChatClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="159" column="70" lean-forward="false" selection-start-line="159" selection-start-column="70" selection-end-line="159" selection-end-column="70" />
+        <state relative-caret-position="1725">
+          <caret line="124" column="27" lean-forward="false" selection-start-line="124" selection-start-column="27" selection-end-line="124" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1417,22 +1458,55 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/chat_window/chatWindowController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="262" column="37" lean-forward="true" selection-start-line="262" selection-start-column="37" selection-end-line="262" selection-end-column="37" />
+        <state relative-caret-position="1260">
+          <caret line="142" column="50" lean-forward="false" selection-start-line="142" selection-start-column="50" selection-end-line="142" selection-end-column="50" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2387#2388#0" expanded="true" />
-            <element signature="e#2434#2435#0" expanded="true" />
-            <element signature="e#2469#2470#0" expanded="true" />
-            <element signature="e#2501#2502#0" expanded="true" />
-            <element signature="e#2543#2544#0" expanded="true" />
-            <element signature="e#2575#2576#0" expanded="true" />
-            <element signature="e#2619#2620#0" expanded="true" />
-            <element signature="e#2658#2659#0" expanded="true" />
-            <element signature="e#2695#2696#0" expanded="true" />
-            <element signature="e#2729#2730#0" expanded="true" />
-            <element signature="e#5039#5060#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/client/Client.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="78" column="95" lean-forward="false" selection-start-line="78" selection-start-column="95" selection-end-line="78" selection-end-column="95" />
+          <folding>
+            <element signature="method#sendLoginData#0;class#Client#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/images/Images.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/add_friend/addFriendController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2325">
+          <caret line="199" column="22" lean-forward="false" selection-start-line="199" selection-start-column="22" selection-end-line="199" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/server/Server.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="124" column="0" lean-forward="false" selection-start-line="124" selection-start-column="0" selection-end-line="124" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pumpkinbox/ui/create_user/signupScreenController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="141" column="76" lean-forward="false" selection-start-line="141" selection-start-column="76" selection-end-line="141" selection-end-column="76" />
+          <folding />
         </state>
       </provider>
     </entry>

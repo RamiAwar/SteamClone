@@ -2,8 +2,6 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXPopup?>
-<?import com.jfoenix.controls.JFXSnackbar?>
-<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.Cursor?>
@@ -24,12 +22,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="618.0" prefWidth="1038.0" style="-fx-background-color: rgba(255,255,255,0);" stylesheets="@home.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pumpkinbox.ui.home.homeController">
+<StackPane fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="618.0" prefWidth="931.0" style="-fx-background-color: rgba(255,255,255,0);" stylesheets="@home.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pumpkinbox.ui.home.homeController">
    <children>
       <Pane prefHeight="650.0" prefWidth="826.0" style="-fx-background-color: rgba(255,255,255,0);" />
       <Pane prefHeight="425.0" prefWidth="506.0" style="-fx-background-color: #444;">
          <children>
-            <HBox fx:id="menuBar" layoutY="2.0" prefHeight="17.0" prefWidth="836.0">
+            <HBox fx:id="menuBar" layoutY="2.0" prefHeight="27.0" prefWidth="712.0">
                <children>
                   <Label fx:id="closeIcon" textFill="WHITE">
                      <HBox.margin>
@@ -47,7 +45,7 @@
                   <Font name="Press Start 2P Regular" size="13.0" />
                </font>
             </Label>
-            <HBox alignment="CENTER" layoutY="31.0" prefHeight="567.0" prefWidth="1019.0">
+            <HBox alignment="CENTER" layoutY="31.0" prefHeight="567.0" prefWidth="910.0">
                <children>
                   <VBox alignment="CENTER" prefHeight="567.0" prefWidth="281.0">
                      <children>
@@ -129,21 +127,21 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="0.0" prefWidth="225.0">
                            <children>
-                              <JFXButton fx:id="add_friend" onAction="#loadAddFriend" prefHeight="27.0" prefWidth="280.0" style="-fx-background-color: #666;" text="Add Friend" textFill="#ebebeb">
+                              <JFXButton fx:id="add_friend" onAction="#loadAddFriend" prefHeight="27.0" prefWidth="110.0" style="-fx-background-color: #666;" text="Add Friend" textFill="#ebebeb">
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="10.0" right="20.0" />
                                  </HBox.margin>
                               </JFXButton>
-                              <Label fx:id="searchIcon" alignment="CENTER" textAlignment="CENTER">
+                              <Label fx:id="searchIcon" alignment="CENTER" disable="true" textAlignment="CENTER">
                                  <HBox.margin>
                                     <Insets bottom="10.0" right="10.0" />
                                  </HBox.margin>
                               </Label>
-                              <JFXTextField accessibleRole="SPLIT_MENU_BUTTON" focusColor="#e4e4e4" maxHeight="-Infinity" prefHeight="25.0" prefWidth="275.0" promptText="Search" style="-fx-background-color: #555;" unFocusColor="#c6c6c6">
+                              <JFXButton fx:id="add_friend1" onAction="#loadAddFriend" prefHeight="27.0" prefWidth="110.0" style="-fx-background-color: #666;" text="Requests (0)" textAlignment="CENTER" textFill="#ebebeb">
                                  <HBox.margin>
-                                    <Insets bottom="10.0" />
+                                    <Insets bottom="10.0" right="10.0" />
                                  </HBox.margin>
-                              </JFXTextField>
+                              </JFXButton>
                            </children>
                         </HBox>
                         <ListView fx:id="friends_list" prefHeight="433.0" prefWidth="234.0" style="-fx-background-color: #555;" stylesheets="@../main.css">
@@ -153,17 +151,17 @@
                         </ListView>
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER" prefHeight="567.0" prefWidth="402.0" HBox.hgrow="NEVER">
+                  <VBox alignment="CENTER" prefHeight="567.0" prefWidth="571.0" HBox.hgrow="NEVER">
                      <children>
                         <Label style="-fx-text-fill: #ddd;" text="Games Library">
                            <VBox.margin>
-                              <Insets bottom="40.0" />
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                            </VBox.margin>
                            <font>
-                              <Font name="Press Start 2P Regular" size="26.0" />
+                              <Font name="Press Start 2P Regular" size="20.0" />
                            </font>
                         </Label>
-                        <GridPane fx:id="games_menu" prefHeight="450.0" prefWidth="402.0" style="-fx-vgap: 10; -fx-hgap: 10;">
+                        <GridPane fx:id="games_menu" prefHeight="572.0" prefWidth="500.0" style="-fx-vgap: 60; -fx-hgap: 20; -fx-padding: 10 10 10 10;">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -172,10 +170,9 @@
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <VBox.margin>
-                              <Insets bottom="40.0" />
+                              <Insets bottom="40.0" top="40.0" />
                            </VBox.margin>
                            <children>
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #555;" GridPane.hgrow="NEVER" GridPane.vgrow="NEVER">
@@ -185,26 +182,38 @@
                                  <children>
                                     <ImageView fitHeight="123.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../../resources/images/pumpkin_profile.png" />
+                                          <Image url="@../../../../resources/images/games/tictactoe2-01.png" />
                                        </image>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
                                     </ImageView>
                                     <Label style="-fx-text-fill: #ddd;" text="Tic Tac Toe">
                                        <VBox.margin>
                                           <Insets top="5.0" />
-                                       </VBox.margin></Label>
+                                       </VBox.margin>
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font></Label>
                                  </children>
                               </VBox>
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #555;" GridPane.columnIndex="1">
                                  <children>
                                     <ImageView fitHeight="123.0" fitWidth="128.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../../resources/images/pumpkin_profile.png" />
+                                          <Image url="@../../../../resources/images/games/snake-01.png" />
                                        </image>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
                                     </ImageView>
-                                    <Label style="-fx-text-fill: #ddd;" text="Game 2">
+                                    <Label style="-fx-text-fill: #ddd;" text="Snake">
                                        <VBox.margin>
                                           <Insets top="5.0" />
-                                       </VBox.margin></Label>
+                                       </VBox.margin>
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font></Label>
                                  </children>
                               </VBox>
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #555;" GridPane.columnIndex="2">
@@ -213,11 +222,17 @@
                                        <image>
                                           <Image url="@../../../../resources/images/pumpkin_profile.png" />
                                        </image>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
                                     </ImageView>
                                     <Label style="-fx-text-fill: #ddd;" text="Game 3">
                                        <VBox.margin>
                                           <Insets top="5.0" />
-                                       </VBox.margin></Label>
+                                       </VBox.margin>
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font></Label>
                                  </children>
                               </VBox>
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #555;" GridPane.rowIndex="1">
@@ -226,11 +241,17 @@
                                        <image>
                                           <Image url="@../../../../resources/images/pumpkin_profile.png" />
                                        </image>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
                                     </ImageView>
                                     <Label style="-fx-text-fill: #ddd;" text="Tic Tac Toe">
                                        <VBox.margin>
                                           <Insets top="5.0" />
-                                       </VBox.margin></Label>
+                                       </VBox.margin>
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font></Label>
                                  </children>
                               </VBox>
                               <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #555;" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -239,36 +260,32 @@
                                        <image>
                                           <Image url="@../../../../resources/images/pumpkin_profile.png" />
                                        </image>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
                                     </ImageView>
                                     <Label style="-fx-text-fill: #ddd;" text="Tic Tac Toe">
                                        <VBox.margin>
                                           <Insets top="5.0" />
-                                       </VBox.margin></Label>
+                                       </VBox.margin>
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font></Label>
                                  </children>
                               </VBox>
                            </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
                         </GridPane>
                      </children>
                      <HBox.margin>
-                        <Insets left="100.0" right="100.0" />
+                        <Insets left="50.0" right="50.0" />
                      </HBox.margin>
+                     <padding>
+                        <Insets left="30.0" />
+                     </padding>
                   </VBox>
-                  <VBox prefHeight="567.0" prefWidth="188.0">
-                     <children>
-                        <StackPane fx:id="root">
-                        	<VBox maxHeight="400" maxWidth="400">
-                        		<children>
-                        			<HBox fillHeight="false" prefHeight="110.0" prefWidth="171.0" spacing="20" style="-fx-padding: 0 0 0 50;">
-                                    <children>
-                                       <JFXButton prefHeight="109.0" prefWidth="153.0" />
-                                    </children>
-                        			</HBox>
-                        		</children>
-                        	</VBox>
-                        	
-                        	<JFXSnackbar fx:id="snackbar" prefWidth="300" />
-                        </StackPane>
-                     </children></VBox>
                </children>
             </HBox>
             <Region fx:id="draggableRegion" layoutX="196.0" layoutY="575.0" prefHeight="23.0" prefWidth="469.0" />

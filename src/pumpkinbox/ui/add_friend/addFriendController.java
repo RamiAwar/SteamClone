@@ -25,6 +25,7 @@ import javafx.stage.StageStyle;
 import pumpkinbox.api.CODES;
 import pumpkinbox.api.ResponseObject;
 import pumpkinbox.client.Client;
+import pumpkinbox.dialogs.AlertDialog;
 import pumpkinbox.ui.draggable.EffectUtilities;
 import pumpkinbox.ui.icons.Icons;
 import pumpkinbox.ui.images.Images;
@@ -33,6 +34,7 @@ import pumpkinbox.validation.Validator;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Stack;
 
 /**
  * Created by ramiawar on 3/23/17.
@@ -47,7 +49,6 @@ public class addFriendController implements Initializable{
     public void setUserID(int userID) {
         this.userID = userID;
     }
-
     public void setName(String userName) {
         this.userName = userName;
     }
@@ -60,6 +61,9 @@ public class addFriendController implements Initializable{
     }
 
     Icons icons = new Icons();
+
+    @FXML
+    StackPane stackPane;
 
     @FXML
     Label closeIcon;
@@ -122,37 +126,29 @@ public class addFriendController implements Initializable{
         if( friend_email.getText().isEmpty() || error_label.isVisible()){
 
             // Display ALERT: please fill all fields
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Please enter a valid email", ButtonType.OK);
-            alert.show();
+            new AlertDialog(stackPane, "Invalid Request", "Please enter a valid friend's email.").showDialog();
 
             return;
         }
 
-        //VALID EMAIL
-        ResponseObject response = Client.sendFriendRequestData("UPDATE " + authenticationToken + " " + "addfriend" + userID + "|" + userName + "|" + friend_email.getText() );
+        String email = friend_email.getText();
+        friend_email.clear();
 
+        ResponseObject responseObject = Client.sendFriendRequestData(userID, userName, email, authenticationToken);
 
-        switch(response.getStatusCode()){
-            case CODES.ALREADY_EXISTS:
-                friend_email.clear();
-
-                //TODO: alert user that they already exists
-                Alert alert = new Alert(Alert.AlertType.ERROR, "User already exists. Try logging in.", ButtonType.CLOSE);
-
-                break;
-
+        switch(responseObject.getStatusCode()){
             case CODES.OK:
-                System.out.println("New user successfully created.");
-                System.out.println("Please login.");
-                //TODO: Display alert, success, please log in
-                close(); //close window
+                new AlertDialog(stackPane, "Request Successful", "Your friend request has been sent.", "Okay").showDialog();
                 break;
-
-            case CODES.INSERTION_ERROR:
-                System.out.println("There was an error creating your account. Please try again later.");
-                //TODO: Display message
+            case CODES.NOT_FOUND:
+                new AlertDialog(stackPane, "Incorrect Email", "The username you requested does not exist. Please try again.", "Okay").showDialog();
                 break;
-
+            case CODES.SEND_ERROR:
+                new AlertDialog(stackPane, "Unknown Error", "There was an error sending your request. Please try again later.", "Okay").showDialog();
+                break;
+            case CODES.ALREADY_EXISTS:
+                new AlertDialog(stackPane, "Already Friends", "You are already friends. Try sending a request to another user.", "Okay").showDialog();
+                break;
             default:
                 break;
         }
@@ -198,7 +194,7 @@ public class addFriendController implements Initializable{
             minimize();
         });
 
-        pumpkinbox_logo.setImage(Images.pumpkin);
+        pumpkinbox_logo.setImage(Images.pumpkin_logo_gif);
     }
 
     private void minimize(){

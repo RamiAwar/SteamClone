@@ -246,7 +246,9 @@ public class Server {
                     userpass = SECRET.split("\\|");
                     username = userpass[0];
                     password = Hasher.sha256(userpass[1]);
-                    String[] userinfo = CONTENT.split("\\|");
+
+                    String[] temp = request.split(" ", 3);
+                    String[] userinfo = temp[2].split("\\|");
                     String firstname = userinfo[0];
                     String lastname = userinfo[1];
 
@@ -282,7 +284,6 @@ public class Server {
                             System.out.println("Could not send invalid request to server.");
                             e.printStackTrace();
                         }
-
                         break;
                     }
 
@@ -330,57 +331,50 @@ public class Server {
 
                             if(validToken){
 
-                                //Send OK
-                                //System.out.println("User exists and valid auth token. Getting friends ...");
+                                switch(type){
 
-                                //Making sure id is correct, if not correct it
-                                if(userId != Integer.parseInt(sender_id)) userId = Integer.parseInt(sender_id);
+                                    case "REQUEST":
 
-                                //Check user friends
-                                if(type.equals("addfriend")) {
+                                        //Check if already friends
+                                        ResultSet friend = db.executeQuery("SELECT * FROM pumpkinbox_users_table WHERE email='" +
+                                                friend_email + "';");
 
-                                    ResultSet friend = db.executeQuery("SELECT * FROM pumpkinbox_friends_table WHERE email='" +
-                                            friend_email + "';");
+                                        if(friend.next()){
 
-                                    if (friend.next()) {
+                                            int friend_id = friend.getInt("id");
 
-                                        //retrieving friend id
-                                        int friend_id = friend.getInt("id");
+                                            ResultSet already = db.executeQuery("SELECT * FROM pumpkinbox_friends_table WHERE (sender_id='" +
+                                                    friend_id + "' AND receiver_id='" +userId+ "' ) OR (sender_id='" + userId+ "' AND receiver_id='" + friend_id + "');");
 
-                                        //Here must send friend REQUEST
+                                            if(already.next()){
+                                                dataout.writeObject(CODES.ALREADY_EXISTS);
+                                                return;
 
+                                            }else{
 
-                                        //TODO LATER Adding friendship to database
-//                                        if(db.executeAction("INSERT INTO pumpkinbox_friends_table (id, sender_id, receiver_id, timestamp) VALUES ('" +
-//                                                userId + "', '" +
-//                                                friend_id + "', '" +
-//                                                Time.getTimeStamp() + "');")){
-//                                            System.out.println("Insertion successful");
-//                                            dataout.writeObject(CODES.OK);
-//                                        }
-                                    }
+                                                //Add request to table
+                                                String friend_request = "INSERT INTO pumpkinbox_friend_requests (sender_id, receiver_id, sender_username) " +
+                                                        "VALUES('" + userId + "', '" + friend_id + "', '" + sender_username + "');";
 
-                                    //Return friends to client
-                                    //Turn onlineFriends into a string
-                                    String outputFriends = "";
-//                                    try {
-//                                        System.out.println("Forming output...");
-//                                        for (int i = 0; i < onlineFriends.size()-1; i++) {
-//                                            System.out.println(onlineFriends.get(i).getUsername());
-//                                            outputFriends += onlineFriends.get(i).getUsername() + "|";
-//                                            outputFriends += onlineFriends.get(i).getUserId() + "|";
-//                                        }
-//
-//                                        outputFriends += onlineFriends.get(onlineFriends.size() - 1).getUsername() + "|";
-//                                        outputFriends += onlineFriends.get(onlineFriends.size() - 1).getUserId();
-//
-//                                        System.out.println("Sending to client: " + outputFriends);
-//                                        dataout.writeObject(outputFriends);
-//                                    }catch (Exception e){
-//                                        e.printStackTrace();
-//                                    }
+                                                if(db.executeAction(friend_request)){
 
+                                                    //Seems good, reply to client
+                                                    dataout.writeObject(CODES.OK);
+                                                    return;
+                                                }
+                                            }
 
+                                        }else{
+
+                                            //friend requested not found, notify user
+                                            dataout.writeObject(CODES.NOT_FOUND);
+                                            return;
+                                        }
+                                        break;
+
+                                    default:
+                                        dataout.writeObject(CODES.INVALID_REQUEST);
+                                        break;
                                 }
 
                             }else{

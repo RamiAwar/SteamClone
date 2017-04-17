@@ -14,19 +14,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="548.0" prefWidth="457.0" style="-fx-background-color: rgba(255,255,255,0);" stylesheets="@add_friend.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pumpkinbox.ui.add_friend.addFriendController">
+<StackPane fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="509.0" prefWidth="533.0" style="-fx-background-color: rgba(255,255,255,0);" stylesheets="@add_friend.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pumpkinbox.ui.add_friend.addFriendController">
    <children>
       <Pane prefHeight="650.0" prefWidth="826.0" style="-fx-background-color: rgba(255,255,255,0);" />
       <Pane prefHeight="425.0" prefWidth="506.0" style="-fx-background-color: #444; -fx-border-radius: 20 20 20 20;" StackPane.alignment="CENTER">
          <children>
-            <VBox alignment="BASELINE_LEFT" fillWidth="false" layoutY="32.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="494.0" prefWidth="434.0">
+            <VBox alignment="BASELINE_LEFT" fillWidth="false" layoutY="32.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="422.0" prefWidth="500.0">
                <children>
                   <ImageView fx:id="pumpkinbox_logo" fitHeight="213.0" fitWidth="132.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="NEVER">
                      <image>
-                        <Image url="@../../../../resources/images/pumpkin_profile.png" />
+                        <Image url="@../../../../resources/images/pumpkinold.gif" />
                      </image>
                      <VBox.margin>
-                        <Insets left="150.0" right="150.0" top="20.0" />
+                        <Insets bottom="30.0" left="190.0" right="190.0" top="50.0" />
                      </VBox.margin>
                   </ImageView>
                   <Label alignment="CENTER" text="Add a friend" textFill="#f2f2f2">
@@ -34,15 +34,15 @@
                         <Font size="17.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="10.0" left="60.0" right="20.0" top="20.0" />
+                        <Insets bottom="10.0" left="60.0" right="20.0" top="40.0" />
                      </VBox.margin>
                   </Label>
-                  <JFXTextField fx:id="friend_email" focusColor="#e4e4e4" labelFloat="true" prefHeight="30.0" prefWidth="322.0" promptText="Friend email" styleClass="input" stylesheets="@add_friend.css" unFocusColor="#a1a1a1">
+                  <JFXTextField fx:id="friend_email" focusColor="#e4e4e4" labelFloat="true" prefHeight="25.0" prefWidth="385.0" promptText="Friend email" styleClass="input" stylesheets="@add_friend.css" unFocusColor="#a1a1a1">
                      <VBox.margin>
                         <Insets left="60.0" right="60.0" top="20.0" />
                      </VBox.margin>
                   </JFXTextField>
-                  <Label fx:id="error_label" alignment="BASELINE_LEFT" prefHeight="25.0" prefWidth="322.0" style="-fx-text-fill: #eee; -fx-background-color: #aa4444;" styleClass="error" text="User not found." textFill="#ffffffd1" textOverrun="CLIP">
+                  <Label fx:id="error_label" alignment="BASELINE_LEFT" prefHeight="25.0" prefWidth="386.0" style="-fx-text-fill: #eee; -fx-background-color: #aa4444;" styleClass="error" text="User not found." textFill="#ffffffd1" textOverrun="CLIP">
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
@@ -53,16 +53,16 @@
                         <Insets left="60.0" right="60.0" top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <HBox prefHeight="35.0" prefWidth="314.0">
+                  <HBox prefHeight="35.0" prefWidth="405.0">
                      <children>
-                        <JFXButton fx:id="searchButton" alignment="BASELINE_LEFT" defaultButton="true" onAction="#addFriend" prefHeight="27.0" prefWidth="136.0" style="-fx-background-color: #555;" text="Send Request" textFill="#dddddd">
+                        <JFXButton fx:id="searchButton" alignment="BASELINE_LEFT" defaultButton="true" onAction="#addFriend" prefHeight="27.0" prefWidth="137.0" style="-fx-background-color: #555;" text="Send Request" textFill="#dddddd">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
                         </JFXButton>
-                        <JFXButton fx:id="cancelButton" alignment="BASELINE_LEFT" cancelButton="true" onAction="#close" prefHeight="27.0" prefWidth="136.0" style="-fx-background-color: #555;" text="Cancel" textFill="#dddddd">
+                        <JFXButton fx:id="cancelButton" alignment="BASELINE_LEFT" cancelButton="true" onAction="#close" prefHeight="27.0" prefWidth="147.0" style="-fx-background-color: #555;" text="Cancel" textFill="#dddddd">
                            <HBox.margin>
-                              <Insets left="40.0" />
+                              <Insets left="100.0" />
                            </HBox.margin>
                         </JFXButton>
                      </children>
@@ -72,12 +72,12 @@
                   </HBox>
                </children>
             </VBox>
-            <Label alignment="CENTER" layoutX="135.0" layoutY="7.0" prefHeight="18.0" prefWidth="168.0" text="PumpkinBox" textFill="#eeeeee">
+            <Label alignment="CENTER" layoutX="173.0" layoutY="5.0" prefHeight="18.0" prefWidth="168.0" text="PumpkinBox" textFill="#eeeeee">
                <font>
                   <Font name="Press Start 2P Regular" size="16.0" />
                </font>
             </Label>
-            <HBox fx:id="menuBar" layoutY="2.0" prefHeight="27.0" prefWidth="438.0">
+            <HBox fx:id="menuBar" layoutY="2.0" prefHeight="27.0" prefWidth="512.0">
                <children>
                   <Label fx:id="closeIcon" textFill="WHITE">
                      <HBox.margin>

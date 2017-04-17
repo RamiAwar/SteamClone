@@ -209,7 +209,7 @@ public class signupScreenController implements Initializable{
             minimize();
         });
 
-        pumpkinbox_logo.setImage(Images.pumpkin);
+        pumpkinbox_logo.setImage(Images.pumpkin_logo_gif);
 
     }
 

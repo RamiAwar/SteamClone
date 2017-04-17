@@ -23,7 +23,7 @@ public class Notification {
                 image = new ImageView(new Image("icon_graphics/cross_red.png"));
                 break;
             case "MESSAGE":
-                image = new ImageView(new Image("icon_graphics/cross_red.png"));
+                image = new ImageView(new Image("icon_graphics/message_colored.png"));
                 break;
             default:
                 image = new ImageView(new Image("icon_graphics/warning_red.png"));
@@ -38,6 +38,15 @@ public class Notification {
         notifications.hideAfter(Duration.seconds(seconds));
         notifications.position(Pos.BOTTOM_RIGHT);
         notifications.show();
+
+    }
+
+    public Notification(String gameTitle, String message){
+
+        ImageView image;
+
+        switch(gameTitle){
+        }
 
     }
 

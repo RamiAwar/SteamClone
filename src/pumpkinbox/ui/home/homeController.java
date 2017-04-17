@@ -3,6 +3,7 @@ package pumpkinbox.ui.home;
 import com.jfoenix.controls.JFXButton;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -60,10 +61,41 @@ public class homeController implements Initializable{
 
     private ObservableList<String> friendsList = FXCollections.observableArrayList();
 
+    /**
+     * This queue stores messages to be sent. The client empties this queue and sends these messages to the server.
+     */
     private BlockingQueue<MessageObject> sendMessageQueue = new LinkedBlockingQueue<>();
+
+    /**
+     * This queue stores incoming messages to be displayed or consumed when the user opens the chat with the sender of the message.
+     */
     private BlockingQueue<MessageObject> receiveMessageQueue = new LinkedBlockingQueue<>();
 
+    /**
+     * This queue stores incoming messages for notification purposes
+     */
+    private BlockingQueue<MessageObject> messageNotificationQueue = new LinkedBlockingQueue<>();
+
+    /**
+     * This queue stores incoming friend requests to be consumed when requests window is opened.
+     */
+    private BlockingQueue<MessageObject> friendRequestsQueue = new LinkedBlockingQueue<>();
+
+    /**
+     * This queue stores incoming friend requests in order to be consumed as notifications
+     */
+    private BlockingQueue<MessageObject> friendRequestsNotificationQueue = new LinkedBlockingQueue<>();
+
+    /**
+     * This queue stores incoming friend requests to be displayed as dismissable alerts.
+     */
+    private BlockingQueue<MessageObject> gameInvitationNotificationQueue = new LinkedBlockingQueue<>();
+
+
+
     private final BlockingQueue<User> onlineFriends = new LinkedBlockingQueue<>();
+
+
 
     private ArrayList<String> onlineFriendsNames = new ArrayList<>();
     private ArrayList<User> onlineFriendsDetails = new ArrayList<>();
@@ -87,7 +119,8 @@ public class homeController implements Initializable{
     public void initClient(){
 
         //System.out.println("Initializing client with : " + authenticationToken + name);
-        client = new ChatClient(onlineFriends, sendMessageQueue, receiveMessageQueue, userId, name, authenticationToken);
+        client = new ChatClient(onlineFriends, sendMessageQueue, receiveMessageQueue, messageNotificationQueue,
+                friendRequestsQueue, friendRequestsNotificationQueue, gameInvitationNotificationQueue, userId, name, authenticationToken);
         client.connect();
     }
 
@@ -134,11 +167,13 @@ public class homeController implements Initializable{
 
     void close() {
         stage.close();
+        Platform.exit();
     }
 
     @FXML
     void close(ActionEvent e) {
         stage.close();
+        Platform.exit();
     }
 
     @FXML
@@ -147,6 +182,7 @@ public class homeController implements Initializable{
         status_icon.setGraphic(icons.GHOST_GREEN);
         online_status = "online";
     }
+
     @FXML
     void setStatusOffline(ActionEvent e){
         user_status.setText("Offline");
@@ -278,6 +314,7 @@ public class homeController implements Initializable{
             public void handle(ActionEvent event) {
 
                 try {
+
                     updateGUI();
 
                 } catch (InterruptedException e) {
@@ -323,6 +360,7 @@ public class homeController implements Initializable{
         friendsList.setAll(onlineFriendsNames);
         friends_list.getItems().setAll(onlineFriendsNames);
 
+
         friends_list.setOnMouseClicked(event -> {
 
             String friend_firstname = friends_list.getSelectionModel().getSelectedItem().toString();
@@ -350,6 +388,24 @@ public class homeController implements Initializable{
         });
 
 
+        //----------NOTIFICATIONS FOR MESSAGES
+        if(!messageNotificationQueue.isEmpty()){
+
+            MessageObject message = messageNotificationQueue.take();
+
+            Platform.runLater(() -> new Notification(
+                    "New message from " + getFirstnameById(message.getSender_id()),
+                    message.getContent(),
+                    10,
+                    "MESSAGE"
+            ));
+        }
+
+        //----------NOTIFICATIONS FOR GAME INVITATIONS
+
+
+
+
     }
 
     private void checkAndAdd(BlockingQueue<User> friends, ArrayList<String> array) throws InterruptedException {
@@ -369,5 +425,14 @@ public class homeController implements Initializable{
                 array.add(friend.getFirstName());
             }
         }
+    }
+
+    private String getFirstnameById(int id){
+        for (int i = 0; i < onlineFriendsDetails.size(); i++) {
+            if(onlineFriendsDetails.get(i).getUserId() == id){
+                return onlineFriendsDetails.get(i).getFirstName();
+            }
+        }
+        return "ERROR";
     }
 }

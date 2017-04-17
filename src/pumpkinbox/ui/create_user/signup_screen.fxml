@@ -112,11 +112,11 @@
                         </Label>
                         <HBox prefHeight="100.0" prefWidth="310.0">
                            <children>
-                              <JFXButton fx:id="signupButton" alignment="BASELINE_LEFT" onAction="#signup" prefHeight="27.0" prefWidth="136.0" style="-fx-background-color: #555;" text="Signup" textFill="#dddddd">
+                              <JFXButton fx:id="signupButton" alignment="BASELINE_LEFT" defaultButton="true" onAction="#signup" prefHeight="27.0" prefWidth="136.0" style="-fx-background-color: #555;" text="Signup" textFill="#dddddd">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin></JFXButton>
-                              <JFXButton fx:id="cancelButton" alignment="BASELINE_LEFT" onAction="#close" prefHeight="27.0" prefWidth="148.0" style="-fx-background-color: #555;" text="Cancel" textFill="#dddddd">
+                              <JFXButton fx:id="cancelButton" alignment="BASELINE_LEFT" cancelButton="true" onAction="#close" prefHeight="27.0" prefWidth="148.0" style="-fx-background-color: #555;" text="Cancel" textFill="#dddddd">
                                  <HBox.margin>
                                     <Insets left="50.0" />
                                  </HBox.margin></JFXButton>

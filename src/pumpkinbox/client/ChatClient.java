@@ -27,6 +27,10 @@ public class ChatClient {
 
     private BlockingQueue<MessageObject> sendMessageQueue;
     private BlockingQueue<MessageObject> receiveMessageQueue;
+    private BlockingQueue<MessageObject> messageNotificationQueue;
+    private BlockingQueue<MessageObject> friendRequestsQueue;
+    private BlockingQueue<MessageObject> friendRequestsNotificationQueue;
+    private BlockingQueue<MessageObject> gameInvitationNotificationQueue;
 
     private ObjectInputStream datain;
     private ObjectOutputStream dataout;
@@ -38,11 +42,30 @@ public class ChatClient {
     private String authenticationToken = "-1";
 
 
-
-    public ChatClient(BlockingQueue<User> onlineFriends, BlockingQueue<MessageObject> sendMessageQueue, BlockingQueue<MessageObject> receiveMessageQueue, int id, String username, String authToken){
+    /**
+     * Chat client constructor. Takes many queues as arguments, providing pipes between the chat client thread and the home controller thread.
+     * @param onlineFriends This queue is used to pass on the online users that are friends.
+     * @param sendMessageQueue  This queue is used to pass on the messages to be sent by the user.
+     * @param receiveMessageQueue   This queue is used to pass on messages received by the user.
+     * @param messageNotificationQueue  This queue is used to pass on messages received by the user, only to be consumed as notifications.
+     * @param friendRequestsQueue   This queue is used to pass on friend requests to the user.
+     * @param friendRequestsNotificationQueue   This queue is used to pass on friend requests to the user, that are consumed as notifications.
+     * @param gameInvitationNotificationQueue   This queue is used to pass on game invitations directed to the user.
+     * @param id    This is the user id connected to the server through this thread.
+     * @param username  This is the username or email of the user connected to the server through this thread.
+     * @param authToken This is the authentication token that the user received when logging in. This is used to authorize client requests.
+     */
+    public ChatClient(BlockingQueue<User> onlineFriends, BlockingQueue<MessageObject> sendMessageQueue,
+                      BlockingQueue<MessageObject> receiveMessageQueue, BlockingQueue<MessageObject> messageNotificationQueue,
+                      BlockingQueue<MessageObject> friendRequestsQueue, BlockingQueue<MessageObject> friendRequestsNotificationQueue,
+                      BlockingQueue<MessageObject> gameInvitationNotificationQueue, int id, String username, String authToken){
 
         this.sendMessageQueue = sendMessageQueue;
         this.receiveMessageQueue = receiveMessageQueue;
+        this.messageNotificationQueue = messageNotificationQueue;
+        this.friendRequestsQueue = friendRequestsQueue;
+        this.friendRequestsNotificationQueue = friendRequestsNotificationQueue;
+        this.gameInvitationNotificationQueue = gameInvitationNotificationQueue;
         this.userId = id;
         this.authenticationToken = authToken;
         this.onlineFriends = onlineFriends;
@@ -217,6 +240,7 @@ public class ChatClient {
                             System.out.println("PUTTING INTO QUEUE: " + message);
 
                             receiveMessageQueue.offer(new MessageObject(sender_id, time_sent, message));
+                            messageNotificationQueue.offer(new MessageObject(sender_id, time_sent, message));
 
                         default:
                             System.out.println("UNKNOWN VERB RECEIVED:");
