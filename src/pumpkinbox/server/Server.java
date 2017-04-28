@@ -5,7 +5,6 @@
 package pumpkinbox.server;
 
 import pumpkinbox.api.CODES;
-import pumpkinbox.api.NotificationObject;
 import pumpkinbox.api.User;
 import pumpkinbox.database.DatabaseHandler;
 import pumpkinbox.security.AuthToken;
@@ -95,7 +94,7 @@ public class Server {
             this.db = DatabaseHandler.getInstance();
         }
 
-        public Socket getSocket(){
+        public Socket getSocket() {
             return socket;
         }
 
@@ -118,14 +117,12 @@ public class Server {
             System.out.println("Connected");
 
             while (true) {
-                long millis = System.currentTimeMillis();
 
                 try {
 
                     Object s = datain.readObject(); //Read client request
 
                     //TODO: Send ping every 1 min to check if connection is alive?
-                    //
                     //if not
                     //remove current client from ConnectedClients list.
                     //socket.close();
@@ -144,11 +141,6 @@ public class Server {
                     break;
                 }
 
-                try {
-                    Thread.sleep(1000 - millis % 1000); //Sleep thread for 1 second to increase efficiency
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             }
 
         }
@@ -162,21 +154,29 @@ public class Server {
         public void parseRequest(String request) {
 
             // Extract VERB from the request line.
-            StringTokenizer tokens = new StringTokenizer(request);
+            String[] tokens = request.split(" ", 3);
 
-            String VERB = tokens.nextToken();
+            String VERB = tokens[0];
             String SECRET = "";
             String CONTENT = "";
 
-            try{SECRET = tokens.nextToken();}catch(Exception e){e.printStackTrace();}
-            try{CONTENT = tokens.nextToken();}catch(Exception e){e.printStackTrace();}
+            try {
+                SECRET = tokens[1];
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                CONTENT = tokens[2];
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
 
             switch (VERB) {
 
 
                 case "LOGIN":
-                    if(SECRET.equals("")) {
+                    if (SECRET.equals("")) {
                         System.out.println("Invalid request");
                         break;
                     }
@@ -188,11 +188,11 @@ public class Server {
                     String password = Hasher.sha256(userpass[1]);
 
                     //Look up username/pass in database
-                    ResultSet rs = db.executeQuery("SELECT * FROM pumpkinbox_users_table WHERE email='" + username + "' AND password='" + password +"';");
+                    ResultSet rs = db.executeQuery("SELECT * FROM pumpkinbox_users_table WHERE email='" + username + "' AND password='" + password + "';");
 
                     try {
                         System.out.println("Checking if user exists ...");
-                        if(rs.next()){
+                        if (rs.next()) {
 
                             //Login user:
                             //Send OK code, homepage info
@@ -203,15 +203,15 @@ public class Server {
                             String timestamp = Time.getTimeStampPlus();
                             String authToken = AuthToken.generateToken();
 
-                            String query = "UPDATE pumpkinbox_users_table SET "+
+                            String query = "UPDATE pumpkinbox_users_table SET " +
                                     "authtoken='" + authToken + "', " +
                                     "expiration='" + timestamp + "' " +
                                     "WHERE email='" + username + "';";
 
-                            try{
+                            try {
                                 db.executeAction(query);
                                 System.out.println("Inserting authentication token...");
-                            }catch(Exception e){
+                            } catch (Exception e) {
                                 System.out.println("Token insertion failed");
                             }
 
@@ -222,7 +222,7 @@ public class Server {
                             //TODO:Get home page info
                             //dataout.writeObject(INFO);
 
-                        }else{
+                        } else {
                             System.out.println("User not found, sending NOT FOUND code...");
                             dataout.writeObject(CODES.NOT_FOUND);
                             dataout.writeObject(CODES.NOT_FOUND);
@@ -236,7 +236,7 @@ public class Server {
 
                 case "SIGNUP":
 
-                    if(SECRET.equals("") || CONTENT.equals("")) {
+                    if (SECRET.equals("") || CONTENT.equals("")) {
                         System.out.println("Invalid request");
                         break;
                     }
@@ -256,12 +256,12 @@ public class Server {
                     rs = db.executeQuery("SELECT * FROM pumpkinbox_users_table WHERE email='" + username + "' ;");
 
                     try {
-                        if(rs.next()){
+                        if (rs.next()) {
                             //User already exists
                             dataout.writeObject(CODES.ALREADY_EXISTS);
-                        }else{
+                        } else {
                             //Write out OK if execution successful
-                            if(db.executeAction("INSERT INTO pumpkinbox_users_table (id, firstname, lastname, password, email) VALUES (0,'" +
+                            if (db.executeAction("INSERT INTO pumpkinbox_users_table (id, firstname, lastname, password, email) VALUES (0,'" +
                                     firstname + "', '" +
                                     lastname + "', '" +
                                     password + "', '" +
@@ -276,7 +276,7 @@ public class Server {
 
                 case "UPDATE":
 
-                    if(SECRET.equals("") || CONTENT.equals("")) {
+                    if (SECRET.equals("") || CONTENT.equals("")) {
                         System.out.println("Invalid request");
                         try {
                             dataout.writeObject(CODES.INVALID_REQUEST);
@@ -290,16 +290,16 @@ public class Server {
                     String[] get_content = CONTENT.split("\\|");
 
                     String type = get_content[0];
-                    String sender_id = get_content[1];
-                    String sender_username = get_content[2];
-                    String friend_email = get_content[3];
 
-                    ResultSet user = db.executeQuery("SELECT * FROM pumpkinbox_users_table WHERE id='" + sender_id +"';");
+                    int sender_id = Integer.parseInt(get_content[1]);
+
+
+                    ResultSet user = db.executeQuery("SELECT * FROM pumpkinbox_users_table WHERE id='" + Integer.toString(sender_id) + "';");
 
                     try {
                         System.out.println("Checking if user exists ...");
 
-                        if(user.next()){
+                        if (user.next()) {
 
                             //User exists, check auth token, get username:
                             username = user.getString("email");
@@ -311,9 +311,9 @@ public class Server {
 
                             System.out.println(token);
 
-                            if(token.equals(SECRET)){
+                            if (token.equals(SECRET)) {
                                 System.out.println("Token exists. Checking expiration...");
-                            } else{
+                            } else {
                                 System.out.println("Invalid authentication token.");
                                 dataout.writeObject(CODES.INVALID_TOKEN);
                                 return;
@@ -324,39 +324,44 @@ public class Server {
                             boolean validToken = Time.checkTimestamp(expirationTime);
 
                             //Update token expiration time
-                            String query = "UPDATE pumpkinbox_users_table SET "+
+                            String query = "UPDATE pumpkinbox_users_table SET " +
                                     "authtoken='" + SECRET + "', " +
                                     "expiration='" + Time.getTimeStampPlus() + "' " +
-                                    "WHERE id='" + sender_id + "';";
+                                    "WHERE id='" + Integer.toString(sender_id) + "';";
 
-                            if(validToken){
+                            if (validToken) {
 
-                                switch(type){
+                                switch (type) {
 
                                     case "REQUEST":
+
+                                        //TODO PREVENT USER FROM SENDING REQUEST TO HIMSELF
+
+                                        String sender_username = get_content[2];
+                                        String friend_email = get_content[3];
 
                                         //Check if already friends
                                         ResultSet friend = db.executeQuery("SELECT * FROM pumpkinbox_users_table WHERE email='" +
                                                 friend_email + "';");
 
-                                        if(friend.next()){
+                                        if (friend.next()) {
 
                                             int friend_id = friend.getInt("id");
 
                                             ResultSet already = db.executeQuery("SELECT * FROM pumpkinbox_friends_table WHERE (sender_id='" +
-                                                    friend_id + "' AND receiver_id='" +userId+ "' ) OR (sender_id='" + userId+ "' AND receiver_id='" + friend_id + "');");
+                                                    friend_id + "' AND receiver_id='" + userId + "' ) OR (sender_id='" + userId + "' AND receiver_id='" + friend_id + "');");
 
-                                            if(already.next()){
+                                            if (already.next()) {
                                                 dataout.writeObject(CODES.ALREADY_EXISTS);
                                                 return;
 
-                                            }else{
+                                            } else {
 
                                                 //Add request to table
                                                 String friend_request = "INSERT INTO pumpkinbox_friend_requests (sender_id, receiver_id, sender_username) " +
                                                         "VALUES('" + userId + "', '" + friend_id + "', '" + sender_username + "');";
 
-                                                if(db.executeAction(friend_request)){
+                                                if (db.executeAction(friend_request)) {
 
                                                     //Seems good, reply to client
                                                     dataout.writeObject(CODES.OK);
@@ -364,26 +369,81 @@ public class Server {
                                                 }
                                             }
 
-                                        }else{
-
+                                        } else {
                                             //friend requested not found, notify user
                                             dataout.writeObject(CODES.NOT_FOUND);
                                             return;
                                         }
                                         break;
 
+                                    case "ACCEPT":  //UPDATE    auth    ACCEPT|sender_id|request_id
+
+                                        int request_id = Integer.parseInt(get_content[2]);
+
+                                        //Go to database, get request info
+                                        ResultSet accept = db.executeQuery("SELECT * FROM pumpkinbox_friend_requests WHERE id='" + request_id + "' AND receiver_id='" +
+                                                Integer.toString(sender_id) + "';");
+                                        if (accept.next()) {
+                                            //request is legit, user is who he says, request is directed to him
+
+                                            //FETCH INFO
+                                            int requestSenderId = accept.getInt("sender_id");
+                                            String requestSenderUsername = accept.getString("sender_username");
+
+                                            //DELETE FROM TABLE
+                                            if(!db.executeAction("DELETE FROM pumpkinbox_friend_requests WHERE id='" + request_id + "';")){
+                                                dataout.writeObject(CODES.INSERTION_ERROR);
+                                                return;
+                                            }
+
+                                            //ADD FRIENDSHIP TO FRIENDS TABLE
+                                            //TABLE: id ---- sender_id ----- receiver_id ----- timestamp ----- sender_privacy ----- receiver_privacy
+
+                                            String timestamp = Time.prettyTimeStamp();
+                                            if (db.executeAction("INSERT INTO pumpkinbox_friends_table (sender_id, receiver_id, timestamp) VALUES('" +
+                                                    requestSenderId + "', '" + Integer.toString(sender_id) + "', '" + timestamp + "');")) {
+                                                dataout.writeObject(CODES.OK);
+                                            }
+                                        }else{
+                                            dataout.writeObject(CODES.NOT_FOUND);
+                                        }
+                                        break;
+
+                                    case "REJECT":  //UPDATE    auth    ACCEPT|sender_id|request_id
+
+                                        int request_id_r = Integer.parseInt(get_content[2]);
+
+                                        //Go to database, get request info
+                                        ResultSet reject = db.executeQuery("SELECT * FROM pumpkinbox_friend_requests WHERE id='" + request_id_r + "' AND receiver_id='" +
+                                                Integer.toString(sender_id) + "';");
+                                        if (reject.next()) {
+
+                                            //request is legit, user is who he says, request is directed to him
+
+                                            //FETCH INFO
+                                            int requestSenderId = reject.getInt("sender_id");
+                                            String requestSenderUsername = reject.getString("sender_username");
+
+                                            //DELETE FROM TABLE
+                                            if (db.executeAction("DELETE FROM pumpkinbox_friend_requests WHERE id='" + request_id_r + "';")) {
+                                                dataout.writeObject(CODES.OK);
+                                            }
+                                        }
+                                        break;
+
+
                                     default:
                                         dataout.writeObject(CODES.INVALID_REQUEST);
                                         break;
                                 }
 
-                            }else{
+                            } else {
                                 System.out.println("User exists but token EXPIRED, sending invalid token code...");
                                 dataout.writeObject(CODES.INVALID_TOKEN + CRLF);
 
                             }
 
-                        }else{
+                        } else {
                             System.out.println("User not found, sending NOT FOUND code...");
                             dataout.writeObject(CODES.NOT_FOUND);
                             dataout.writeObject(CODES.NOT_FOUND);
@@ -401,9 +461,111 @@ public class Server {
 
                 case "GET":
 
-                    break;
+                    if (SECRET.equals("") || CONTENT.equals("")) {
+                        System.out.println("Invalid request");
+                        try {
+                            dataout.writeObject(CODES.INVALID_REQUEST);
+                        } catch (IOException e) {
+                            System.out.println("Could not send invalid request to server.");
+                            e.printStackTrace();
+                        }
+                        break;
+                    }
+
+                    String[] content = CONTENT.split("\\|");
+
+                    type = content[0];
+                    sender_id = Integer.parseInt(content[1]);
+
+
+                    user = db.executeQuery("SELECT * FROM pumpkinbox_users_table WHERE id='" + sender_id + "';");
+
+                    try {
+                        System.out.println("Checking if user exists ...");
+
+                        if (user.next()) {
+
+                            //User exists, check auth token, get username:
+                            username = user.getString("email");
+                            int userId = user.getInt("id");
+
+                            //Check authentication token
+                            System.out.println("User exists. Checking if token valid...");
+                            String token = user.getString("authtoken");
+
+                            System.out.println(token);
+
+                            if (token.equals(SECRET)) {
+                                System.out.println("Token exists. Checking expiration...");
+                            } else {
+                                System.out.println("Invalid authentication token.");
+                                dataout.writeObject(CODES.INVALID_TOKEN);
+                                return;
+                            }
+
+                            //Check valid timestamp
+                            String expirationTime = user.getString("expiration");
+                            boolean validToken = Time.checkTimestamp(expirationTime);
+
+                            //Update token expiration time
+                            String query = "UPDATE pumpkinbox_users_table SET " +
+                                    "authtoken='" + SECRET + "', " +
+                                    "expiration='" + Time.getTimeStampPlus() + "' " +
+                                    "WHERE id='" + sender_id + "';";
+
+                            if (validToken) {
+
+                                switch (type) {
+
+                                    case "REQUEST":
+
+                                        //Check if already friends
+                                        ResultSet requests = db.executeQuery("SELECT * FROM pumpkinbox_friend_requests WHERE receiver_id='" +
+                                                userId + "';");
+
+                                        String requests_message = "";
+
+                                        while (requests.next()) {
+
+                                            int request_id = requests.getInt("id");
+                                            sender_id = requests.getInt("sender_id");
+                                            int receiver_id = userId;
+                                            String sender_username = requests.getString("sender_username");
+
+                                            requests_message += request_id + "|";
+                                            requests_message += sender_username + "|";
+
+                                        }
+
+                                        //REMOVING ADDITIONAL | in the end
+                                        if (requests_message != null && requests_message.length() > 0 && requests_message.charAt(requests_message.length() - 1) == '|') {
+                                            requests_message = requests_message.substring(0, requests_message.length() - 1);
+                                        }
+
+                                        dataout.writeObject(requests_message);
+                                        return;
+
+                                    default:
+
+                                        dataout.writeObject(CODES.INVALID_REQUEST);
+                                        return;
+                                }
+
+                            } else {
+                                System.out.println("User exists but token EXPIRED, sending invalid token code...");
+                                dataout.writeObject(CODES.INVALID_TOKEN + CRLF);
+
+                            }
+
+                        } else {
+                            System.out.println("User not found, sending NOT FOUND code...");
+                            dataout.writeObject(CODES.NOT_FOUND);
+                            dataout.writeObject(CODES.NOT_FOUND);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
             }
         }
     }
-
 }

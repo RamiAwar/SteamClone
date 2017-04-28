@@ -28,8 +28,8 @@ public class ChatClient {
     private BlockingQueue<MessageObject> sendMessageQueue;
     private BlockingQueue<MessageObject> receiveMessageQueue;
     private BlockingQueue<MessageObject> messageNotificationQueue;
-    private BlockingQueue<MessageObject> friendRequestsQueue;
-    private BlockingQueue<MessageObject> friendRequestsNotificationQueue;
+    private BlockingQueue<RequestObject> friendRequestsQueue;
+    private BlockingQueue<RequestObject> friendRequestsNotificationQueue;
     private BlockingQueue<MessageObject> gameInvitationNotificationQueue;
 
     private ObjectInputStream datain;
@@ -57,7 +57,7 @@ public class ChatClient {
      */
     public ChatClient(BlockingQueue<User> onlineFriends, BlockingQueue<MessageObject> sendMessageQueue,
                       BlockingQueue<MessageObject> receiveMessageQueue, BlockingQueue<MessageObject> messageNotificationQueue,
-                      BlockingQueue<MessageObject> friendRequestsQueue, BlockingQueue<MessageObject> friendRequestsNotificationQueue,
+                      BlockingQueue<RequestObject> friendRequestsQueue, BlockingQueue<RequestObject> friendRequestsNotificationQueue,
                       BlockingQueue<MessageObject> gameInvitationNotificationQueue, int id, String username, String authToken){
 
         this.sendMessageQueue = sendMessageQueue;
@@ -202,17 +202,20 @@ public class ChatClient {
             while (true) {
 
                 try {
-                    System.out.println("Reading from server...");
+
+                    //ALL CLIENT RECEPTION MESSAGES ARE OF THE FORMAT:
+                    //      VERB CONTENT
 
                     String input = (String) datain.readObject();
-                    StringTokenizer tokens = new StringTokenizer(input);
 
                     System.out.println("CLIENT RECEIVED: " + input);
 
-                    String VERB = tokens.nextToken();
+                    String[] tokens = input.split(" ", 2);
+
+                    String VERB = tokens[0];
                     String CONTENT = "";
 
-                    try{CONTENT = tokens.nextToken();}catch(Exception e){e.printStackTrace();}
+                    try{CONTENT = tokens[1];}catch(Exception e){e.printStackTrace();}
 
                     if(CONTENT.equals("")){
                         System.out.println("Invalid server response! Server has gone mad!");
@@ -230,8 +233,7 @@ public class ChatClient {
 
                         case "MESSAGE":
 
-                            String[] lines = input.split(" ", 2);
-                            String[] messageObject = lines[1].split("\\|");
+                            String[] messageObject = tokens[1].split("\\|");
 
                             int sender_id = Integer.parseInt(messageObject[0]);
                             String time_sent = messageObject[1];
@@ -241,6 +243,22 @@ public class ChatClient {
 
                             receiveMessageQueue.offer(new MessageObject(sender_id, time_sent, message));
                             messageNotificationQueue.offer(new MessageObject(sender_id, time_sent, message));
+
+                            break;
+
+                        case "REQUEST":
+
+                            //MESSAGE FORMAT:   REQUEST  request_id|sender_username
+                            String[] requestLine = tokens[1].split("\\|");
+
+                            int request_id = Integer.parseInt(requestLine[0]);
+                            String requester_username = requestLine[1];
+
+                            RequestObject requestObject = new RequestObject(request_id, userId, requester_username);
+                            friendRequestsNotificationQueue.offer(requestObject);
+                            friendRequestsQueue.offer(requestObject);
+
+                            break;
 
                         default:
                             System.out.println("UNKNOWN VERB RECEIVED:");

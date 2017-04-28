@@ -132,12 +132,7 @@
                                     <Insets bottom="10.0" left="10.0" right="20.0" />
                                  </HBox.margin>
                               </JFXButton>
-                              <Label fx:id="searchIcon" alignment="CENTER" disable="true" textAlignment="CENTER">
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" right="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <JFXButton fx:id="add_friend1" onAction="#loadAddFriend" prefHeight="27.0" prefWidth="110.0" style="-fx-background-color: #666;" text="Requests (0)" textAlignment="CENTER" textFill="#ebebeb">
+                              <JFXButton fx:id="request_button" onAction="#loadRequests" prefHeight="27.0" prefWidth="110.0" style="-fx-background-color: #666;" text="Requests (0)" textAlignment="CENTER" textFill="#ebebeb">
                                  <HBox.margin>
                                     <Insets bottom="10.0" right="10.0" />
                                  </HBox.margin>

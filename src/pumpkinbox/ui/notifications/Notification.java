@@ -25,6 +25,9 @@ public class Notification {
             case "MESSAGE":
                 image = new ImageView(new Image("icon_graphics/message_colored.png"));
                 break;
+            case "REQUEST":
+                image = new ImageView(new Image("icon_graphics/ghost.png"));
+                break;
             default:
                 image = new ImageView(new Image("icon_graphics/warning_red.png"));
                 break;

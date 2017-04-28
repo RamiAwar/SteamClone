@@ -63,6 +63,126 @@ public class Client {
         return object;
     }
 
+    public static ResponseObject acceptFriendRequest(int request_id, int senderId, String auth){
+
+        //API REQUEST FORMAT
+        //UPDATE    auth    ACCEPT|sender_id|request_id
+
+        Socket clientSocket;
+
+        ResponseObject object = new ResponseObject();
+
+        try{
+            clientSocket = new Socket(hostname, port);
+
+            //Care about order
+            ObjectInputStream datain = new ObjectInputStream(clientSocket.getInputStream());
+            ObjectOutputStream dataout = new ObjectOutputStream(clientSocket.getOutputStream());
+
+            String request = "UPDATE " + auth + " ACCEPT|"  + Integer.toString(senderId) +  "|" +  Integer.toString(request_id);
+
+            dataout.writeObject(request);
+            String response = (String) datain.readObject();
+            clientSocket.close();
+
+            //Data received, parse into response object
+            object.setResponse(response);
+            object.setToken("");
+            object.setStatusCode(response);
+
+            return object;
+
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        object.setStatusCode(CODES.SEND_ERROR);
+
+        return object;
+    }
+
+    public static ResponseObject rejectFriendRequest(int request_id, int senderId, String auth){
+
+        //API REQUEST FORMAT
+        //UPDATE    auth    REJECT|sender_id|request_id
+
+        Socket clientSocket;
+
+        ResponseObject object = new ResponseObject();
+
+        try{
+            clientSocket = new Socket(hostname, port);
+
+            //Care about order
+            ObjectInputStream datain = new ObjectInputStream(clientSocket.getInputStream());
+            ObjectOutputStream dataout = new ObjectOutputStream(clientSocket.getOutputStream());
+
+            String request = "UPDATE " + auth + " REJECT|"  + Integer.toString(senderId) +  "|" +  Integer.toString(request_id);
+
+            dataout.writeObject(request);
+            String response = (String) datain.readObject();
+            clientSocket.close();
+
+            //Data received, parse into response object
+            object.setResponse(response);
+            object.setToken("");
+            object.setStatusCode(response);
+
+            return object;
+
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        object.setStatusCode(CODES.SEND_ERROR);
+
+        return object;
+    }
+
+    public static ResponseObject getFriendRequests(int senderId, String auth){
+
+        //API REQUEST FORMAT
+        //GET    auth    REQUESTS|myId
+
+        Socket clientSocket;
+
+        ResponseObject object = new ResponseObject();
+
+        try{
+            clientSocket = new Socket(hostname, port);
+
+            //Care about order
+            ObjectInputStream datain = new ObjectInputStream(clientSocket.getInputStream());
+            ObjectOutputStream dataout = new ObjectOutputStream(clientSocket.getOutputStream());
+
+            String request = "GET " + auth + " REQUEST|"  + Integer.toString(senderId);
+            dataout.writeObject(request);
+
+            String response = (String) datain.readObject();
+            clientSocket.close();
+
+            //Data received, parse into response object
+
+            //TODO parse response into status and response
+
+            object.setResponse(response);
+            object.setToken("");
+            object.setStatusCode(response);
+
+            return object;
+
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        object.setStatusCode(CODES.SEND_ERROR);
+
+        return object;
+    }
+
     public static ResponseObject sendFriendRequestData(int senderId,String sender_username, String friend_email, String auth){
 
         Socket clientSocket;

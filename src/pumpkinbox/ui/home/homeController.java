@@ -15,6 +15,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import pumpkinbox.api.MessageObject;
+import pumpkinbox.api.RequestObject;
 import pumpkinbox.api.User;
 import pumpkinbox.client.ChatClient;
 import pumpkinbox.dialogs.AlertDialog;
@@ -36,6 +37,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import pumpkinbox.ui.images.Images;
 import pumpkinbox.ui.notifications.Notification;
+import pumpkinbox.ui.requests.friendRequestsScreenController;
 
 
 import java.io.IOException;
@@ -58,6 +60,8 @@ public class homeController implements Initializable{
     private ChatClient client;
     private Stage stage;
 
+//    private int request_counter = 0;
+
 
     private ObservableList<String> friendsList = FXCollections.observableArrayList();
 
@@ -79,12 +83,12 @@ public class homeController implements Initializable{
     /**
      * This queue stores incoming friend requests to be consumed when requests window is opened.
      */
-    private BlockingQueue<MessageObject> friendRequestsQueue = new LinkedBlockingQueue<>();
+    private BlockingQueue<RequestObject> friendRequestsQueue = new LinkedBlockingQueue<>();
 
     /**
      * This queue stores incoming friend requests in order to be consumed as notifications
      */
-    private BlockingQueue<MessageObject> friendRequestsNotificationQueue = new LinkedBlockingQueue<>();
+    private BlockingQueue<RequestObject> friendRequestsNotificationQueue = new LinkedBlockingQueue<>();
 
     /**
      * This queue stores incoming friend requests to be displayed as dismissable alerts.
@@ -135,8 +139,6 @@ public class homeController implements Initializable{
     @FXML
     Region draggableRegion;
     @FXML
-    Label searchIcon;
-    @FXML
     Label user_status;
     @FXML
     ContextMenu statusMenu;
@@ -150,6 +152,8 @@ public class homeController implements Initializable{
     JFXButton add_friend;
     @FXML
     Label status_icon;
+    @FXML
+    JFXButton request_button;
 
 
 
@@ -242,6 +246,49 @@ public class homeController implements Initializable{
         controller.setAuthenticationToken(authenticationToken);
         controller.setUserID(userId);
         controller.setName(name);
+
+    }
+
+    @FXML
+    void loadRequests(ActionEvent eventi){
+
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pumpkinbox/ui/requests/friend_requests_screen.fxml"));
+            Parent parent = loader.load();
+
+            Stage stage = new Stage(StageStyle.UNDECORATED);
+            stage.initStyle(StageStyle.TRANSPARENT);
+
+            stage.setTitle("Requests");
+
+            Scene scene = new Scene(parent);
+            scene.setFill(Color.TRANSPARENT);
+            scene.getStylesheets().add("pumpkinbox/ui/requests/requests.css");
+
+            stage.setScene(scene);
+            stage.setAlwaysOnTop(false);
+            stage.show();
+
+            //Passing primaryStage to controller in order to make window draggable
+            friendRequestsScreenController controller =
+                    loader.<friendRequestsScreenController>getController();
+
+            controller.registerStage(stage);
+
+            controller.setAuthenticationToken(authenticationToken);
+            controller.setUserID(userId);
+            controller.setUsername(name);
+            controller.setFriendRequestsNotificationQueue(friendRequestsNotificationQueue);
+            controller.setFriendRequestsQueue(friendRequestsQueue);
+            controller.setupList();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+//        //RESET UNREAD REQUESTS
+//        request_counter = 0;
 
     }
 
@@ -339,7 +386,6 @@ public class homeController implements Initializable{
         icons.setSize("1em");
 
         closeIcon.setGraphic(icons.CLOSE_m);
-        searchIcon.setGraphic(icons.SEARCH);
         user_status.setGraphic(icons.MINIMIZE_small);
         minimizeIcon.setGraphic(icons.MINIMIZE_m);
         add_friend.setGraphic(icons.ADD);
@@ -349,13 +395,13 @@ public class homeController implements Initializable{
 
     public void updateGUI() throws InterruptedException {
 
-//        System.out.println("Updating friends list...");
+
+        //Update request button text
+//        request_button.setText("Requests(" + request_counter + ")");
 
         if(!name.equals(null)) username.setText(name);
 
         checkAndAdd(onlineFriends, onlineFriendsNames);
-
-//        System.out.println("MAIN: " + onlineFriendsNames);
 
         friendsList.setAll(onlineFriendsNames);
         friends_list.getItems().setAll(onlineFriendsNames);
@@ -399,6 +445,22 @@ public class homeController implements Initializable{
                     10,
                     "MESSAGE"
             ));
+        }
+
+        //----------NOTIFICATIONS FOR FRIEND REQUESTS
+        if(!friendRequestsNotificationQueue.isEmpty()){
+
+            RequestObject request = friendRequestsNotificationQueue.take();
+            String requester_username = request.getRequester_username();
+
+            Platform.runLater(() -> new Notification(
+                    "Friend Request",
+                    "You have received a friend request from " + requester_username,
+                    10,
+                    "REQUEST"
+            ));
+
+//            request_counter++;
         }
 
         //----------NOTIFICATIONS FOR GAME INVITATIONS

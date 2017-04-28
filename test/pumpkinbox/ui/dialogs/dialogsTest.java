@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import pumpkinbox.dialogs.AlertDialog;
 import pumpkinbox.dialogs.DecisionDialog;
+import pumpkinbox.ui.notifications.Notification;
 
 import static javafx.application.Application.launch;
 
@@ -67,7 +68,7 @@ public class dialogsTest extends Application{
             DecisionDialog dialog = new DecisionDialog(stackPane, "Error", "Invalid request would you like to retry?", "Yes", "No");
 
             dialog.confirmButton.setOnAction(event -> {
-                alert.showDialog();
+                Notification notif = new Notification("Friend Request", "You have received a friend request from rami@gmail.com", 20, "REQUEST");
             });
 
             button.setOnAction(event -> {

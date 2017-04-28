@@ -9,7 +9,7 @@ public class DatabaseHandler {
 
     private static DatabaseHandler handler;
 
-    private static final String URL = "jdbc:mysql://34.206.52.140:3306/pumpkinbox";
+    private static final String URL = "jdbc:mysql://34.201.22.155:3306/pumpkinbox";
     private static Connection connection = null;
     private static Statement statement = null;
 

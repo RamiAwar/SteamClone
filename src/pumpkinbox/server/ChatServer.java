@@ -9,8 +9,6 @@ package pumpkinbox.server;
  */
 
 import pumpkinbox.api.CODES;
-import pumpkinbox.api.MessageObject;
-import pumpkinbox.api.NotificationObject;
 import pumpkinbox.api.User;
 import pumpkinbox.database.DatabaseHandler;
 import pumpkinbox.time.Time;
@@ -103,7 +101,8 @@ public class ChatServer {
         private ObjectOutputStream dataout;
         private DatabaseHandler db;
         private String clientPort;
-        private Timer timer;
+        private Timer messageTimer;
+        private Timer requestsTimer;
 
 
         public int userId;
@@ -175,8 +174,46 @@ public class ChatServer {
                 }
             };
 
-            timer = new Timer("Message fetcher");//create a new timer
-            timer.scheduleAtFixedRate(timerTask, 30, 500);
+            messageTimer = new Timer("Message fetcher");//create a new messageTimer
+            messageTimer.scheduleAtFixedRate(timerTask, 30, 500);
+
+            TimerTask timerTask2 = new TimerTask() {
+
+                @Override
+                public void run() {
+
+                    try {
+
+                        //Search database for unread messages
+                        ResultSet rs = db.executeQuery("SELECT * FROM pumpkinbox_friend_requests WHERE receiver_id='" + userId +"' AND received='0';");
+
+                        //Send any unread messages to client and MARK AS READ
+                        while(rs.next()){
+
+                            int request_id = rs.getInt("id");
+                            int sender_id = rs.getInt("sender_id");
+                            int receiver_id = rs.getInt("receiver_id");
+                            String sender_username = rs.getString("sender_username");
+
+                            System.out.println("Writing friend request to client");
+
+                            dataout.writeObject("REQUEST " + Integer.toString(request_id) + "|" + sender_username );
+
+                            //Update database friend request as receiver and read
+                            String query = "UPDATE pumpkinbox_friend_requests SET "+
+                                    "received='1' WHERE id='" + Integer.toString(request_id) + "';";
+                            db.executeAction(query);
+
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+
+            requestsTimer = new Timer("Requests fetcher");//create a new messageTimer
+            requestsTimer.scheduleAtFixedRate(timerTask2, 30, 3000);
 
             try {
 
