@@ -58,7 +58,7 @@ public class dialogsTest extends Application{
             buttons.getChildren().add(button2);
 
 
-            stackPane.setAlignment(buttons, Pos.CENTER);
+            StackPane.setAlignment(buttons, Pos.CENTER);
 
             primaryStage.setScene(scene);
 

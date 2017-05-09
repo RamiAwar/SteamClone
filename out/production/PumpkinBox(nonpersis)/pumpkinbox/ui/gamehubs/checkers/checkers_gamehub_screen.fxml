@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1075.0" style="-fx-background-color: rgba(255,255,255,0);" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pumpkinbox.ui.gamehubs.checkers.checkersGamehubController">
+   <children>
+      <Pane prefHeight="650.0" prefWidth="826.0" style="-fx-background-color: rgba(255,255,255,0);">
+         <children>
+            <Region fx:id="draggableRegion" layoutX="13.0" layoutY="682.0" prefHeight="50.0" prefWidth="1053.0" />
+         </children></Pane>
+      <Pane prefHeight="425.0" prefWidth="506.0" style="-fx-background-color: #444;">
+         <children>
+            <TabPane layoutY="37.0" prefHeight="669.0" prefWidth="1051.0" stylesheets="@custom_tab_pane.css" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="General">
+                     <content>
+                        <HBox alignment="CENTER" prefHeight="677.0" prefWidth="1055.0" style="-fx-background-color: #333;">
+                           <children>
+                              <VBox prefHeight="636.0" prefWidth="764.0">
+                                 <children>
+                                    <Label style="-fx-text-fill: #ddd;" text="GameHub">
+                                       <font>
+                                          <Font name="Press Start 2P Regular" size="20.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <HBox prefHeight="95.0" prefWidth="609.0">
+                                       <children>
+                                          <ImageView fx:id="game_image" fitHeight="128.0" fitWidth="159.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-color: #fff;">
+                                             <image>
+                                                <Image url="@../../../../../resources/images/games/tictactoe.png" />
+                                             </image>
+                                             <viewport>
+                                                <Rectangle2D height="1100.0" width="1100.0" />
+                                             </viewport>
+                                             <HBox.margin>
+                                                <Insets left="10.0" right="20.0" />
+                                             </HBox.margin>
+                                          </ImageView>
+                                          <VBox prefHeight="159.0" prefWidth="398.0">
+                                             <children>
+                                                <Label fx:id="game_name" text="Checkers" textFill="#e8e8e8">
+                                                   <font>
+                                                      <Font size="24.0" />
+                                                   </font>
+                                                   <VBox.margin>
+                                                      <Insets bottom="20.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <HBox prefHeight="28.0" prefWidth="275.0">
+                                                   <children>
+                                                      <JFXButton fx:id="play_offline_button" onAction="#launch_offline" prefHeight="29.0" prefWidth="136.0" style="-fx-background-color: #666;" text="Play Offline" textFill="#ebebeb">
+                                                         <font>
+                                                            <Font size="14.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets right="40.0" />
+                                                         </HBox.margin>
+                                                      </JFXButton>
+                                                      <JFXButton fx:id="play_online_button" onAction="#launch_online" prefHeight="29.0" prefWidth="152.0" style="-fx-background-color: #666;" text="Play with a friend" textFill="#ebebeb">
+                                                         <font>
+                                                            <Font size="14.0" />
+                                                         </font>
+                                                      </JFXButton>
+                                                   </children>
+                                                   <VBox.margin>
+                                                      <Insets right="20.0" />
+                                                   </VBox.margin>
+                                                </HBox>
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="20.0" left="20.0" right="20.0" top="50.0" />
+                                             </padding>
+                                          </VBox>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" />
+                                       </VBox.margin>
+                                       <padding>
+                                          <Insets left="20.0" />
+                                       </padding>
+                                    </HBox>
+                                    <VBox prefHeight="462.0" prefWidth="701.0">
+                                       <children>
+                                          <Label text="Global Stats" textFill="#f8f8f8">
+                                             <font>
+                                                <Font size="25.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="15.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="20.0" left="20.0" right="20.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="TOP_CENTER" prefHeight="567.0" prefWidth="724.0" HBox.hgrow="NEVER">
+                                 <children>
+                                    <VBox prefHeight="677.0" prefWidth="416.0">
+                                       <children>
+                                          <HBox prefHeight="262.0" prefWidth="466.0" />
+                                          <Label text="Local Stats" textFill="#f8f8f8">
+                                             <font>
+                                                <Font size="25.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets bottom="20.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </content>
+                </Tab>
+                <Tab text="Global Chat">
+                     <content>
+                        <HBox alignment="CENTER" prefHeight="677.0" prefWidth="1055.0" style="-fx-background-color: #333;">
+                           <children>
+                              <VBox prefHeight="636.0" prefWidth="997.0">
+                                 <children>
+                                    <Label style="-fx-text-fill: #ddd;" text="Global Chat">
+                                       <font>
+                                          <Font name="Press Start 2P Regular" size="20.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <HBox prefHeight="491.0" prefWidth="577.0">
+                                       <children>
+                                          <TextArea fx:id="text_area" editable="false" prefHeight="296.0" prefWidth="611.0">
+                                             <HBox.margin>
+                                                <Insets bottom="20.0" />
+                                             </HBox.margin>
+                                          </TextArea>
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </padding>
+                                       <VBox.margin>
+                                          <Insets left="35.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox alignment="TOP_RIGHT" prefHeight="27.0" prefWidth="422.0">
+                                       <children>
+                                          <JFXTextField fx:id="message_text_field" focusColor="#fcfcfc" prefHeight="25.0" prefWidth="434.0" promptText="Enter your message..." style="-fx-text-fill: #eee;" unFocusColor="#b5b5b5">
+                                             <HBox.margin>
+                                                <Insets left="20.0" right="20.0" />
+                                             </HBox.margin>
+                                          </JFXTextField>
+                                          <JFXButton fx:id="sendButton" alignment="CENTER" defaultButton="true" prefHeight="27.0" prefWidth="103.0" style="-fx-background-color: #555;" text="Send" textFill="#dddddd">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </JFXButton>
+                                       </children>
+                                       <padding>
+                                          <Insets right="10.0" />
+                                       </padding>
+                                    </HBox>
+                                 </children>
+                                 <padding>
+                                    <Insets right="50.0" />
+                                 </padding>
+                              </VBox>
+                              <VBox alignment="TOP_CENTER" prefHeight="567.0" prefWidth="724.0" HBox.hgrow="NEVER">
+                                 <children>
+                                    <VBox prefHeight="625.0" prefWidth="389.0">
+                                       <children>
+                                          <Label text="Online Users" textFill="#f8f8f8">
+                                             <font>
+                                                <Font size="25.0" />
+                                             </font>
+                                          </Label>
+                                          <ListView fx:id="online_users_list" prefHeight="602.0" prefWidth="349.0" style="-fx-border-color: transparent; -fx-background-color: transparent;" styleClass="listview" stylesheets="@../../requests/requests.css">
+                                             <VBox.margin>
+                                                <Insets top="10.0" />
+                                             </VBox.margin></ListView>
+                                       </children>
+                                       <padding>
+                                          <Insets left="20.0" right="20.0" top="20.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+            <Label alignment="CENTER" layoutX="354.0" layoutY="-3.0" prefHeight="33.0" prefWidth="134.0" text="PumpkinBox" textFill="#eeeeee">
+               <font>
+                  <Font name="Press Start 2P Regular" size="13.0" />
+               </font>
+            </Label>
+            <HBox fx:id="menuBar" prefHeight="36.0" prefWidth="1048.0">
+               <children>
+                  <Label fx:id="closeIcon" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="minimizeIcon" layoutX="10.0" layoutY="10.0" textFill="WHITE" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+         </children>
+         <effect>
+            <DropShadow blurType="GAUSSIAN" color="#00000046" offsetX="5.0" offsetY="5.0" radius="10.76" width="24.04" />
+         </effect>
+         <StackPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </StackPane.margin>
+      </Pane>
+   </children>
+   <effect>
+      <DropShadow blurType="GAUSSIAN" />
+   </effect>
+   <padding>
+      <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+   </padding>
+</StackPane>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="93.0" prefWidth="333.0" style="-fx-background-color: rgba(255,255,255,0);" stylesheets="@../home/home.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Pane prefHeight="650.0" prefWidth="826.0" style="-fx-background-color: rgba(255,255,255,0);" />
+        <Pane prefHeight="425.0" prefWidth="506.0" style="-fx-background-color: #666;">
+            <effect>
+                <DropShadow blurType="GAUSSIAN" color="#00000046" offsetX="5.0" offsetY="5.0" radius="10.76" width="24.04" />
+            </effect>
+            <StackPane.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </StackPane.margin>
+            <children>
+                <HBox fx:id="root" alignment="CENTER" layoutX="-2.0" layoutY="-1.0" prefHeight="74.0" prefWidth="307.0">
+                    <children>
+                        <ImageView fx:id="friendImage" fitHeight="46.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../../../resources/images/games/tictactoe1-01.png" />
+                            </image>
+                            <HBox.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </HBox.margin>
+                        </ImageView>
+                        <VBox alignment="CENTER" prefHeight="74.0" prefWidth="246.0">
+                            <children>
+                                <Label fx:id="friendName" alignment="CENTER" prefHeight="20.0" prefWidth="168.0" text="Rami Awar" textAlignment="CENTER" textFill="#fcfcfc">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Label>
+                        <Label text="Friends since" textFill="#fcfcfc">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="time" alignment="CENTER" prefHeight="19.0" prefWidth="226.0" text="Monday April 23, 2017" textAlignment="CENTER" textFill="#fcfcfc">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Label>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+            </children>
+        </Pane>
+    </children>
+    <effect>
+        <DropShadow blurType="GAUSSIAN" />
+    </effect>
+    <padding>
+        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+    </padding>
+</StackPane>

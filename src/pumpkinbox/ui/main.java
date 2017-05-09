@@ -44,7 +44,7 @@ public class main extends Application {
 
         //Passing primaryStage to controller in order to make window draggable
         loginScreenController controller =
-                loader.<loginScreenController>getController();
+                loader.getController();
         controller.registerStage(primaryStage);
 
     }

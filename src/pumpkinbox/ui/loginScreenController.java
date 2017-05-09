@@ -184,7 +184,7 @@ public class loginScreenController implements Initializable{
 
             //Passing primaryStage to controller in order to make window draggable
             signupScreenController controller =
-                    loader.<signupScreenController>getController();
+                    loader.getController();
             controller.registerStage(stage);
 
 
@@ -213,7 +213,7 @@ public class loginScreenController implements Initializable{
 
             //Passing primaryStage to controller in order to make window draggable
             homeController controller =
-                    loader.<homeController>getController();
+                    loader.getController();
 
             controller.registerStage(stage);
 

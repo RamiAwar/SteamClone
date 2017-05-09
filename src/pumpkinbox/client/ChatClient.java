@@ -21,9 +21,10 @@ public class ChatClient {
     private int port = 9000;
 
     private Timer timer;
+    private Timer timer2;
     private Timer messageSenderTimer;
 
-    private int requestFriendsTime = 10000;
+    private int requestFriendsTime = 5000;
 
     private BlockingQueue<MessageObject> sendMessageQueue;
     private BlockingQueue<MessageObject> receiveMessageQueue;
@@ -124,7 +125,6 @@ public class ChatClient {
         //Thread main program
         public void run() {
 
-
             try {
 
                 System.out.println("Getting output/input socket streams...");
@@ -163,6 +163,37 @@ public class ChatClient {
 
             timer = new Timer("Friends updater");//create a new timer
             timer.scheduleAtFixedRate(timerTask, 30, requestFriendsTime);
+
+            TimerTask timerTask2 = new TimerTask() {
+
+                @Override
+                public void run() {
+
+                    try {
+
+                        ResponseObject r = Client.getInvite(userId);
+                        if(!r.getResponse().equals(CODES.NOT_FOUND)){
+                            System.out.println("FOUND INVITE");
+                            if(r.getStatusCode().equals(CODES.OK)) {
+                                //parse response
+                                String[] temp = r.getResponse().split("\\|");
+                                MessageObject m = new MessageObject(Integer.parseInt(temp[0]), Integer.parseInt(temp[1]), temp[2]);
+                                gameInvitationNotificationQueue.offer(m);
+
+                                System.out.println(gameInvitationNotificationQueue);
+                            }
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+
+
+            timer2 = new Timer("Friends updater");//create a new timer
+            timer2.scheduleAtFixedRate(timerTask2, 30, 500);
+
 
             TimerTask messageSender = new TimerTask() {
 

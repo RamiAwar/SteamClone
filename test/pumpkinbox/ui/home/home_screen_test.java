@@ -51,7 +51,7 @@ public class home_screen_test extends Application {
 
         //Passing primaryStage to controller in order to make window draggable
         homeController controller =
-                loader.<homeController>getController();
+                loader.getController();
         controller.registerStage(primaryStage);
 
         primaryStage.setOnCloseRequest(e -> Platform.exit());

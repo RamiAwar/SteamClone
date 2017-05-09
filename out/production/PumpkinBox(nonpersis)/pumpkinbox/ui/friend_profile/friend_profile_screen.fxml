@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXProgressBar?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1075.0" style="-fx-background-color: rgba(255,255,255,0);" stylesheets="@../home/home.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pumpkinbox.ui.friend_profile.friendProfileController">
+   <children>
+      <Pane prefHeight="650.0" prefWidth="826.0" style="-fx-background-color: rgba(255,255,255,0);">
+         <children>
+            <Region fx:id="draggableRegion" layoutX="13.0" layoutY="682.0" prefHeight="50.0" prefWidth="1053.0" />
+         </children></Pane>
+      <Pane prefHeight="425.0" prefWidth="506.0" style="-fx-background-color: #444;">
+         <children>
+            <HBox alignment="CENTER" layoutX="-2.0" layoutY="29.0" prefHeight="677.0" prefWidth="1055.0">
+               <children>
+                  <VBox prefHeight="677.0" prefWidth="997.0">
+                     <children>
+                        <Label style="-fx-text-fill: #ddd;" text="Profile">
+                           <font>
+                              <Font name="Press Start 2P Regular" size="20.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox prefHeight="95.0" prefWidth="609.0">
+                           <children>
+                              <ImageView fx:id="profile_photo" fitHeight="128.0" fitWidth="159.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-color: #fff;">
+                                 <image>
+                                    <Image url="@../../../../resources/images/pumpkin_profile.png" />
+                                 </image>
+                                 <viewport>
+                                    <Rectangle2D height="1100.0" width="1100.0" />
+                                 </viewport>
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="20.0" />
+                                 </HBox.margin>
+                              </ImageView>
+                              <VBox prefHeight="159.0" prefWidth="398.0">
+                                 <children>
+                                    <Label fx:id="username" text="Rami Awar" textFill="#e8e8e8">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="username1" text="rami.awar.ra@gmail.com" textFill="#e8e8e8">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="20.0" left="20.0" right="20.0" top="50.0" />
+                                 </padding>
+                              </VBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </HBox>
+                        <VBox prefHeight="462.0" prefWidth="701.0">
+                           <children>
+                              <Label text="Activity" textFill="#f8f8f8">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <ListView fx:id="activity_list" prefHeight="491.0" prefWidth="701.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="listview" stylesheets="@big_list_view.css" />
+                           </children>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefHeight="567.0" prefWidth="724.0" HBox.hgrow="NEVER">
+                     <children>
+                        <VBox prefHeight="677.0" prefWidth="416.0">
+                           <children>
+                              <HBox prefHeight="183.0" prefWidth="391.0">
+                                 <children>
+                                    <VBox prefHeight="7.0" prefWidth="349.0">
+                                       <children>
+                                          <HBox prefHeight="30.0" prefWidth="349.0">
+                                             <children>
+                                                <Label fx:id="level_label" style="-fx-text-fill: #ddd;" text="Level 0">
+                                                   <font>
+                                                      <Font name="Press Start 2P Regular" size="19.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="experience_points" alignment="TOP_RIGHT" style="-fx-text-fill: #ddd;" text="25xp" textAlignment="CENTER">
+                                                   <font>
+                                                      <Font name="Press Start 2P Regular" size="19.0" />
+                                                   </font>
+                                                   <HBox.margin>
+                                                      <Insets left="70.0" />
+                                                   </HBox.margin>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <JFXProgressBar fx:id="level_progress_bar" minHeight="-Infinity" prefHeight="23.0" prefWidth="351.0" progress="0.35">
+                                             <VBox.margin>
+                                                <Insets top="10.0" />
+                                             </VBox.margin>
+                                          </JFXProgressBar>
+                                       </children>
+                                       <padding>
+                                          <Insets top="20.0" />
+                                       </padding>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <Label text="Friends" textFill="#f8f8f8">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </Label>
+                              <ListView fx:id="friends_list" prefHeight="366.0" prefWidth="349.0" style="-fx-border-color: transparent; -fx-background-color: transparent;" styleClass="listview" stylesheets="@../requests/requests.css">
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </ListView>
+                           </children>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+            </HBox>
+            <Label alignment="CENTER" layoutX="354.0" layoutY="-3.0" prefHeight="33.0" prefWidth="134.0" text="PumpkinBox" textFill="#eeeeee">
+               <font>
+                  <Font name="Press Start 2P Regular" size="13.0" />
+               </font>
+            </Label>
+            <HBox fx:id="menuBar" prefHeight="27.0" prefWidth="1053.0">
+               <children>
+                  <Label fx:id="closeIcon" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="minimizeIcon" layoutX="10.0" layoutY="10.0" textFill="WHITE" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+         </children>
+         <effect>
+            <DropShadow blurType="GAUSSIAN" color="#00000046" offsetX="5.0" offsetY="5.0" radius="10.76" width="24.04" />
+         </effect>
+         <StackPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </StackPane.margin>
+      </Pane>
+   </children>
+   <effect>
+      <DropShadow blurType="GAUSSIAN" />
+   </effect>
+   <padding>
+      <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+   </padding>
+</StackPane>

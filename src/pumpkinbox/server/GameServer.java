@@ -8,7 +8,7 @@ package pumpkinbox.server;
  * Created by ramiawar on 3/23/17.
  */
 
-import pumpkinbox.api.CODES;
+import pumpkinbox.api.GameStatus;
 import pumpkinbox.database.DatabaseHandler;
 
 import java.io.IOException;
@@ -16,14 +16,15 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class GameServer {
 
-    private int port = 9000;    //ServerSocket port number
+    private int port = 10000;    //ServerSocket port number
     private ServerSocket serverSocket;
 
-    private volatile ArrayList<GameRequestObject> gameRequestsList = new ArrayList<>();
+    private BlockingQueue<GameRequestObject> gameRequestsList = new LinkedBlockingQueue<>();
 
     //Empty private constructor since we do not this class to be accessible from other classes
     private GameServer() throws ClassNotFoundException {}
@@ -162,67 +163,103 @@ public class GameServer {
             int receiver_id = Integer.parseInt(tokens[2]);
             String game = tokens[3];
             String move = "";
-            try{move = tokens[4];}catch (Exception e){e.printStackTrace();}
+
+            boolean receive = false;
+
+            try{
+
+                move = tokens[4];
+
+            } catch (Exception e){
+                receive = true;
+                e.printStackTrace();
+            }
 
             switch (VERB) {
 
                 case "REQUEST":
 
-                    if(move.length() > 0) {
+                    if(!receive) {
                         //Save this player's move
-                        GameRequestObject object = new GameRequestObject(sender_id, receiver_id, move, game);
-                        gameRequestsList.add(object);
+                        GameRequestObject object = new GameRequestObject(sender_id, receiver_id, game, move);
+                        gameRequestsList.offer(object);
                     }
 
-                    //Wait for other player's move and return
-                    GameRequestObject returnObject = new GameRequestObject();
-                    boolean found = false;
+                    if(receive) {
 
-                    while (!found) {
+                        //Wait for other player's move and return
+                        GameRequestObject returnObject = new GameRequestObject();
+                        boolean found = false;
 
-                        for (int i = 0; i < gameRequestsList.size(); i++) {
-                            GameRequestObject p = gameRequestsList.get(i);
+                        while (!found) {
 
-                            if (p.getSender_id() == receiver_id && p.getReceiver_id() == sender_id && p.getGame().equals(game)) {
-                                //We found an object belonging to this player
-                                dataout.writeObject(p.getMove());
-                                gameRequestsList.remove(i);
-                                break;
+                            Thread.sleep(100);
+
+                            System.out.println("Searching for request...");
+                            while(!gameRequestsList.isEmpty()){
+
+                                Thread.sleep(300);
+
+                                GameRequestObject p = gameRequestsList.take();
+                                System.out.println("From the inside: " + p);
+
+                                if (p.getSender_id() == receiver_id && p.getReceiver_id() == sender_id && p.getGame().equals(game)) {
+                                    System.out.println("FOUND");
+                                    //We found an object belonging to this player
+                                    dataout.writeObject(p.getMove());
+                                    found = true;
+
+                                    break;
+                                }else{
+                                    gameRequestsList.offer(p);
+                                }
                             }
                         }
-//                        wait(100);
                     }
-
-                    dataout.writeObject(CODES.SEND_ERROR);
                     break;
 
                 case "STATUS":
 
-                    String receiver_username = tokens[5];
 
                     // Extract VERB from the request line.
-                    tokens = request.split(" ", 3);
+                    tokens = request.split(" ");
 
                     VERB = tokens[0];
                     sender_id = Integer.parseInt(tokens[1]);
                     receiver_id = Integer.parseInt(tokens[2]);
                     game = tokens[3];
-                    String status = tokens[4];
-                    int score = 0;
+                    int status = Integer.parseInt(tokens[4]);
+                    String receiver_username = tokens[5];
 
-                    if(status.equals("WIN")){
+                    int scoreA = 0;
+                    int scoreB = 0;
+
+                    if(status == GameStatus.WIN){
                         switch (game){
-                            case "XO":
-                                score = 10;
+                            case "tictactoe":
+                                scoreA = 10;
+                                scoreB = 5;
                                 break;
 
                             default:
                                 break;
                         }
-                    }else if(status.equals("LOSS")){
+                    }else if(status == GameStatus.LOSS) {
+                        switch (game) {
+                            case "tictactoe":
+                                scoreA = 5;
+                                scoreB = 10;
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }else if(status == GameStatus.TIE){
                         switch (game){
-                            case "XO":
-                                score = 5;
+
+                            case "tictactoe":
+                                scoreA = 5;
+                                scoreB = 5;
                                 break;
 
                             default:
@@ -232,8 +269,6 @@ public class GameServer {
                         //TODO: HANDLE ERROR
 
 
-
-
                     }
 
                     if(db.executeAction("INSERT INTO pumpkinbox_game_sessions (sender_id, receiver_id, receiver_username, game, score, status) VALUES ('" +
@@ -241,8 +276,14 @@ public class GameServer {
                             receiver_id + "', '" +
                             receiver_username + "', '" +
                             game + "', '" +
-                            score + "', '" +
+                            scoreA + "', '" +
                             status + "');")) System.out.println("OK");
+
+                    if(db.executeAction("INSERT INTO pumpkinbox_gamestats (user1_id, user2_id, user1_score, user2_score) VALUES ('" +
+                            sender_id + "', '" +
+                            receiver_id + "', '" +
+                            scoreA + "', '" +
+                            scoreB + "');")) System.out.println("OK");
 
                     System.out.println("Message sent.");
 

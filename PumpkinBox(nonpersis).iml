@@ -19,5 +19,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="sendgrid-java-3.1.0-jar" level="project" />
   </component>
 </module>

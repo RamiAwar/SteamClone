@@ -50,7 +50,7 @@ public class personal_profile_test extends Application {
 
         //Passing primaryStage to controller in order to make window draggable
         personalProfileController controller =
-                loader.<personalProfileController>getController();
+                loader.getController();
 
         primaryStage.setOnCloseRequest(e -> Platform.exit());
     }

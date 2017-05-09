@@ -228,8 +228,7 @@ public class Validator {
         }
         else{
             label.setVisible(false);
-            if(VALID) return true;
-            else return false;
+            return VALID;
         }
     }
 

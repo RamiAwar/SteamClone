@@ -1,0 +1,18 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="PumpkinBox(nonpersis):jar2">
+    <output-path>$PROJECT_DIR$/out/artifacts/PumpkinBox_nonpersis__jar2</output-path>
+    <root id="archive" name="PumpkinBox(nonpersis).jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/MANIFESt/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="PumpkinBox(nonpersis)" />
+      <element id="library" level="project" name="sendgrid-java-3.1.0-jar" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/fontawesomefx-8.0.10.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/fontawesomefx-8.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/fontawesomefx-glyphsbrowser-all-1.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/jfoenix.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/joda-time-2.9.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/mysql-connector-java-5.1.41-bin.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

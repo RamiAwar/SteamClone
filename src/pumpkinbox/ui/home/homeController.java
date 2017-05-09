@@ -9,20 +9,23 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import pumpkinbox.api.MessageObject;
-import pumpkinbox.api.RequestObject;
-import pumpkinbox.api.User;
+import pumpkinbox.api.*;
 import pumpkinbox.client.ChatClient;
+import pumpkinbox.client.Client;
 import pumpkinbox.dialogs.AlertDialog;
+import pumpkinbox.dialogs.DecisionDialog;
+import pumpkinbox.games.TicTacToe.TicTacToeClient;
 import pumpkinbox.ui.add_friend.addFriendController;
 import pumpkinbox.ui.chat_window.chatWindowController;
-import pumpkinbox.ui.create_user.signupScreenController;
 import pumpkinbox.ui.draggable.EffectUtilities;
+import pumpkinbox.ui.gamehubs.checkers.checkersGamehubController;
+import pumpkinbox.ui.gamehubs.tictactoe.gamehubController;
 import pumpkinbox.ui.icons.Icons;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -37,15 +40,18 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import pumpkinbox.ui.images.Images;
 import pumpkinbox.ui.notifications.Notification;
+import pumpkinbox.ui.personal_profile.personalProfileController;
 import pumpkinbox.ui.requests.friendRequestsScreenController;
 
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by ramiawar on 3/23/17.
@@ -59,8 +65,6 @@ public class homeController implements Initializable{
     private Icons icons = new Icons();
     private ChatClient client;
     private Stage stage;
-
-//    private int request_counter = 0;
 
 
     private ObservableList<String> friendsList = FXCollections.observableArrayList();
@@ -96,9 +100,7 @@ public class homeController implements Initializable{
     private BlockingQueue<MessageObject> gameInvitationNotificationQueue = new LinkedBlockingQueue<>();
 
 
-
     private final BlockingQueue<User> onlineFriends = new LinkedBlockingQueue<>();
-
 
 
     private ArrayList<String> onlineFriendsNames = new ArrayList<>();
@@ -154,7 +156,10 @@ public class homeController implements Initializable{
     Label status_icon;
     @FXML
     JFXButton request_button;
-
+    @FXML
+    ImageView tictactoe_image;
+    @FXML
+    ImageView checkers_image;
 
 
 
@@ -205,11 +210,43 @@ public class homeController implements Initializable{
     void loadMyProfile(ActionEvent e){
 
 
-        //TODO LOAD PROFILE PAGE
+        //LOAD PROFILE PAGE
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pumpkinbox/ui/personal_profile/personal_profile_screen.fxml"));
+        Parent parent = null;
 
+        try {
+            parent = loader.load();
+        } catch (IOException e1) {
+            Notification notification = new Notification("Error", "Unable to load window", 10, "ERROR");
+            e1.printStackTrace();
+            return;
+        }
 
+        Stage stage = new Stage(StageStyle.UNDECORATED);
+        stage.initStyle(StageStyle.TRANSPARENT);
 
+        stage.setTitle("My Profile");
+        Scene scene = new Scene(parent);
+        scene.setFill(Color.TRANSPARENT);
+        scene.getStylesheets().add("pumpkinbox/ui/requests/requests.css");
 
+        stage.setScene(scene);
+        stage.setAlwaysOnTop(false);
+        stage.show();
+
+        //Passing primaryStage to controller in order to make window draggable
+        personalProfileController controller =
+                loader.getController();
+
+        controller.registerStage(stage);
+
+        controller.setAuthenticationToken(authenticationToken);
+        controller.setUserID(userId);
+        controller.setUsername(name);
+
+        controller.getEditFriendsList();
+        controller.getActivityList();
+        controller.getExperiencePoints();
     }
 
     @FXML
@@ -239,7 +276,7 @@ public class homeController implements Initializable{
 
         //Passing primaryStage to controller in order to make window draggable
         addFriendController controller =
-                loader.<addFriendController>getController();
+                loader.getController();
 
         controller.registerStage(stage);
 
@@ -272,7 +309,7 @@ public class homeController implements Initializable{
 
             //Passing primaryStage to controller in order to make window draggable
             friendRequestsScreenController controller =
-                    loader.<friendRequestsScreenController>getController();
+                    loader.getController();
 
             controller.registerStage(stage);
 
@@ -314,7 +351,7 @@ public class homeController implements Initializable{
 
             //Passing primaryStage to controller in order to make window draggable
             chatWindowController controller =
-                    loader.<chatWindowController>getController();
+                    loader.getController();
 
             controller.registerStage(stage);
 
@@ -331,7 +368,79 @@ public class homeController implements Initializable{
             e.printStackTrace();
         }
 
+    }
 
+
+
+    @FXML
+    public void launch_tictactoe(MouseEvent e){
+
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pumpkinbox/ui/gamehubs/tictactoe/gamehub_screen.fxml"));
+            Parent parent = loader.load();
+
+            Stage stage = new Stage(StageStyle.UNDECORATED);
+            stage.initStyle(StageStyle.TRANSPARENT);
+
+            stage.setTitle("Gamehub");
+            Scene scene = new Scene(parent);
+            scene.setFill(Color.TRANSPARENT);
+
+            stage.setScene(scene);
+            stage.setAlwaysOnTop(false);
+            stage.show();
+
+            //Passing primaryStage to controller in order to make window draggable
+            gamehubController controller =
+                    loader.getController();
+
+            controller.registerStage(stage);
+
+            controller.setAuthenticationToken(authenticationToken);
+            controller.setUserID(userId);
+            controller.setUsername(name);
+            controller.setGameInvitationQueue(gameInvitationNotificationQueue);
+//            controller.getData();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+
+    }
+
+    @FXML
+    public void launch_checkers(MouseEvent e){
+
+        try {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/pumpkinbox/ui/gamehubs/checkers/checkers_gamehub_screen.fxml"));
+            Parent parent = loader.load();
+
+            Stage stage = new Stage(StageStyle.UNDECORATED);
+            stage.initStyle(StageStyle.TRANSPARENT);
+
+            stage.setTitle("Gamehub");
+            Scene scene = new Scene(parent);
+            scene.setFill(Color.TRANSPARENT);
+
+            stage.setScene(scene);
+            stage.setAlwaysOnTop(false);
+            stage.show();
+
+            //Passing primaryStage to controller in order to make window draggable
+            checkersGamehubController controller =
+                    loader.getController();
+
+            controller.registerStage(stage);
+
+            controller.setAuthenticationToken(authenticationToken);
+            controller.setUserID(userId);
+            controller.setUsername(name);
+            controller.setGameInvitationQueue(gameInvitationNotificationQueue);
+
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
 
     }
 
@@ -351,28 +460,80 @@ public class homeController implements Initializable{
             statusMenu.show(user_status, event.getScreenX(), event.getScreenY());
         });
 
+        tictactoe_image.setImage(Images.getImage("tictactoe"));
+        checkers_image.setImage(Images.profile2);
+
         username.setText(name);
 
         profile_photo.setImage(Images.pumpkin_logo);
 
-        Timeline gui_updater = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+        Timeline gui_updater = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
 
-            @Override
-            public void handle(ActionEvent event) {
+            try {
 
-                try {
+                updateGUI();
 
-                    updateGUI();
-
-                } catch (InterruptedException e) {
-                    System.out.println("Error taking from queue.");
-                    e.printStackTrace();
-                }
+            } catch (InterruptedException e) {
+                System.out.println("Error taking from queue.");
+                e.printStackTrace();
             }
         }));
 
         gui_updater.setCycleCount(Timeline.INDEFINITE);
         gui_updater.play();
+
+        Timeline tictactoechecker = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
+
+            try {
+
+                while(!gameInvitationNotificationQueue.isEmpty()){
+
+                    MessageObject x = gameInvitationNotificationQueue.take();
+
+                    System.out.println(x);
+
+                    if(x.getReceiver_id() == userId && x.getContent().equals("tictactoe")){
+
+                        System.out.println("FOUND A GAME INVITE");
+                        gameInvitationNotificationQueue.offer(new MessageObject(userId, x.getSender_id(), "OK"));
+
+                        //launch tictactoe
+                        new Thread(() -> {
+
+                            while (true) {
+
+                                try {
+                                    TicTacToeClient client = new TicTacToeClient(true, false);
+                                    client.setSender_id(x.getSender_id());
+                                    client.setReceiver_id(x.getReceiver_id());
+                                    client.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                                    client.frame.setSize(500, 500);
+                                    client.frame.setVisible(true);
+                                    client.frame.setResizable(false);
+                                    client.play();
+                                    if (!client.wantsToPlayAgain()) {
+                                        break;
+                                    }
+
+                                }catch(Exception e1){
+                                    e1.printStackTrace();
+                                }
+                            }
+                        }).start();
+
+                    }else{
+                        gameInvitationNotificationQueue.offer(x);
+                    }
+                }
+
+            } catch (Exception e) {
+                System.out.println("Error taking from queue.");
+                e.printStackTrace();
+            }
+        }));
+
+        tictactoechecker.setCycleCount(Timeline.INDEFINITE);
+        tictactoechecker.play();
 
     }
 
@@ -392,6 +553,17 @@ public class homeController implements Initializable{
         status_icon.setGraphic(icons.GHOST_GREEN);
 
     }
+
+    public void displayDialog(boolean x) {
+
+        Platform.runLater(() -> {
+
+            DecisionDialog dialog = new DecisionDialog(stackPane, "Error", "Invalid request would you like to retry?", "Yes", "No");
+
+        });
+    }
+
+
 
     public void updateGUI() throws InterruptedException {
 
@@ -464,10 +636,37 @@ public class homeController implements Initializable{
         }
 
         //----------NOTIFICATIONS FOR GAME INVITATIONS
+        if(!gameInvitationNotificationQueue.isEmpty()){
 
+            System.out.println("GOT IT!");
 
+            MessageObject m = gameInvitationNotificationQueue.take();
 
+                //LAUNCH GAME AS STARTER
+                Thread y = new Thread(() -> {
 
+                    while (true) {
+
+                        try {
+                            TicTacToeClient client = new TicTacToeClient(true, false);
+                            client.setSender_id(m.getReceiver_id());
+                            client.setReceiver_id(m.getSender_id());
+                            client.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                            client.frame.setSize(500, 500);
+                            client.frame.setVisible(true);
+                            client.frame.setResizable(false);
+                            client.play();
+                            if (!client.wantsToPlayAgain()) {
+                                break;
+                            }
+                        }catch(Exception e1){
+                            e1.printStackTrace();
+                        }
+                    }
+                });
+                y.setDaemon(false);
+                y.start();
+            }
     }
 
     private void checkAndAdd(BlockingQueue<User> friends, ArrayList<String> array) throws InterruptedException {

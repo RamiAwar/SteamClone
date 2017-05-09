@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<StackPane fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="597.0" style="-fx-background-color: rgba(255,255,255,0);" stylesheets="@../home/home.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane prefHeight="650.0" prefWidth="826.0" style="-fx-background-color: rgba(255,255,255,0);" />
+      <Pane prefHeight="425.0" prefWidth="506.0" style="-fx-background-color: #666;">
+         <effect>
+            <DropShadow blurType="GAUSSIAN" color="#00000046" offsetX="5.0" offsetY="5.0" radius="10.76" width="24.04" />
+         </effect>
+         <StackPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </StackPane.margin>
+         <children>
+            <HBox fx:id="root" prefHeight="178.0" prefWidth="575.0">
+               <children>
+                  <ImageView fx:id="gameImage" fitHeight="138.0" fitWidth="143.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../resources/images/games/tictactoe.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <VBox alignment="CENTER" prefHeight="178.0" prefWidth="212.0">
+                     <children>
+                        <Label fx:id="gameTitle" text="Tic Tac Toe" textFill="#fcfcfc">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="gameTitle3" text="You" textFill="#fcfcfc">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="gameTitle2" text="vs" textFill="#a2d7ff">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="friend_username" text="karl@gmail.com" textFill="#fcfcfc">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="178.0" prefWidth="208.0">
+                     <children>
+                        <Label fx:id="gameStatus" text="Win" textFill="#2ed352">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="gameExperience" alignment="CENTER" prefHeight="24.0" prefWidth="197.0" text="+10 experience points" textFill="#fcfcfc">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </Pane>
+   </children>
+   <effect>
+      <DropShadow blurType="GAUSSIAN" />
+   </effect>
+   <padding>
+      <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+   </padding>
+</StackPane>

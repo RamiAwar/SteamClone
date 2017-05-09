@@ -13,8 +13,8 @@ public class Images {
     public static Image profile2 = new Image("images/pro2.png");
     public static Image pumpkin_logo_gif = new Image("images/pumpkinold.gif");
 
-
     public static String tictactoe = "images/games/tictactoe.png";
+    public static String snake = "images/games/snake.png";
 
 
     public static Image getImage(String img){
@@ -25,6 +25,8 @@ public class Images {
                 return profile2;
             case "PUMPKIN":
                 return pumpkin;
+            case "tictactoe":
+                return new Image(tictactoe);
             default:
                 return pumpkin;
         }

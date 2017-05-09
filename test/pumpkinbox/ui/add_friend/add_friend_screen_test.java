@@ -49,7 +49,7 @@ public class add_friend_screen_test extends Application {
 
         //Passing primaryStage to controller in order to make window draggable
         addFriendController controller =
-                loader.<addFriendController>getController();
+                loader.getController();
         controller.registerStage(primaryStage);
 
     }

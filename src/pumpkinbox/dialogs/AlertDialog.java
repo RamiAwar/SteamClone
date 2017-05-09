@@ -45,7 +45,7 @@ public class AlertDialog {
         this.content.setBody(new Text(body));
 
         this.dialog = new JFXDialog(stackPane, this.content, JFXDialog.DialogTransition.BOTTOM);
-        stackPane.setMargin(dialog, new Insets(10, 10, 10, 10));
+        StackPane.setMargin(dialog, new Insets(10, 10, 10, 10));
 
         this.actionButton = new JFXButton(actionDialogText);
 
@@ -69,7 +69,7 @@ public class AlertDialog {
         this.content.setBody(new Text(body));
 
         this.dialog = new JFXDialog(stackPane, this.content, JFXDialog.DialogTransition.BOTTOM);
-        stackPane.setMargin(dialog, new Insets(10, 10, 10, 10));
+        StackPane.setMargin(dialog, new Insets(10, 10, 10, 10));
 
         this.actionButton = new JFXButton("Close");
 

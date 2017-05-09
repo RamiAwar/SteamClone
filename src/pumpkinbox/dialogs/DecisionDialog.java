@@ -50,7 +50,7 @@ public class DecisionDialog {
         this.content.setBody(new Text(body));
 
         this.dialog = new JFXDialog(stackPane, this.content, JFXDialog.DialogTransition.BOTTOM);
-        stackPane.setMargin(dialog, new Insets(10, 10, 10, 10));
+        StackPane.setMargin(dialog, new Insets(10, 10, 10, 10));
 
         this.confirmButton = new JFXButton(confirmButtonText);
         this.cancelButton = new JFXButton(cancelButtonText);
@@ -78,7 +78,7 @@ public class DecisionDialog {
         this.content.setBody(new Text(body));
 
         this.dialog = new JFXDialog(stackPane, this.content, JFXDialog.DialogTransition.BOTTOM);
-        stackPane.setMargin(dialog, new Insets(10, 10, 10, 10));
+        StackPane.setMargin(dialog, new Insets(10, 10, 10, 10));
 
         this.confirmButton = new JFXButton(confirmButtonText);
         this.cancelButton = new JFXButton("Cancel");

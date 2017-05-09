@@ -1,0 +1,62 @@
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color: #888;
+    -fx-text-fill: white;
+}
+
+.list-cell:even { /* <=== changed to even */
+    -fx-background-color: #555;
+}
+
+.list-cell:odd {
+    -fx-background-color: #666;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #999;
+    -fx-text-fill: white;
+}
+
+.list-cell{
+    -fx-text-fill: #ddd;
+    -fx-background-color: #555;
+    -fx-cell-size: 70px;
+}
+
+.listview  .scroll-bar:vertical{
+    -fx-background-color:transparent;
+
+}
+
+.listview {
+    -fx-background-color:transparent;
+    -fx-border-color:derive(gray,0%);
+}
+
+/* The increment and decrement button CSS class of scrollbar */
+.listview .increment-button ,.listview .decrement-button {
+    -fx-background-color:transparent;
+}
+
+/* The main scrollbar **track** CSS class  */
+
+.listview .scroll-bar:vertical .track{
+     -fx-background-color: transparent;
+	 -fx-background-radius: 0em;
+}
+
+/* The main scrollbar **thumb** CSS class which we drag every time (movable) */
+
+.listview .scroll-bar:vertical .thumb {
+    -fx-background-color:derive(#555,90%);
+
+}
+
+/* The main scrollbar **track** CSS class on event of "hover" and "pressed" */
+
+.listview .scroll-bar:vertical:pressed .track{
+     -fx-background-color: derive(#eee,20%);
+}
+
+.listview .scroll-bar .thumb:pressed{
+    -fx-background-color: derive(white,50%);
+}

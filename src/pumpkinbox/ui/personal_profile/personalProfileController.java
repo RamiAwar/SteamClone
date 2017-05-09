@@ -1,6 +1,7 @@
 package pumpkinbox.ui.personal_profile;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXProgressBar;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,6 +25,7 @@ import pumpkinbox.ui.icons.Icons;
 import pumpkinbox.ui.requests.requestListViewCell;
 
 import java.net.URL;
+import java.rmi.server.ExportException;
 import java.util.ResourceBundle;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -82,8 +84,9 @@ public class personalProfileController implements Initializable{
     private Stage stage;
     private Icons icons = new Icons();
 
-
+    private ObservableList<EditFriendObject> friendsList = FXCollections.observableArrayList();
     private ObservableList<EditFriendObject> editFriendsList = FXCollections.observableArrayList();
+    private ObservableList<GameActivityObject> gameActivityList = FXCollections.observableArrayList();
 
     public void setAuthenticationToken(String s){
         this.authenticationToken = s;
@@ -97,27 +100,38 @@ public class personalProfileController implements Initializable{
 
     @FXML
     StackPane stackPane;
-
     @FXML
     ListView<GameActivityObject> activity_list;
-
+    @FXML
+    ListView<EditFriendObject> friends_list;
     @FXML
     ListView<EditFriendObject> edit_friends_list;
-
     @FXML
     HBox menuBar;
-
     @FXML
     Region draggableRegion;
-
     @FXML
-    JFXButton cancelButton;
-
+    ImageView profile_photo;
     @FXML
     Label closeIcon;
-
     @FXML
     Label minimizeIcon;
+    @FXML
+    Label experience_points;
+    @FXML
+    JFXProgressBar level_progress_bar;
+    @FXML
+    Label level_label;
+    @FXML
+    Label experience_points1;
+    @FXML
+    JFXProgressBar level_progress_bar1;
+    @FXML
+    Label level_label1;
+    @FXML
+    Label username;
+    @FXML
+    Label email;
 
 
     //Receiving stage from main class to make window draggable
@@ -139,54 +153,90 @@ public class personalProfileController implements Initializable{
         stage.close();
     }
 
-
     public void getEditFriendsList(){
-//        ResponseObject responseObject = Client.getEditFriendsList(userId, authenticationToken);
-//
-//        if(!responseObject.getStatusCode().equals(CODES.INVALID_REQUEST)){
-//
-//            if(responseObject.getResponse().equals("")){
-//                AlertDialog alertDialog = new AlertDialog(stackPane, "No Friend Requests",
-//                        "You have no new friend requests! Check again later.", "Okay");
-//                alertDialog.showDialog();
-//                return;
-//            }
-//
-//            //Were okay, parse string
-//            String[] response_array = responseObject.getResponse().split("\\|");
-//            for(int i=0; i<response_array.length; i+=2){
-//                editFriendsList.add(new RequestObject(Integer.parseInt(response_array[i]), userId, response_array[i+1], authenticationToken));
-//            }
-//        }
-//
-//        edit_friends_list.setItems(editFriendsList);
-//        edit_friends_list.setCellFactory(studentListView -> new requestListViewCell());
+
+        username.setText(name);
+        email.setText("");
+
+        ResponseObject responseObject = Client.getEditFriendsList(userId, authenticationToken);
+
+        if(!responseObject.getStatusCode().equals(CODES.INVALID_REQUEST)){
+
+            System.out.println(responseObject.getResponse());
+
+            try {
+                //Were okay, parse string
+                String[] response_array = responseObject.getResponse().split("\\|");
+
+                //Return
+                //FRIEND_ID |  FIRSTNAME LASTNAME   |   TIME ADDED
+
+                for (int i = 0; i < response_array.length; i += 3) {
+                    friendsList.add(new EditFriendObject(userId, Integer.parseInt(response_array[i]), response_array[i + 1], response_array[i + 2], authenticationToken));
+                    editFriendsList.add(new EditFriendObject(userId, Integer.parseInt(response_array[i]), response_array[i + 1], response_array[i + 2], authenticationToken));
+                }
+
+            }catch(Exception e){
+                //Do something
+            }
+        }
+
+        edit_friends_list.setItems(editFriendsList);
+        edit_friends_list.setCellFactory(studentListView -> new editFriendListViewCell(edit_friends_list));
+
+        friends_list.setItems(friendsList);
+        friends_list.setCellFactory(studentListView -> new friendListViewCell(friends_list));
     }
 
     public void getActivityList(){
 
-//        ResponseObject responseObject = Client.getEditFriendsList(userId, authenticationToken);
-//
-//        if(!responseObject.getStatusCode().equals(CODES.INVALID_REQUEST)){
-//
-//            if(responseObject.getResponse().equals("")){
-//                AlertDialog alertDialog = new AlertDialog(stackPane, "No Friend Requests",
-//                        "You have no new friend requests! Check again later.", "Okay");
-//                alertDialog.showDialog();
-//                return;
-//            }
-//
-//            //Were okay, parse string
-//            String[] response_array = responseObject.getResponse().split("\\|");
-//            for(int i=0; i<response_array.length; i+=2){
-//                editFriendsList.add(new RequestObject(Integer.parseInt(response_array[i]), userId, response_array[i+1], authenticationToken));
-//            }
-//        }
-//
-//        edit_friends_list.setItems(editFriendsList);
-//        edit_friends_list.setCellFactory(studentListView -> new requestListViewCell());
+        ResponseObject responseObject = Client.getActivityList(userId, authenticationToken);
+
+        if(!responseObject.getStatusCode().equals(CODES.INVALID_REQUEST)){
+
+            //Were okay, parse string
+            //RESPONSE FORMAT
+            // FRIEND NAME | GAME NAME | GAME STATUS | EXPERIENCE
+
+            try {
+                String[] response_array = responseObject.getResponse().split("\\|");
+                for (int i = 0; i < response_array.length; i += 4) {
+                    gameActivityList.add(new GameActivityObject(response_array[i], response_array[i + 1], response_array[i + 3], response_array[i + 2]));
+                }
+            }catch (Exception e){
+                //Do something
+            }
+        }
+
+        activity_list.setItems(gameActivityList);
+        activity_list.setCellFactory(studentListView -> new gameActivityListViewCell(activity_list));
+
     }
 
+    public void getExperiencePoints(){
+
+        //get sum of experience points
+        ResponseObject response = Client.getExperience(userId, authenticationToken);
+
+        if(response.getStatusCode().equals(CODES.OK)) {
+
+            int experience = Integer.parseInt(response.getResponse());
+            int level = experience / 20;
+            double progress = ((double) experience % 20)/20;
+
+            experience_points.setText(Integer.toString(experience) + "xp");
+            level_label.setText("Level " + Integer.toString(level));
+            level_progress_bar.setProgress(progress);
+
+            experience_points1.setText(Integer.toString(experience) + "xp");
+            level_label1.setText("Level " + Integer.toString(level));
+            level_progress_bar1.setProgress(progress);
+
+        }else{
+            AlertDialog alert = new AlertDialog(stackPane, "Error", "Could not get experience points", "Okay");
+        }
+
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -200,6 +250,7 @@ public class personalProfileController implements Initializable{
             minimize();
         });
 
+        profile_photo.setImage(Images.pumpkin_logo);
     }
 
     private void minimize(){

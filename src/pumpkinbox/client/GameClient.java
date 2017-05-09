@@ -11,9 +11,9 @@ public class GameClient {
     private static final String CRLF = "\r\n";
 
     private static String hostname = "localhost";
-    private static int port = 9000;
+    private static int port = 10000;
 
-    public static void sendGameStatus(int sender_id, int receiver_id, String receiver_username, String game){
+    public static void sendGameStatus(int sender_id, int receiver_id, String receiver_username, String game, int gameStatus){
 
         //API REQUEST FORMAT
         //STATUS   sender_id       receiver_id     game        status
@@ -28,10 +28,15 @@ public class GameClient {
             ObjectInputStream datain = new ObjectInputStream(clientSocket.getInputStream());
             ObjectOutputStream dataout = new ObjectOutputStream(clientSocket.getOutputStream());
 
-            String request = "STATUS " + Integer.toString(sender_id) + " " + Integer.toString(receiver_id) + " " + receiver_username + " " + game;
+            String request = "STATUS "
+                    + Integer.toString(sender_id) + " "
+                    + Integer.toString(receiver_id) + " "
+                    + game + " "
+                    + Integer.toString(gameStatus) + " "
+                    + receiver_username;
 
             dataout.writeObject(request);
-            String response = (String) datain.readObject();
+//            String response = (String) datain.readObject();
             clientSocket.close();
 
         }catch(Exception e){
@@ -40,7 +45,7 @@ public class GameClient {
 
     }
 
-    public static String sendGameMove(int sender_id, int receiver_id, String game, String move) {
+    public static void sendGameMove(int sender_id, int receiver_id, String game, String move) {
 
         //API REQUEST FORMAT
         //REQUEST   sender_id       receiver_id     game        move
@@ -60,16 +65,12 @@ public class GameClient {
             String request = "REQUEST " + Integer.toString(sender_id) + " " + Integer.toString(receiver_id) + " " + game + " " + move;
 
             dataout.writeObject(request);
-            String response = (String) datain.readObject();
+//            String response = (String) datain.readObject();
             clientSocket.close();
-
-            return response;
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return CODES.SEND_ERROR;
     }
 
     public static String receiveGameMove(int sender_id, int receiver_id, String game) {
@@ -82,26 +83,27 @@ public class GameClient {
 
         ResponseObject object = new ResponseObject();
 
-        try {
-            clientSocket = new Socket(hostname, port);
+        while(true) {
+            try {
 
-            //Care about order
-            ObjectInputStream datain = new ObjectInputStream(clientSocket.getInputStream());
-            ObjectOutputStream dataout = new ObjectOutputStream(clientSocket.getOutputStream());
+                clientSocket = new Socket(hostname, port);
 
-            String request = "REQUEST " + Integer.toString(sender_id) + " " + Integer.toString(receiver_id) + " " + game;
+                //Care about order
+                ObjectInputStream datain = new ObjectInputStream(clientSocket.getInputStream());
+                ObjectOutputStream dataout = new ObjectOutputStream(clientSocket.getOutputStream());
 
-            dataout.writeObject(request);
-            String response = (String) datain.readObject();
-            clientSocket.close();
+                String request = "REQUEST " + Integer.toString(sender_id) + " " + Integer.toString(receiver_id) + " " + game;
 
-            return response;
+                dataout.writeObject(request);
+                String response = (String) datain.readObject();
+                clientSocket.close();
 
-        } catch (Exception e) {
-            e.printStackTrace();
+                return response;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-
-        return CODES.SEND_ERROR;
     }
 
 }

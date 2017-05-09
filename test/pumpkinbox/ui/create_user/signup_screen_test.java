@@ -55,7 +55,7 @@ public class signup_screen_test extends Application {
 
         //Passing primaryStage to controller in order to make window draggable
         signupScreenController controller =
-                loader.<signupScreenController>getController();
+                loader.getController();
         controller.registerStage(primaryStage);
 
     }

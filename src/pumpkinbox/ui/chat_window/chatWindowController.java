@@ -179,7 +179,7 @@ public class chatWindowController implements Initializable {
 
         //Passing primaryStage to controller in order to make window draggable
         addFriendController controller =
-                loader.<addFriendController>getController();
+                loader.getController();
 
         controller.registerStage(stage);
 
