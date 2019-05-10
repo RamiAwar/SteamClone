@@ -4,6 +4,11 @@
 This project is an online game platform that allows users to connect to, chat with, and play with their friends in real time.
 The application, login/signup server, chat server, multiplayer games, and client gui were all built using java. 
 
+The goal behind this university project is connecting a client to the PumpkinBox server, allowing them to connect with their friends, playing games or chatting. This is done with maximum security in mind to protect user privacy, and maximum scalability in case there was a plan to take this to the market at some point. (As time progressed, emphasis on security and scalability slightly declined due to time constraints)
+
+For a detailed description of the application flow, features, etc. please download the build report pdf file.
+
+
 ## Details
 
 
